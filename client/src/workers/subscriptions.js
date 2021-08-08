@@ -1,4 +1,4 @@
-import { post } from '../src/api/index';
+import { post } from '@/api/index';
 
 const VAPID_PUBLIC_KEY = "BIqI_gfrU8xCXOQ_Hvcf7A6q-psPlnopnPSrpx5prpa2Yjl3cr5b9kPSTCvo_KbI2-IrhjugZ-j5CogzrwWqlXs";
 const VAPID_PRIVATE_KEY = "vsbSUVkua5iwKhNkQrut6mNkYZ7rUzr2FcklIGzsFpg";
