@@ -1,0 +1,13 @@
+@import "@/styles/Global.scss";
+
+.layout-app-wrapper {
+    position: relative;
+    height: 100vh;
+
+    @media (min-width: 767px) {
+        display: flex;
+        justify-content: center;
+        padding-top: 50px;
+        height: 100%;
+    }
+}
