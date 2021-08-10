@@ -1,19 +1,5 @@
 // Old Logo Colors
-$choice-ash: #eff0f2 !important;
-$choice-dark-green: #34524f !important;
-$choice-dark-blue: #323d4d !important;
-$choice-gold: #c9bb9c !important;
-
-// New Logo Colors
-// 4f8fbf (Blue1)
-// 1d92c0 (Blue2)
-// 12aec0 (Teal)
-// faa21a (Orange1)
-// f57b23 (Orange2)
-
-#root {
-  height: 100%;
-}
+$primary-blue: #5A59FF;
 
 * {
   margin: 0px;
@@ -21,138 +7,15 @@ $choice-gold: #c9bb9c !important;
   box-sizing: border-box !important;
 }
 
-.button.custom-button {
-  width: calc(100% - 30px);
-  background-color: $choice-dark-blue;
-  color: white;
-  margin: 15px;
-
-  &:hover {
-    color: white;
-  }
-}
-
-div.actions {
-  display: flex;
-  justify-content: space-between;
-
-  .button {
-    flex-basis: 50%;
-
-    &.primary {
-      background-color: $choice-dark-blue;
-    }
-  }
-}
-
-.ui.table td.active {
-  // background-color: white !important;
-  background-color: $choice-dark-blue;
-
-  span.suicr-content-item,
-  div.ui.circular.label {
-    color: white !important;
-    border-radius: 50% !important;
-    height: 25px !important;
-    width: 25px !important;
-    padding: 15px !important;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: auto;
-  }
-
-  div.ui.circular.label {
-    background-color: $choice-gold;
-    color: black !important;
-  }
-}
-
-.ui.flowing.popup .ui.table td.active span.suicr-content-item {
-  width: 100% !important;
-  border-radius: 0% !important;
-}
-
-.ui.celled.table tr td,
-.ui.celled.table tr th {
-  border: 0px !important;
-}
-
-#child-select-popup {
-  // Styles shared across multiple child select components
-  padding: 10px;
-
-  ul {
-    list-style-type: none !important;
-
-    li {
-      margin: 10px;
-    }
-
-    li:last-of-type {
-      margin-bottom: 0px !important;
-    }
-  }
-}
-
-
-.shake {
-  animation: shake 1.5s cubic-bezier(.36,.07,.19,.97) both;
-  transform: translate3d(0, 0, 0);
-  animation-iteration-count: infinite;
-}
-
-@keyframes shake {
-  10%, 90% {
-    transform: translate3d(-0.5px, 0, 0);
-  }
-  
-  20%, 80% {
-    transform: translate3d(1px, 0, 0);
-  }
-
-  30%, 50%, 70% {
-    transform: translate3d(-2px, 0, 0);
-  }
-
-  40%, 60% {
-    transform: translate3d(2px, 0, 0);
-  }
-}
-
-//----------------------------------------------------------------
-//Fonts
-//----------------------------------------------------------------
-// @font-face {
-//   font-family: rubik-regular;
-//   src: url(../assets/fonts/Rubik-Regular.ttf);
-// }
-
-// @font-face {
-//   font-family: rubik-medium;
-//   src: url(../assets/fonts/Rubik-Medium.ttf);
-// }
-
-// @font-face {
-//   font-family: sf-pro-medium;
-//   src: url(../assets/fonts/SF-Pro-Display-Medium.otf);
-// }
-
-// @font-face {
-//   font-family: sf-pro-bold;
-//   src: url(../assets/fonts/SF-Pro-Display-Bold.otf);
-// }
 
 h1 {
   font-size: 24px;
-  font-family: sf-pro-bold;
   font-weight: 200;
   margin: 0;
 }
 
 h2 {
   font-size: 20px;
-  font-family: sf-pro-bold;
   font-weight: 200;
   margin: 0;
 }

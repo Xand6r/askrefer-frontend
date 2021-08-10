@@ -35,6 +35,7 @@ const Layout = ({ children }) => {
       </>
     );
   } else {
+    // TODO include a popup that were comin to mobile soon
     return (
       <div className="layout-app-wrapper">
         <div className="marvel-device iphone8plus black">

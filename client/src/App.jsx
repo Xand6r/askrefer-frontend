@@ -1,10 +1,12 @@
-import Layout from '@/components/layout';
+import { BrowserRouter as Router } from "react-router-dom";
+import Routes from './routes';
+
 
 function App() {
   return (
-    <div className="App">
-      currently building ask refer
-    </div>
+    <Router>
+      <Routes />
+    </Router>
   );
 }
 
