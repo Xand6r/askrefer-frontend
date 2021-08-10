@@ -3,6 +3,8 @@ import Button from "@/components/button";
 import { QuestionOne, QuestionTwo } from "./components/questions";
 import "./styles.scss";
 
+const CTA_TEXT = "Get Started";
+
 export default function index() {
     /**
      * The CTA to be called when we choose to go to the next page
@@ -10,7 +12,6 @@ export default function index() {
     const onClickButton = () => {
         console.log('going to next page');
     };
-    const CTA_TEXT = "Get Started";
 
     return (
         <div id="landing-page">
