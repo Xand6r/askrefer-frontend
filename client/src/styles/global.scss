@@ -10,6 +10,13 @@ $padding-x: 16px;
   box-sizing: border-box !important;
 }
 
+html{
+  width: 100vw;
+  body{
+    width: 100%;
+  }
+}
+
 
 h1 {
   font-size: 24px;

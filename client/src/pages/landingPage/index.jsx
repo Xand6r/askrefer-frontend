@@ -18,7 +18,7 @@ export default function index() {
             <section className="header">
                 <img src={Megaphone} alt="" />
                 <h4>
-                    Sometimes you can’t Google your way to <br />
+                    Sometimes you can’t Google your way to
                     the Perfect fit.
                 </h4>
             </section>

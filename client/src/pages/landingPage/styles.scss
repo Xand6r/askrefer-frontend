@@ -1,16 +1,23 @@
 @import '@/styles/global.scss';
 
-$light-blue: rgba(32, 82, 216, 0.05);
-$white: rgb(255, 255, 255);
+$light-blue: #F3F6FD;
+$white: #ffffff;
 
 #landing-page{
     padding: 0 $padding-x;
     section.header{
         padding: 20px 35px;
         margin-bottom: 5px;
-        background: linear-gradient($white 80%, $light-blue);
+        background: $light-blue;
+        background: linear-gradient($white 50%, $light-blue);
+        background: -moz-linear-gradient(top,  $white 50%, $light-blue); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop($white 50%), color-stop($light-blue)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  $white 50%, $light-blue); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  $white 50%,$light-blue); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  $white 50%,$light-blue); /* IE10+ */
+        background: linear-gradient(to bottom, $white 50% , $light-blue); /* W3C */
         img{
-            margin-left: 70px;
+            // margin-left: 70px;
         }
         h4{
             margin-top: 22px;
@@ -20,11 +27,12 @@ $white: rgb(255, 255, 255);
         }
     }
     section.questions{
-        padding: 20px;
+        padding: 17px 20px;
         margin-bottom: 32px;
         background: $light-blue;
         display: flex;
         justify-content: space-between;
+        gap: 15px;
     }
     section.cta{
         h5{
