@@ -34,10 +34,11 @@ export default function Index() {
         }));
     };
 
-    const onSubmit = () => {
+    const validateForm = () => {
         const {
-            desire, details, url, duration
+            desire, details
         } = state;
+
         if(!desire){
             return showErrorToast(
                 "Please supply what you are looking for."
@@ -48,6 +49,12 @@ export default function Index() {
                 "Please supply more details to better explain your request."
             )
         }
+    }
+
+    const onSubmit = () => {
+        const {
+            desire, details, url, duration
+        } = state;
         showSuccessToast("coming soon.");
     };
 
@@ -110,7 +117,7 @@ export default function Index() {
                 </div>
             </div>
 
-            <div className="submit-button">
+            <div onClick={validateForm} className="submit-button">
                 <Button
                     text={CTA_TEXT}
                     onClick={onSubmit}

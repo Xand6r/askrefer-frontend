@@ -1,6 +1,6 @@
 export const TOAST_INITIALIZERS = {
     position: "top-left",
-    autoClose: 5000,
+    autoClose: 2000,
     hideProgressBar: true,
     closeOnClick: true,
     pauseOnHover: true,
