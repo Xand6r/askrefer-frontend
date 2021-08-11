@@ -4,20 +4,21 @@
     padding: 0 $padding-x;
     margin-top: 16px;
 
-    .submit-button{
-        margin-top: 60px;
+    .submit-button {
+        margin-top: 44px;
     }
 
-    .select-group{
-        h4{
+    .select-group {
+        h4 {
             margin-bottom: 12px;
         }
 
-        &__tabs{
+        &__tabs {
             display: flex;
             transition: $transition-speed;
-            gap: 16px;
-            .select-tab{
+            .select-tab {
+                margin-right: 16px;
+                margin-bottom: 16px;
                 display: flex;
                 padding: 8px 10px;
                 height: 35px;
@@ -25,10 +26,10 @@
                 border-radius: 5px;
                 cursor: pointer;
                 width: fit-content;
-                border: 1px solid #A5A5A5;
-    
-                &.--selected{
-                    background: #146A89;
+                border: 1px solid #a5a5a5;
+
+                &.--selected {
+                    background: #146a89;
                     color: white;
                 }
             }
@@ -53,9 +54,26 @@
             box-sizing: border-box;
             color: #6a6a7d;
             outline: none;
+            -webkit-appearance: none;
             &:focus {
                 outline: none;
                 border: 1px solid rgba(0, 0, 0, 0.2);
+            }
+            &::-webkit-input-placeholder {
+                /* Chrome/Opera/Safari */
+                font-size: 12px;
+            }
+            &::-moz-placeholder {
+                /* Firefox 19+ */
+                font-size: 12px;
+            }
+            &:-ms-input-placeholder {
+                /* IE 10+ */
+                font-size: 12px;
+            }
+            &:-moz-placeholder {
+                /* Firefox 18- */
+                font-size: 12px;
             }
         }
     }
