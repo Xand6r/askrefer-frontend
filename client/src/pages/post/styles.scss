@@ -16,9 +16,7 @@
         &__tabs{
             display: flex;
             transition: $transition-speed;
-            & > div{
-                margin-right: 16px;
-            }
+            gap: 16px;
             .select-tab{
                 display: flex;
                 padding: 8px 10px;
@@ -49,12 +47,12 @@
         }
         textarea {
             height: 72px;
-            width: 382px;
             border: 1px solid rgba(0, 0, 0, 0.1);
             transition: $transition-speed;
             padding: 28px 14px;
             box-sizing: border-box;
             color: #6a6a7d;
+            outline: none;
             &:focus {
                 outline: none;
                 border: 1px solid rgba(0, 0, 0, 0.2);
