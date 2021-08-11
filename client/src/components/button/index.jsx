@@ -1,7 +1,16 @@
 import "./style.scss";
-export default function index({ text, onClick }) {
+export default function index({ text, onClick, disabled }) {
+    const activateButton = () => {
+        if (disabled) return;
+        return onClick();
+    };
+    const className = `${disabled ? "--disabled" : ""}`;
     return (
-        <div onClick={onClick} id="action-button">
+        <div
+            onClick={activateButton}
+            id="action-button"
+            className={className}
+        >
             <h4>{text}</h4>
         </div>
     );

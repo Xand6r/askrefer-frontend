@@ -1,3 +1,4 @@
+import { useHistory } from "react-router-dom";
 import Megaphone from "@/assets/svgs/megaphone.svg";
 import Button from "@/components/button";
 import { QuestionOne, QuestionTwo } from "./components/questions";
@@ -5,12 +6,13 @@ import "./styles.scss";
 
 const CTA_TEXT = "Get Started";
 
-export default function index() {
+export default function Index() {
+    const history = useHistory();
     /**
      * The CTA to be called when we choose to go to the next page
      */
     const onClickButton = () => {
-        console.log('going to next page');
+        history.push('/post');
     };
 
     return (

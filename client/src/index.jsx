@@ -4,11 +4,10 @@ import ReactDOM from "react-dom";
 import Layout from '@/components/layout';
 import App from "./App";
 
-import * as serviceWorker from "@/workers/serviceWorker";
-import { subscribeUser, requestPermission } from "@/workers/subscriptions";
+// import * as serviceWorker from "@/workers/serviceWorker";
+// import { subscribeUser, requestPermission } from "@/workers/subscriptions";
 import reportWebVitals from "@/workers/reportWebVitals";
 
-import "@/styles/global.scss";
 
 ReactDOM.render(
     <React.StrictMode>

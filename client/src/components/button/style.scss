@@ -3,6 +3,7 @@
 $background-color-normal: #5a59ff;
 $background-color-hover: #3030fa;
 $background-color-active: #3d3de0;
+$background-color-disabled: #3d3de050;
 
 #action-button{
     background: $background-color-normal;
@@ -22,5 +23,13 @@ $background-color-active: #3d3de0;
 
     &:active{
         background: $background-color-active;
+    }
+
+
+    &.--disabled{
+        background: $background-color-disabled;
+        &:hover, &:active{
+            background: $background-color-disabled;
+        }
     }
 }
