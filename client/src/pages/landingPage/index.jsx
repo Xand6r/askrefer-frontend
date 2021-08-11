@@ -24,8 +24,12 @@ export default function index() {
             </section>
 
             <section className="questions">
-                <QuestionOne />
-                <QuestionTwo />
+                <div>
+                    <QuestionOne />
+                </div>
+                <div>
+                    <QuestionTwo />
+                </div>
             </section>
 
             <section className="cta">

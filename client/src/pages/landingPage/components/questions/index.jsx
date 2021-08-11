@@ -2,8 +2,8 @@ export function QuestionOne({}) {
     return(
         <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="164.998"
-            height="54.11"
+            width="100%"
+            height="50.11"
             viewBox="0 0 164.998 54.11"
         >
             <g
@@ -42,8 +42,8 @@ export function QuestionTwo() {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="164.998"
-            height="54.11"
+            width="100%"
+            height="50.11"
             viewBox="0 0 164.998 54.11"
         >
             <g

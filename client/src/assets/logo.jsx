@@ -21,7 +21,7 @@ export default function Logo() {
                         transform="translate(308 41.005)"
                         fill="#8584ff"
                         font-size="20"
-                        font-family="SourceSansPro-Bold, Source Sans Pro"
+                        font-family="Source Sans Pro, sans-serif"
                         font-weight="700"
                     >
                         <tspan x="-37.02" y="0">

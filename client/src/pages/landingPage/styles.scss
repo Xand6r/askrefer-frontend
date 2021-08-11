@@ -33,6 +33,12 @@ $white: #ffffff;
         display: flex;
         justify-content: space-between;
         gap: 15px;
+
+        div{
+            width: 144px;
+            height: 47px;
+            width: 50%;
+        }
     }
     section.cta{
         h5{
