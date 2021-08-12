@@ -1,0 +1,32 @@
+/*
+ * Basic animation to change opacity over time and fade in an item
+*/
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    } to {
+        opacity: 1;
+    }
+}
+
+/*
+* Basic animation to slide an item up from the bottom
+*/
+@keyframes slideUp {
+    0% {
+        margin-bottom: -100%;
+    }
+    95%{
+        margin-bottom: 0;
+    }
+}
+
+@keyframes slideDown {
+    0% {
+        margin-bottom: 0;
+    }
+    95%{
+        margin-bottom: -100%;
+    }
+}
+

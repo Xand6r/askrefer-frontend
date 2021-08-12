@@ -1,4 +1,6 @@
 import { useState } from "react";
+
+import Overlay from '@/components/overlay';
 import { showErrorToast, showSuccessToast } from "@/utilities";
 
 import Button from "@/components/button";
@@ -26,6 +28,7 @@ function Tab({ name, selected }) {
 
 export default function Index() {
     const [state, setState] = useState(INITIAL_STATE);
+    const [openOverlay, setOpenOverlay] = useState(true);
 
     const updateState = (name, value) => {
         setState((state) => ({
@@ -55,6 +58,7 @@ export default function Index() {
         const {
             desire, details, url, duration
         } = state;
+        setOpenOverlay(true);
         showSuccessToast("coming soon.");
     };
 
@@ -124,6 +128,10 @@ export default function Index() {
                     disabled={!(state.desire && state.details)}
                 />
             </div>
+            <Overlay
+                open={openOverlay}
+                toggleOpen={() => openOverlay && setOpenOverlay(false)}
+            />
         </div>
     );
 }
