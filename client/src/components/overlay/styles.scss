@@ -5,30 +5,31 @@
     height: 100vh;
     width: 100vw;
     position: absolute;
-    top: 0;
+    bottom: 0;
     left: 0;
     background-color: #00000080;
-    animation: fadeIn $fast-animation-speed ease-in forwards;
     display: flex;
     flex-direction: column-reverse;
-    transition: $transition-speed;
+    animation-fill-mode: forwards;
 
     .overlay-component{
         &__slider{
+            transition: 400ms;
             background-color: white;
             border-radius: 8px 8px 0 0;
-            animation: slideUp $slow-animation-speed ease-in;
             height: 40%;
             width: 100%;
+            animation-fill-mode: forwards;
         }
     }
 
     &.--hidden{
-        animation: fadeOut 100ms 400ms ease-in forwards;
+        animation: fadeOut $transition-speed ease-in-out forwards;
+        background-color: transparent;
 
         .overlay-component{
             &__slider{
-                animation: slideDown $slow-animation-speed ease-in;
+                height: 0;
             }
         }
     }

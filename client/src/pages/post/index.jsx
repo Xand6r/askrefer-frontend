@@ -42,16 +42,16 @@ export default function Index() {
             desire, details
         } = state;
 
-        if(!desire){
-            return showErrorToast(
-                "Please supply what you are looking for."
-            )
-        }
-        if(!details){
-            return showErrorToast(
-                "Please supply more details to better explain your request."
-            )
-        }
+        // if(!desire){
+        //     return showErrorToast(
+        //         "Please supply what you are looking for."
+        //     )
+        // }
+        // if(!details){
+        //     return showErrorToast(
+        //         "Please supply more details to better explain your request."
+        //     )
+        // }
     }
 
     const onSubmit = () => {
@@ -59,7 +59,7 @@ export default function Index() {
             desire, details, url, duration
         } = state;
         setOpenOverlay(true);
-        showSuccessToast("coming soon.");
+        // showSuccessToast("coming soon.");
     };
 
     return (
@@ -125,7 +125,7 @@ export default function Index() {
                 <Button
                     text={CTA_TEXT}
                     onClick={onSubmit}
-                    disabled={!(state.desire && state.details)}
+                    // disabled={!(state.desire && state.details)}
                 />
             </div>
             <Overlay
