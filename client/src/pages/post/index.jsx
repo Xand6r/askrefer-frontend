@@ -28,7 +28,7 @@ function Tab({ name, selected }) {
 
 export default function Index() {
     const [state, setState] = useState(INITIAL_STATE);
-    const [openOverlay, setOpenOverlay] = useState(true);
+    const [openOverlay, setOpenOverlay] = useState(false);
 
     const updateState = (name, value) => {
         setState((state) => ({
