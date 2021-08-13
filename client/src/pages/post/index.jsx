@@ -1,9 +1,10 @@
 import { useState } from "react";
 
-import Overlay from '@/components/overlay';
+import Overlay from "@/components/overlay";
+import Button from "@/components/button";
 import { showErrorToast, showSuccessToast } from "@/utilities";
 
-import Button from "@/components/button";
+import Kyc from "./components/kyc";
 import "./styles.scss";
 
 const INITIAL_STATE = {
@@ -38,9 +39,7 @@ export default function Index() {
     };
 
     const validateForm = () => {
-        const {
-            desire, details
-        } = state;
+        const { desire, details } = state;
 
         // if(!desire){
         //     return showErrorToast(
@@ -52,14 +51,16 @@ export default function Index() {
         //         "Please supply more details to better explain your request."
         //     )
         // }
-    }
+    };
+
+    const gotoSecondState = () => {
+        const { desire, details, url, duration } = state;
+        setOpenOverlay(true);
+    };
 
     const onSubmit = () => {
-        const {
-            desire, details, url, duration
-        } = state;
-        setOpenOverlay(true);
-        // showSuccessToast("coming soon.");
+        showSuccessToast("coming soon.");
+        setOpenOverlay(false);
     };
 
     return (
@@ -124,13 +125,14 @@ export default function Index() {
             <div onClick={validateForm} className="submit-button">
                 <Button
                     text={CTA_TEXT}
-                    onClick={onSubmit}
+                    onClick={gotoSecondState}
                     // disabled={!(state.desire && state.details)}
                 />
             </div>
             <Overlay
                 open={openOverlay}
                 toggleOpen={() => openOverlay && setOpenOverlay(false)}
+                component={() => <Kyc onSubmit={onSubmit} />}
             />
         </div>
     );

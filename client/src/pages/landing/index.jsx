@@ -1,5 +1,5 @@
 import { useHistory } from "react-router-dom";
-import Megaphone from "@/assets/svgs/megaphone.svg";
+import Megaphone from "@/assets/svgs/landingicon.svg";
 import Button from "@/components/button";
 import { QuestionOne, QuestionTwo } from "./components/questions";
 import "./styles.scss";

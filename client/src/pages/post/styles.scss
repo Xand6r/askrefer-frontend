@@ -16,6 +16,7 @@
 
         &__tabs {
             display: flex;
+            flex-wrap: wrap;
             transition: $transition-speed;
             .select-tab {
                 margin-right: 16px;
