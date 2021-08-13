@@ -1,5 +1,6 @@
 import Button from "@/components/button";
 import "@/styles/input.scss";
+import "./styles.scss";
 
 const CTA_TEXT = "Complete";
 export default function index({ onSubmit }) {
