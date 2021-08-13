@@ -2,7 +2,6 @@ import { useState } from 'react';
 
 import Button from "@/components/button";
 import "@/styles/input.scss";
-
 import "./styles.scss";
 
 const CTA_TEXT = "Complete";
@@ -13,7 +12,7 @@ const INITIAL_STATE = {
 };
 
 export default function Index({ onSubmit }) {
-    const [state, setState] = useState(INITIAL_STATE);
+    const [state, setState] = useState(INITIAL_STATE)
     const changeState = (e) => {
         const {name, value} = e.target;
         setState(state => ({
@@ -24,12 +23,11 @@ export default function Index({ onSubmit }) {
     return (
         <div id="kyc-form" className="slider-form">
             <div className="header-group">
-                <h1 className="slider-form__header">About you</h1>
+                <h1 className="slider-form__header">Awesome!</h1>
 
                 <h6 className="slider-form__subheader">
-                    This allows AskRefer to send you update on who is interested
-                    in your ask.{" "}
-                    <span>This would not be shared with the Viewers</span>
+                    We will share your details with the original poster. They
+                    will be in touch if it is a match.
                 </h6>
             </div>
 
