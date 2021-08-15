@@ -38,10 +38,17 @@ export const getAvatarDetails = (fullName) => {
     };
 };
 
-
 /**
  * MAnually redirecting to another URL
  */
 export const gotoURL = (link) => {
     window.open(link, "_blank")
+}
+
+/**
+ * Copy a text to clipboard
+ */
+export const copyToClipboard = (text, successMessage) => {
+    navigator.clipboard.writeText(text);
+    showSuccessToast(successMessage);
 }

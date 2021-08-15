@@ -1,0 +1,32 @@
+#refer-form {
+    margin: 27px 22px 44px;
+
+    form {
+        div.input__group.--refer {
+            .refer_input__wrapper {
+                position: relative;
+                input {
+                    width: 100%;
+                    padding-right: 130px;
+                    text-decoration: underline;
+                }
+                .copy-button {
+                    width: 118px;
+                    height: 52px;
+                    background-color: #8080f0;
+                    border-radius: 5px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    position: absolute;
+                    top: 0;
+                    left: calc(100% - 118px);
+                    h5 {
+                        color: white;
+                        font-weight: 300;
+                    }
+                }
+            }
+        }
+    }
+}
