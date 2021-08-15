@@ -127,7 +127,7 @@ export default function Index() {
             <Overlay
                 open={maybe}
                 toggleOpen={() => maybe && setMaybe(false)}
-                component={() => <Refer onSubmit={onSubmitYes} />}
+                component={() => <Refer onSubmit={onSubmitMaybe} />}
             />
         </div>
     );
