@@ -8,6 +8,7 @@ import Button from "@/components/button";
 
 import Match from "./components/match";
 import "./styles.scss";
+import { showSuccessToast } from "@/utilities";
 
 const CTA_TEXT = "post an ask";
 export default function Index() {
@@ -23,7 +24,10 @@ export default function Index() {
         history.push("/post");
     };
 
-    const onSubmitYes = () => {}
+    const onSubmitYes = () => {
+        showSuccessToast('coming soon.')
+        setYes(false);
+    }
 
     return (
         <div id="referral-page">
@@ -35,7 +39,7 @@ export default function Index() {
             <Overlay
                 open={yes}
                 toggleOpen={() => yes && setYes(false)}
-                component={() => <Match onSubmit={onSubmit} />}
+                component={() => <Match onSubmit={onSubmitYes} />}
             />
         </div>
     );
