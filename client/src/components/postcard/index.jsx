@@ -1,5 +1,9 @@
 import { getAvatarDetails, gotoURL } from "@/utilities";
 import { DATE_FORMAT } from "@/utilities/constants";
+import { showSuccessToast } from "@/utilities";
+import Overlay from "@/components/overlay";
+import Match from "./components/match";
+
 import moment from "moment";
 import { useState } from "react";
 import "./styles.scss";
@@ -13,6 +17,8 @@ const INITIAL_STATE = {
 };
 export default function Index() {
     const [state, setState] = useState(INITIAL_STATE);
+    const [yes, setYes] = useState(false);
+
     const avatarDetails = getAvatarDetails(state.fullName);
 
     const onViewMore = () => {
@@ -29,6 +35,10 @@ export default function Index() {
                 ? "1 day"
                 : `${dayDiff} days`;
         return expiresIn;
+    };
+    const onSubmitYes = () => {
+        showSuccessToast("coming soon.");
+        setYes(false);
     };
 
     const expiresIn = timeDifferenceText(expiryDate.diff(creationDate, "day"));
@@ -54,11 +64,15 @@ export default function Index() {
                     </h5>
                 </div>
                 <div className="auxilliary_content">
-                    <h6 className="auxilliary_content__posted">{postedAt} ago</h6>
-                    <h6 className="auxilliary_content__expiry">Expires in {expiresIn}</h6>
+                    <h6 className="auxilliary_content__posted">
+                        {postedAt} ago
+                    </h6>
+                    <h6 className="auxilliary_content__expiry">
+                        Expires in {expiresIn}
+                    </h6>
                 </div>
             </div>
-            <div className="divider"/>
+            <div className="divider" />
             <div className="bottom_section">
                 <div className="action_button --no">
                     <h5>Nope Sorry</h5>
@@ -66,10 +80,15 @@ export default function Index() {
                 <div className="action_button --maybe">
                     <h5>I know someone</h5>
                 </div>
-                <div className="action_button --yes">
+                <div onClick={() => setYes(true)} className="action_button --yes">
                     <h5>I am your guy</h5>
                 </div>
             </div>
+            <Overlay
+                open={yes}
+                toggleOpen={() => yes && setYes(false)}
+                component={() => <Match onSubmit={onSubmitYes} />}
+            />
         </div>
     );
 }
