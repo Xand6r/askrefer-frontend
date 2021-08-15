@@ -1,0 +1,96 @@
+
+@import "@/styles/variables.scss";
+#post-card{
+    min-height: 225px;
+    width: 100%;
+    // background-color: black;
+    box-shadow: 0px 0px 6px rgba(136, 132, 132, 0.16);
+
+    .top_section{
+        padding: 12px;
+        padding-bottom: 16px;
+        .auxilliary_content{
+            display: flex;
+            justify-content: space-between;
+            margin-top: 16px;
+            h6{
+                font-weight: 400;
+            }
+            h6.auxilliary_content__posted{
+                color: #A3A5AD;
+            }
+            h6.auxilliary_content__expiry{
+                color: #ED6767;
+            }
+        }
+
+        .post_content{
+            h5{
+                font-weight: 300;
+                line-height: 24px;
+                span{
+                    text-decoration: underline;
+                    color: #2052D8;
+                    cursor: pointer;
+                    margin-left: 5px;
+                }
+            }
+        }
+
+        .poster_details{
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            &__img{
+                color: white;
+                height: 40px;
+                width: 40px;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-transform: uppercase;
+                margin-right: 10px;
+                h4{
+                    font-weight: bold;
+                    letter-spacing: 1px;
+                }
+            }
+            &__text{
+                font-weight: 500;
+            }
+        }
+    }
+
+    .bottom_section{
+        display: flex;
+        color: white;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px;
+        .action_button{
+            padding: 8px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: $transition-speed;
+            &.--no{
+                background: #FD4E4E;
+                &:hover{
+                    background: #ff1818;
+                }
+            }
+            &.--maybe{
+                background: #EAA70D;
+                &:hover{
+                    background: #d69b10;
+                }
+            }
+            &.--yes{
+                background: #3DC34D;
+                &:hover{
+                    background: #13c028;
+                }
+            }
+        }
+    }
+}

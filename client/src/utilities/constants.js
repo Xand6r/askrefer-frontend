@@ -8,3 +8,4 @@ export const TOAST_INITIALIZERS = {
     progress: undefined,
 };
 
+export const DATE_FORMAT = "DD-MM-YYYY"
