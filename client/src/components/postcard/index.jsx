@@ -7,6 +7,7 @@ import Match from "./components/match";
 import moment from "moment";
 import { useState } from "react";
 import "./styles.scss";
+import { useHistory } from "react-router-dom";
 
 const INITIAL_STATE = {
     fullName: "Shuaibu Alexander",
@@ -18,6 +19,7 @@ const INITIAL_STATE = {
 export default function Index() {
     const [state, setState] = useState(INITIAL_STATE);
     const [yes, setYes] = useState(false);
+    const history = useHistory();
 
     const avatarDetails = getAvatarDetails(state.fullName);
 
@@ -39,6 +41,7 @@ export default function Index() {
     const onSubmitYes = () => {
         showSuccessToast("coming soon.");
         setYes(false);
+        history.push('/')
     };
 
     const expiresIn = timeDifferenceText(expiryDate.diff(creationDate, "day"));
