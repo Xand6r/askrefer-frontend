@@ -5,7 +5,6 @@ import Button from "@/components/button";
 import { showErrorToast, showSuccessToast } from "@/utilities";
 
 import Kyc from "./components/kyc";
-// import Match from "./components/match";
 import "./styles.scss";
 
 const INITIAL_STATE = {
@@ -134,7 +133,6 @@ export default function Index() {
                 open={openOverlay}
                 toggleOpen={() => openOverlay && setOpenOverlay(false)}
                 component={() => <Kyc onSubmit={onSubmit} />}
-                // component={() => <Kyc onSubmit={onSubmit} />}
             />
         </div>
     );
