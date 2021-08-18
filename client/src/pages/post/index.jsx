@@ -126,6 +126,7 @@ export default function Index() {
                 <Button
                     text={CTA_TEXT}
                     onClick={gotoSecondState}
+                    loading
                     // disabled={!(state.desire && state.details)}
                 />
             </div>

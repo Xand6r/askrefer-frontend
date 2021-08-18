@@ -17,6 +17,12 @@ $background-color-disabled: #3d3de050;
     font-weight: 500;
     transition: 300ms;
 
+    .spinner{
+        .askrefer-circular-loader{
+            margin: 0 auto;
+        }
+    }
+
     &:hover{
         background: $background-color-hover;
     }
