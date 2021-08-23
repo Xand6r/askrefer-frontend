@@ -3,7 +3,7 @@
  */
 import { toast } from "react-toastify";
 import randomColor from "randomcolor"; // import the script
-import { TOAST_INITIALIZERS } from "./constants";
+import { LINKEDIN_REGEXP, TOAST_INITIALIZERS } from "./constants";
 
 /**
  * A utility function used to show an error toast
@@ -61,4 +61,11 @@ export function validateEmail(email) {
     const re =
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
+}
+
+/**
+ * validate a linkedin url
+ */
+export function validateLinkedIn(url) {
+    return LINKEDIN_REGEXP.exec(url);
 }

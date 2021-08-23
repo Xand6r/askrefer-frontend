@@ -3,6 +3,9 @@ import { useState } from "react";
 import Button from "@/components/button";
 import "@/styles/input.scss";
 import "./styles.scss";
+import { showErrorToast, showSuccessToast, validateEmail, validateLinkedIn } from "@/utilities";
+import { LINKEDIN_REGEXP } from "@/utilities/constants";
+import { postReq } from "@/api";
 
 const CTA_TEXT = "Complete";
 const INITIAL_STATE = {
@@ -11,8 +14,10 @@ const INITIAL_STATE = {
     url: "",
 };
 
-export default function Index({ onSubmit }) {
+export default function Index({ onSubmit, postId }) {
     const [state, setState] = useState(INITIAL_STATE);
+    const [loading, setLoading] = useState(false);
+
     const changeState = (e) => {
         const { name, value } = e.target;
         setState((state) => ({
@@ -20,6 +25,58 @@ export default function Index({ onSubmit }) {
             [name]: value,
         }));
     };
+
+    const recommendSelf = () => {
+        if(loading) return;
+        setLoading(true);
+        postReq("/referral/recommend", {
+            postId: postId,
+            user: {
+                "fullName": state.name,
+                "email": state.email,
+                "linkedIn": state.url
+            }
+        })
+        .then(({data: response}) => {
+            console.log(response)
+            // onSubmit()
+        })
+        .catch(err => {
+            showErrorToast("There was an error: ", err.message)
+        })
+        .finally(() => {
+            setLoading(false);
+        })
+    }
+
+    const validateState = () => {
+        const { name, email, url } = state;
+        if (!name) {
+            return showErrorToast(
+                "Please fill in a name we can use to identify you!"
+            );
+        }
+        if (!email) {
+            return showErrorToast(
+                "Please fill in an email we can use to contact you!"
+            );
+        }
+        if (!validateEmail(email)) {
+            return showErrorToast("Please fill in a valid email address");
+        }
+        if (!url) {
+            return showErrorToast(
+                "Please fill in your linkedIn url we can use to validate your identity!"
+            );
+        }
+        if (!validateLinkedIn(url)) {
+            return showErrorToast("Please enter a valid linkedIn profile URL");
+        }
+    };
+
+    const allFieldsFilled = state.name && state.email && state.url && validateEmail(state.email) && validateLinkedIn(state.url);
+    const buttonIsDisabled = !allFieldsFilled || loading
+
     return (
         <div id="kyc-form" className="slider-form">
             <div className="header-group">
@@ -62,7 +119,14 @@ export default function Index({ onSubmit }) {
                         value={state.url}
                     />
                 </div>
-                <Button text={CTA_TEXT} onClick={onSubmit} />
+                <div onClick={validateState}>
+                    <Button
+                        text={CTA_TEXT}
+                        onClick={recommendSelf}
+                        loading={loading}
+                        disabled={buttonIsDisabled}
+                    />
+                </div>
             </form>
         </div>
     );
