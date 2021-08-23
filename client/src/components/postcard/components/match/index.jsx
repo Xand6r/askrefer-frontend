@@ -3,7 +3,12 @@ import { useState } from "react";
 import Button from "@/components/button";
 import "@/styles/input.scss";
 import "./styles.scss";
-import { showErrorToast, showSuccessToast, validateEmail, validateLinkedIn } from "@/utilities";
+import {
+    showErrorToast,
+    showSuccessToast,
+    validateEmail,
+    validateLinkedIn,
+} from "@/utilities";
 import { LINKEDIN_REGEXP } from "@/utilities/constants";
 import { postReq } from "@/api";
 import { useHistory } from "react-router";
@@ -29,30 +34,34 @@ export default function Index({ onSubmit, postId }) {
     };
 
     const recommendSelf = () => {
-        if(loading) return;
+        if (loading) return;
         setLoading(true);
         postReq("/referral/recommend", {
             postId: postId,
             user: {
-                "fullName": state.name,
-                "email": state.email,
-                "linkedIn": state.url
-            }
+                fullName: state.name,
+                email: state.email,
+                linkedIn: state.url,
+            },
         })
-        .then(({data: response}) => {
-            const {error} = response;
-            if(error === "ALREADY_APPLIED"){
-                showErrorToast("You have already applied for this role, thank you!");
-            }
-            onSubmit()
-        })
-        .catch(err => {
-            showErrorToast("There was an error: ", err.message)
-        })
-        .finally(() => {
-            setLoading(false);
-        })
-    }
+            .then(({ data: response }) => {
+                const { error } = response;
+                if (error === "ALREADY_APPLIED") {
+                    showErrorToast(
+                        "You have already applied for this role, thank you!"
+                    );
+                } else {
+                    showSuccessToast("Your application was successfull, you will be contacted if you are a match!");
+                }
+                onSubmit();
+            })
+            .catch((err) => {
+                showErrorToast("There was an error: ", err.message);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    };
 
     const validateState = () => {
         const { name, email, url } = state;
@@ -79,8 +88,13 @@ export default function Index({ onSubmit, postId }) {
         }
     };
 
-    const allFieldsFilled = state.name && state.email && state.url && validateEmail(state.email) && validateLinkedIn(state.url);
-    const buttonIsDisabled = !allFieldsFilled || loading
+    const allFieldsFilled =
+        state.name &&
+        state.email &&
+        state.url &&
+        validateEmail(state.email) &&
+        validateLinkedIn(state.url);
+    const buttonIsDisabled = !allFieldsFilled || loading;
 
     return (
         <div id="kyc-form" className="slider-form">
