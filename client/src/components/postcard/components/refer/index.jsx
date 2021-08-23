@@ -3,11 +3,11 @@ import { useState, useRef, useEffect } from "react";
 import Button from "@/components/button";
 import "@/styles/input.scss";
 import "./styles.scss";
-import { copyToClipboard } from "@/utilities";
+import { copyToClipboard, showErrorToast, showSuccessToast, validateEmail } from "@/utilities";
+import { postReq } from "@/api";
 
 const CTA_TEXT = "Complete";
 const INITIAL_STATE = {
-    name: "",
     email: "",
     url: "",
 };
@@ -15,6 +15,7 @@ const INITIAL_STATE = {
 export default function Index({ onSubmit, link }) {
     const inputRef = useRef();
     const [state, setState] = useState(INITIAL_STATE);
+    const [loading, setLoading] = useState(false);
     useEffect(() => {
         setState({
             ...state,
@@ -33,6 +34,34 @@ export default function Index({ onSubmit, link }) {
     function copyURLToClipboard() {
         copyToClipboard(state.url, "Link copied to clipboard");
     }
+
+    const validateInputs = () => {
+        if (!state.email) {
+            return showErrorToast("Please input your email before you submit");
+        }
+
+        if (!validateEmail(state.email)) {
+            return showErrorToast("Please enter a valid email address");
+        }
+    };
+
+    function attachUserToURL() {
+        if(loading) return;
+        setLoading(true);
+        const referralId = link.split("/").reverse()[0];
+        postReq('/referral/attach', {
+            "email": state.email,
+            "referralKey": referralId
+        }).then(res => {
+            onSubmit();
+        }).catch(err => {
+            showErrorToast("There was an unknown error:", err.message);
+        }).finally(() => {
+            setLoading(false);
+        })
+    }
+
+    const buttonDisabled = !state.email || !validateEmail(state.email) || loading;
 
     return (
         <div id="refer-form" className="slider-form">
@@ -75,7 +104,14 @@ export default function Index({ onSubmit, link }) {
                         value={state.email}
                     />
                 </div>
-                <Button text={CTA_TEXT} onClick={onSubmit} />
+                <div onClick={validateInputs}>
+                    <Button
+                        text={CTA_TEXT}
+                        onClick={attachUserToURL}
+                        disabled={buttonDisabled}
+                        loading={loading}
+                    />
+                </div>
             </form>
         </div>
     );
