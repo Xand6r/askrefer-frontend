@@ -8,4 +8,6 @@ export const TOAST_INITIALIZERS = {
     progress: undefined,
 };
 
-export const DATE_FORMAT = "DD-MM-YYYY"
+export const DATE_FORMAT = "DD-MM-YYYY";
+export const REDIRECT_DELAY = 1500; //TIME IN MILLISECOND
+export const LINKEDIN_REGEXP = /(ftp|http|https):\/\/?((www|\w\w)\.)?linkedin.com(\w+:{0,1}\w*@)?(\S+)(:([0-9])+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/

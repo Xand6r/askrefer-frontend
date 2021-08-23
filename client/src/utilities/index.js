@@ -48,7 +48,7 @@ export const gotoURL = (link) => {
 /**
  * Copy a text to clipboard
  */
-export const copyToClipboard = (text, successMessage) => {
+export const copyToClipboard = (text, successMessage="") => {
     navigator.clipboard.writeText(text);
-    showSuccessToast(successMessage);
+    successMessage && showSuccessToast(successMessage);
 }

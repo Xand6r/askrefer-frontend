@@ -4,15 +4,17 @@
 import axios from "axios";
 import { getToken } from "@/api/cache";
 
+
 /**
  * dynamically select the url to use for the backend
  * depending on if were working locally or building for deployment
  */
 // TODO change to use .env and .env.prod respectively
+const REMOTE_URL = "http://askrefer-backend.herokuapp.com";
 export const BASE =
     !process.env.NODE_ENV || process.env.NODE_ENV === "development"
-        ? "http://0.0.0.0:8081/"
-        : "REMOTEURL";
+        ? "http://0.0.0.0:8000"
+        : REMOTE_URL;
 
 /**
  * dynamically get the tokens for every API call
@@ -29,7 +31,7 @@ const getHeader = (token) => ({
  * @param {Object} obj The payload of the post request in the form of an object
  * @returns {Promise}
  */
-export const post = async (path, obj) => {
+export const postReq = async (path, obj) => {
     try {
         const response = await axios.post(BASE + path, obj, {
             headers: getHeader(getToken()),
@@ -45,7 +47,7 @@ export const post = async (path, obj) => {
  * @param {*} path The path we wish to make a post request to
  * @returns {Promise}
  */
-export const get = async (path) => {
+export const getReq = async (path) => {
     try {
         const response = await axios.get(BASE + path, {
             headers: getHeader(getToken()),

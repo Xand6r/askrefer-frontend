@@ -11,10 +11,10 @@ const INITIAL_STATE = {
     desire: "",
     details: "",
     url: "",
-    duration: "1 Week",
+    duration: 1,
 };
 
-const TAB_NAMES = ["1 Week", "2 Weeks", "3 Weeks", "4 Weeks"];
+const TAB_NAMES = [1, 2, 3, 4];
 
 const CTA_TEXT = "Create Askrefer Url";
 
@@ -26,6 +26,7 @@ function Tab({ name, selected }) {
         </div>
     );
 }
+
 
 export default function Index() {
     const [state, setState] = useState(INITIAL_STATE);
@@ -41,26 +42,28 @@ export default function Index() {
     const validateForm = () => {
         const { desire, details } = state;
 
-        // if(!desire){
-        //     return showErrorToast(
-        //         "Please supply what you are looking for."
-        //     )
-        // }
-        // if(!details){
-        //     return showErrorToast(
-        //         "Please supply more details to better explain your request."
-        //     )
-        // }
+        if (!desire) {
+            return showErrorToast("Please supply what you are looking for.");
+        }
+        if (!details) {
+            return showErrorToast(
+                "Please supply more details to better explain your request."
+            );
+        }
     };
+
+    const buttonIsDisabled = !(state.desire && state.details);
+
+    const formatState = () => ({
+        title: state.desire,
+        details: state.details,
+        durationInWeeks: state.duration,
+        url: state.url
+    })
 
     const gotoSecondState = () => {
         const { desire, details, url, duration } = state;
         setOpenOverlay(true);
-    };
-
-    const onSubmit = () => {
-        showSuccessToast("coming soon.");
-        setOpenOverlay(false);
     };
 
     return (
@@ -115,7 +118,9 @@ export default function Index() {
                         <div onClick={() => updateState("duration", oneName)}>
                             <Tab
                                 selected={state.duration === oneName}
-                                name={oneName}
+                                name={`${oneName} ${
+                                    oneName == 1 ? "Week" : " Weeks"
+                                }`}
                             />
                         </div>
                     ))}
@@ -126,14 +131,13 @@ export default function Index() {
                 <Button
                     text={CTA_TEXT}
                     onClick={gotoSecondState}
-                    loading
-                    // disabled={!(state.desire && state.details)}
+                    disabled={buttonIsDisabled}
                 />
             </div>
             <Overlay
                 open={openOverlay}
                 toggleOpen={() => openOverlay && setOpenOverlay(false)}
-                component={() => <Kyc onSubmit={onSubmit} />}
+                component={() => <Kyc postState={formatState()} />}
             />
         </div>
     );

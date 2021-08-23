@@ -1,26 +1,93 @@
-import { useState } from 'react';
+import { useState } from "react";
+import { useHistory } from "react-router";
 
 import Button from "@/components/button";
 import "@/styles/input.scss";
 
 import "./styles.scss";
+import { copyToClipboard, showErrorToast, showSuccessToast } from "@/utilities";
+import { LINKEDIN_REGEXP, REDIRECT_DELAY } from "@/utilities/constants";
+import { postReq } from "@/api";
 
 const CTA_TEXT = "Complete";
+
 const INITIAL_STATE = {
     name: "",
     email: "",
-    url: ""
+    url: "https://www.linkedin.com/in/alex-ander-shuaibu-28889b17a/",
 };
 
-export default function Index({ onSubmit }) {
+export default function Index({ postState }) {
     const [state, setState] = useState(INITIAL_STATE);
+    const [loading, setLoading] = useState(false);
+    const history = useHistory();
+
     const changeState = (e) => {
-        const {name, value} = e.target;
-        setState(state => ({
+        const { name, value } = e.target;
+        setState((state) => ({
             ...state,
-            [name]: value
+            [name]: value,
         }));
-    }
+    };
+
+    const submitPost = () => {
+        if (loading) return;
+        setLoading(true);
+        const payload = {
+            post: postState,
+            user: {
+                fullName: state.name,
+                email: state.email,
+                linkedIn: state.url,
+            },
+        };
+        postReq("/post/create", payload)
+            .then(({ data: response }) => {
+                const { referralLink } = response;
+                copyToClipboard(referralLink);
+                showSuccessToast(
+                    "Your referral link has been copied to your clipboard."
+                );
+                setTimeout(() => {
+                    history.push("/");
+                }, REDIRECT_DELAY);
+            })
+            .catch((err) => {
+                showErrorToast("There was an unknown error:", err.message);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    };
+
+    const validateFields = () => {
+        const { name, email, url } = state;
+        if (!name) {
+            return showErrorToast(
+                "Please fill in a name we can use to identify you!"
+            );
+        }
+        if (!email) {
+            return showErrorToast(
+                "Please fill in an email we can use to contact you!"
+            );
+        }
+        if (!url) {
+            return showErrorToast(
+                "Please fill in your linkedIn url we can use to validate your identity!"
+            );
+        }
+        if (!LINKEDIN_REGEXP.exec(url)) {
+            return showErrorToast("Please enter a valid linkedIn profile URL");
+        }
+    };
+
+    const allFieldsFilled =
+        state.name &&
+        state.email &&
+        state.url &&
+        LINKEDIN_REGEXP.exec(state.url);
+    const buttonIsDisabled = !allFieldsFilled || loading;
     return (
         <div id="kyc-form" className="slider-form">
             <div className="header-group">
@@ -42,6 +109,7 @@ export default function Index({ onSubmit }) {
                         placeholder="This is the name viewed will see next to the ask."
                         onChange={changeState}
                         value={state.name}
+                        disabled={loading}
                     />
                 </div>
                 <div className="input__group">
@@ -52,6 +120,7 @@ export default function Index({ onSubmit }) {
                         placeholder="This is the email you will be contacted with."
                         onChange={changeState}
                         value={state.email}
+                        disabled={loading}
                     />
                 </div>
                 <div className="input__group">
@@ -62,9 +131,17 @@ export default function Index({ onSubmit }) {
                         placeholder="We use this to verify your identity."
                         onChange={changeState}
                         value={state.url}
+                        disabled={loading}
                     />
                 </div>
-                <Button text={CTA_TEXT} onClick={onSubmit} />
+                <div onClick={validateFields}>
+                    <Button
+                        text={CTA_TEXT}
+                        onClick={submitPost}
+                        loading={loading}
+                        disabled={buttonIsDisabled}
+                    />
+                </div>
             </form>
         </div>
     );
