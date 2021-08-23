@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 import Button from "@/components/button";
 import "@/styles/input.scss";
@@ -8,18 +8,18 @@ const CTA_TEXT = "Complete";
 const INITIAL_STATE = {
     name: "",
     email: "",
-    url: ""
+    url: "",
 };
 
 export default function Index({ onSubmit }) {
-    const [state, setState] = useState(INITIAL_STATE)
+    const [state, setState] = useState(INITIAL_STATE);
     const changeState = (e) => {
-        const {name, value} = e.target;
-        setState(state => ({
+        const { name, value } = e.target;
+        setState((state) => ({
             ...state,
-            [name]: value
+            [name]: value,
         }));
-    }
+    };
     return (
         <div id="kyc-form" className="slider-form">
             <div className="header-group">
