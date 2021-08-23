@@ -10,6 +10,7 @@ import { useState, useEffect } from "react";
 import "./styles.scss";
 import { useHistory } from "react-router-dom";
 import { getReq } from "@/api";
+import CircularProgressSpinner from "../loader";
 
 const INITIAL_STATE = {
     fullName: "",
@@ -28,6 +29,8 @@ export default function Index({ post }) {
     const [state, setState] = useState(INITIAL_STATE);
     const [yes, setYes] = useState(false);
     const [maybe, setMaybe] = useState(false);
+    const [loadingLink, setLoadingLink] = useState(false);
+    const [refLink, setrefLink] = useState("");
 
     const history = useHistory();
 
@@ -82,15 +85,21 @@ export default function Index({ post }) {
 
     const generateReferral = () => {
         const { referralId } = state;
-        // // generate a new link then set maybe
-        // getReq(`/referral/refer/${referralId}`)
-        //     .then(({ data: response }) => {
-        //         console.log(response);
-        //         // setMaybe(true);
-        //     })
-        //     .catch((err) => {
-        //         showErrorToast("there was an unknown error:", err.message);
-        //     });
+        if (loadingLink) return;
+        // generate a new link then set maybe
+        setLoadingLink(true);
+        getReq(`/referral/refer/${referralId}`)
+            .then(({ data: response }) => {
+                const { link } = response;
+                setrefLink(link);
+                setMaybe(true)
+            })
+            .catch((err) => {
+                showErrorToast("there was an unknown error:", err.message);
+            })
+            .finally(() => {
+                setLoadingLink(false);
+            });
     };
 
     const onSubmitYes = () => {
@@ -106,13 +115,14 @@ export default function Index({ post }) {
     };
 
     const onSubmitNo = () => {
+        if(loadingLink) return;
         showSuccessToast("Maybe next time. Thank you");
         goHome();
     };
 
     const expiresIn = timeDifferenceText(expiryDate.diff(creationDate, "day"));
     const postedAt = timeDifferenceText(today.diff(creationDate, "day"));
-    console.log({ expiresIn, postedAt, today, creationDate });
+
     // moment
     return (
         <div id="post-card">
@@ -158,7 +168,7 @@ export default function Index({ post }) {
                     <h5>I know someone</h5>
                 </div>
                 <div
-                    onClick={() => setYes(true)}
+                    onClick={() => !loadingLink && setYes(true)}
                     className="action_button --yes"
                 >
                     <h5>I am your guy</h5>
