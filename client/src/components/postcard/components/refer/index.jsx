@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 import Button from "@/components/button";
 import "@/styles/input.scss";
@@ -9,12 +9,18 @@ const CTA_TEXT = "Complete";
 const INITIAL_STATE = {
     name: "",
     email: "",
-    url: "https://askrefer-frontend.herokuapp.com/referral/123",
+    url: "",
 };
 
-export default function Index({ onSubmit }) {
+export default function Index({ onSubmit, link }) {
     const inputRef = useRef();
     const [state, setState] = useState(INITIAL_STATE);
+    useEffect(() => {
+        setState({
+            ...state,
+            url: link,
+        });
+    }, [link]);
 
     const changeState = (e) => {
         const { name, value } = e.target;
@@ -51,7 +57,10 @@ export default function Index({ onSubmit }) {
                             ref={inputRef}
                             disabled
                         />
-                        <div onClick={copyURLToClipboard} className="copy-button">
+                        <div
+                            onClick={copyURLToClipboard}
+                            className="copy-button"
+                        >
                             <h5>Tap to copy</h5>
                         </div>
                     </div>
