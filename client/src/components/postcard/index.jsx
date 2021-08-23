@@ -1,4 +1,4 @@
-import { getAvatarDetails, gotoURL } from "@/utilities";
+import { getAvatarDetails, gotoURL, showErrorToast } from "@/utilities";
 import { DATE_FORMAT } from "@/utilities/constants";
 import { showSuccessToast } from "@/utilities";
 import Overlay from "@/components/overlay";
@@ -6,32 +6,61 @@ import Match from "./components/match";
 import Refer from "./components/refer";
 
 import moment from "moment";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./styles.scss";
 import { useHistory } from "react-router-dom";
+import { getReq } from "@/api";
 
 const INITIAL_STATE = {
-    fullName: "Shuaibu Alexander",
-    text: "I am looking for a front end developer in Australia. Can you help?",
-    url: "https://google.com",
-    expiryDate: "2021-08-25T09:27:57.139+00:00",
-    creationDate: "2021-08-13T09:27:57.139+00:00",
+    fullName: "",
+    title: "",
+    text: "",
+    url: "",
+    expiryDate: "",
+    creationDate: "",
+    postId: "",
+    referralId: "",
 };
 
 const TIMEOUT_DURATION = 1500;
 
-export default function Index() {
+export default function Index({ post }) {
     const [state, setState] = useState(INITIAL_STATE);
     const [yes, setYes] = useState(false);
     const [maybe, setMaybe] = useState(false);
 
     const history = useHistory();
 
+    useEffect(() => {
+        const {
+            createdAt,
+            details,
+            expiryDate,
+            title,
+            url,
+            _id,
+            referralId,
+            owner: { fullName = "" },
+        } = post;
+        setState({
+            ...state,
+            fullName,
+            title: title,
+            text: details,
+            url: url,
+            expiryDate: expiryDate,
+            creationDate: createdAt,
+            referralId,
+            postId: _id,
+        });
+    }, []);
+
     const avatarDetails = getAvatarDetails(state.fullName);
 
     const onViewMore = () => {
         gotoURL(state.url);
     };
+
     const today = moment();
     const creationDate = moment(state.creationDate);
     const expiryDate = moment(state.expiryDate);
@@ -49,6 +78,19 @@ export default function Index() {
         setTimeout(() => {
             history.push("/");
         }, TIMEOUT_DURATION);
+    };
+
+    const generateReferral = () => {
+        const { referralId } = state;
+        // // generate a new link then set maybe
+        // getReq(`/referral/refer/${referralId}`)
+        //     .then(({ data: response }) => {
+        //         console.log(response);
+        //         // setMaybe(true);
+        //     })
+        //     .catch((err) => {
+        //         showErrorToast("there was an unknown error:", err.message);
+        //     });
     };
 
     const onSubmitYes = () => {
@@ -70,7 +112,7 @@ export default function Index() {
 
     const expiresIn = timeDifferenceText(expiryDate.diff(creationDate, "day"));
     const postedAt = timeDifferenceText(today.diff(creationDate, "day"));
-
+    console.log({ expiresIn, postedAt, today, creationDate });
     // moment
     return (
         <div id="post-card">
@@ -82,7 +124,12 @@ export default function Index() {
                     >
                         <h4>{avatarDetails.initials}</h4>
                     </div>
-                    <h5 className="poster_details__text">{state.fullName}</h5>
+                    <div className="extra_details">
+                        <h5 className="poster_details__text">
+                            {state.fullName}
+                        </h5>
+                        <h6>{state.title}</h6>
+                    </div>
                 </div>
                 <div className="post_content">
                     <h5>
@@ -92,7 +139,7 @@ export default function Index() {
                 </div>
                 <div className="auxilliary_content">
                     <h6 className="auxilliary_content__posted">
-                        {postedAt} ago
+                        {postedAt} {postedAt === "Today" ? "" : "ago"}
                     </h6>
                     <h6 className="auxilliary_content__expiry">
                         Expires in {expiresIn}
@@ -105,7 +152,7 @@ export default function Index() {
                     <h5>Nope Sorry</h5>
                 </div>
                 <div
-                    onClick={() => setMaybe(true)}
+                    onClick={generateReferral}
                     className="action_button --maybe"
                 >
                     <h5>I know someone</h5>

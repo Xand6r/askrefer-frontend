@@ -24,6 +24,7 @@ export const showSuccessToast = (text) => {
  * useful for displaying avatar placeholders
  */
 export const getAvatarDetails = (fullName) => {
+    if (!fullName) return "";
     const [firstName, lastname] = fullName.split("");
     let initials;
     if (lastname) {
@@ -42,13 +43,13 @@ export const getAvatarDetails = (fullName) => {
  * MAnually redirecting to another URL
  */
 export const gotoURL = (link) => {
-    window.open(link, "_blank")
-}
+    window.open(link, "_blank");
+};
 
 /**
  * Copy a text to clipboard
  */
-export const copyToClipboard = (text, successMessage="") => {
+export const copyToClipboard = (text, successMessage = "") => {
     navigator.clipboard.writeText(text);
     successMessage && showSuccessToast(successMessage);
-}
+};

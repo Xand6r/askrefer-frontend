@@ -28,12 +28,28 @@
             h5{
                 font-weight: 300;
                 line-height: 24px;
+                display: block;
                 span{
                     text-decoration: underline;
                     color: #2052D8;
                     cursor: pointer;
                     margin-left: 5px;
                 }
+            }
+            
+            h5:first-letter {
+                text-transform: uppercase;
+            }
+        }
+
+        .extra_details{
+            h6 {
+                display: block;
+                margin-top: 1px;
+            }
+            
+            h6:first-letter {
+                text-transform: uppercase;
             }
         }
 
