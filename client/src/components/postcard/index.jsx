@@ -88,11 +88,11 @@ export default function Index({ post }) {
         if (loadingLink) return;
         // generate a new link then set maybe
         setLoadingLink(true);
+        setMaybe(true)
         getReq(`/referral/refer/${referralId}`)
             .then(({ data: response }) => {
                 const { link } = response;
                 setrefLink(link);
-                setMaybe(true)
             })
             .catch((err) => {
                 showErrorToast("there was an unknown error:", err.message);

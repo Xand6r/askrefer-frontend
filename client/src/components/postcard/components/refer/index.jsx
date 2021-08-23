@@ -3,8 +3,14 @@ import { useState, useRef, useEffect } from "react";
 import Button from "@/components/button";
 import "@/styles/input.scss";
 import "./styles.scss";
-import { copyToClipboard, showErrorToast, showSuccessToast, validateEmail } from "@/utilities";
+import {
+    copyToClipboard,
+    showErrorToast,
+    showSuccessToast,
+    validateEmail,
+} from "@/utilities";
 import { postReq } from "@/api";
+import CircularProgressSpinner from "@/components/loader";
 
 const CTA_TEXT = "Complete";
 const INITIAL_STATE = {
@@ -46,22 +52,26 @@ export default function Index({ onSubmit, link }) {
     };
 
     function attachUserToURL() {
-        if(loading) return;
+        if (loading) return;
         setLoading(true);
         const referralId = link.split("/").reverse()[0];
-        postReq('/referral/attach', {
-            "email": state.email,
-            "referralKey": referralId
-        }).then(res => {
-            onSubmit();
-        }).catch(err => {
-            showErrorToast("There was an unknown error:", err.message);
-        }).finally(() => {
-            setLoading(false);
+        postReq("/referral/attach", {
+            email: state.email,
+            referralKey: referralId,
         })
+            .then((res) => {
+                onSubmit();
+            })
+            .catch((err) => {
+                showErrorToast("There was an unknown error:", err.message);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
     }
 
-    const buttonDisabled = !state.email || !validateEmail(state.email) || loading;
+    const buttonDisabled =
+        !state.email || !validateEmail(state.email) || loading || !state.url;
 
     return (
         <div id="refer-form" className="slider-form">
@@ -80,8 +90,7 @@ export default function Index({ onSubmit, link }) {
                         <input
                             type="text"
                             name="name"
-                            placeholder="This is the name viewed will see next to the ask."
-                            // onChange={changeState}
+                            placeholder="loading ... "
                             value={state.url}
                             ref={inputRef}
                             disabled
@@ -90,7 +99,11 @@ export default function Index({ onSubmit, link }) {
                             onClick={copyURLToClipboard}
                             className="copy-button"
                         >
-                            <h5>Tap to copy</h5>
+                            {state.url ? (
+                                <h5>Tap to copy</h5>
+                            ) : (
+                                <CircularProgressSpinner />
+                            )}
                         </div>
                     </div>
                 </div>
