@@ -6,6 +6,7 @@ import "./styles.scss";
 import { showErrorToast, showSuccessToast, validateEmail, validateLinkedIn } from "@/utilities";
 import { LINKEDIN_REGEXP } from "@/utilities/constants";
 import { postReq } from "@/api";
+import { useHistory } from "react-router";
 
 const CTA_TEXT = "Complete";
 const INITIAL_STATE = {
@@ -15,6 +16,7 @@ const INITIAL_STATE = {
 };
 
 export default function Index({ onSubmit, postId }) {
+    const history = useHistory();
     const [state, setState] = useState(INITIAL_STATE);
     const [loading, setLoading] = useState(false);
 
@@ -38,8 +40,11 @@ export default function Index({ onSubmit, postId }) {
             }
         })
         .then(({data: response}) => {
-            console.log(response)
-            // onSubmit()
+            const {error} = response;
+            if(error === "ALREADY_APPLIED"){
+                showErrorToast("You have already applied for this role, thank you!");
+            }
+            onSubmit()
         })
         .catch(err => {
             showErrorToast("There was an error: ", err.message)

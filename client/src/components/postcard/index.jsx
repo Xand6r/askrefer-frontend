@@ -103,7 +103,6 @@ export default function Index({ post }) {
     };
 
     const onSubmitYes = () => {
-        showSuccessToast("We will be in touch. Thank you");
         setYes(false);
         goHome();
     };
@@ -178,7 +177,7 @@ export default function Index({ post }) {
             <Overlay
                 open={yes}
                 toggleOpen={() => yes && setYes(false)}
-                component={() => <Match onSubmit={onSubmitYes} />}
+                component={() => <Match postId={state.postId} onSubmit={onSubmitYes} />}
             />
             {/* for maybe */}
             <Overlay
