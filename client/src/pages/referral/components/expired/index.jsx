@@ -11,7 +11,7 @@ export default function Index() {
     };
 
     return (
-        <div className="notFound">
+        <div className="expired">
             <img src={brokenLink} alt="" />
             <h1>
                 This post has expired. <span onClick={goHome}>Go home</span>
