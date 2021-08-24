@@ -10,7 +10,7 @@ import { getToken } from "@/api/cache";
  * depending on if were working locally or building for deployment
  */
 // TODO change to use .env and .env.prod respectively
-const REMOTE_URL = "http://askrefer-backend.herokuapp.com";
+const REMOTE_URL = "https://askrefer-backend.herokuapp.com";
 export const BASE =
     !process.env.NODE_ENV || process.env.NODE_ENV === "development"
         ? "http://0.0.0.0:8000"
