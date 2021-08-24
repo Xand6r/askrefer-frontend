@@ -29,13 +29,14 @@ export default function Index(props) {
                 } = response;
                 if (error) {
                     setError(error);
+                    return
                 }
                 setPost({ ...post, referralId: paramId });
             })
             .catch((err) => {
                 console.log(err);
                 showErrorToast("There was an error:", err.message);
-                // history.push("/");
+                history.push("/");
             })
             .finally(() => {
                 setLoading(false);
@@ -46,11 +47,11 @@ export default function Index(props) {
         history.push("/post");
     };
 
-    // if (error === "NOT_FOUND") {
-    //     return <Error404 />;
-    // }
+    if (error === "NOT_FOUND") {
+        return <Error404 />;
+    }
 
-    if(error === "NOT_FOUND"){
+    if(error === "EXPIRED"){
         return <ExpiredPage />
     }
 

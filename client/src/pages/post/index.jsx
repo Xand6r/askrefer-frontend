@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import Overlay from "@/components/overlay";
 import Button from "@/components/button";
-import { showErrorToast, showSuccessToast } from "@/utilities";
+import { isUrlValid, showErrorToast, showSuccessToast } from "@/utilities";
 
 import Kyc from "./components/kyc";
 import "./styles.scss";
@@ -27,7 +27,6 @@ function Tab({ name, selected }) {
     );
 }
 
-
 export default function Index() {
     const [state, setState] = useState(INITIAL_STATE);
     const [openOverlay, setOpenOverlay] = useState(false);
@@ -40,7 +39,7 @@ export default function Index() {
     };
 
     const validateForm = () => {
-        const { desire, details } = state;
+        const { desire, details, url } = state;
 
         if (!desire) {
             return showErrorToast("Please supply what you are looking for.");
@@ -50,16 +49,21 @@ export default function Index() {
                 "Please supply more details to better explain your request."
             );
         }
+        if (url && !isUrlValid(url)) {
+            return showErrorToast(
+                "Please enter a valid url of the form http://domainname.domain"
+            );
+        }
     };
 
-    const buttonIsDisabled = !(state.desire && state.details);
+    const buttonIsDisabled = !(state.desire && state.details && state.url && !isUrlValid(state.url));
 
     const formatState = () => ({
         title: state.desire,
         details: state.details,
         durationInWeeks: state.duration,
-        url: state.url
-    })
+        url: state.url,
+    });
 
     const gotoSecondState = () => {
         const { desire, details, url, duration } = state;
