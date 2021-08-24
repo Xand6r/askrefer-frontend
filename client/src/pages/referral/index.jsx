@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 
-import { copyToClipboard, showErrorToast, showSuccessToast } from "@/utilities";
+import Error404 from '@/pages/notFound';
+import { showErrorToast } from "@/utilities";
 import PostCard from "@/components/postcard";
 import interviewImage from "@/assets/svgs/interview.svg";
 import Button from "@/components/button";
@@ -22,13 +23,18 @@ export default function Index(props) {
         getReq(`/post/byreferral/${paramId}`)
             .then(({ data: response }) => {
                 const {
-                    attachedPost: { post },
+                    attachedPost: { post, error },
                 } = response;
+                if(error){
+                    alert('error');
+                    return;
+                }
                 setPost({ ...post, referralId: paramId });
             })
             .catch((err) => {
+                console.log(err)
                 showErrorToast("There was an error:", err.message);
-                history.posh("/");
+                // history.push("/");
             })
             .finally(() => {
                 setLoading(false);
@@ -38,6 +44,8 @@ export default function Index(props) {
     const gotoCreatePost = () => {
         history.push("/post");
     };
+
+    return <Error404 />
 
     return (
         <div id="referral-page">
