@@ -43,7 +43,7 @@ export default function Index({ postState }) {
         };
         postReq("/post/create", payload)
             .then(({ data: response }) => {
-                const { referralLink } = response;
+                const { referralLink } = response
                 copyToClipboard(referralLink);
                 showSuccessToast(
                     "Your referral link has been copied to your clipboard."
