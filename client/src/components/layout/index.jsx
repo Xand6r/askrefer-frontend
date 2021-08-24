@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
+import DesktopLoading from '@/pages/desktop';
 import "./styles.scss";
 
 const Layout = ({ children }) => {
@@ -38,17 +39,7 @@ const Layout = ({ children }) => {
     // TODO include a popup that were comin to mobile soon
     return (
       <div className="layout-app-wrapper">
-        <div className="marvel-device iphone8plus black">
-          <div className="top-bar"></div>
-          <div className="sleep"></div>
-          <div className="volume"></div>
-          <div className="camera"></div>
-          <div className="sensor"></div>
-          <div className="speaker"></div>
-          <div className="screen">{children}</div>
-          <div className="home"></div>
-          <div className="bottom-bar"></div>
-        </div>
+        <DesktopLoading />
       </div>
     );
   }
