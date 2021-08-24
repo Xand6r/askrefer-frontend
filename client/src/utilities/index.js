@@ -49,8 +49,18 @@ export const gotoURL = (link) => {
 /**
  * Copy a text to clipboard
  */
-export const copyToClipboard = (text, successMessage = "") => {
-    navigator.clipboard.writeText(text);
+export const copyToClipboard = (url, successMessage = "") => {
+    // fallback for non navigator browser support
+    if(navigator && navigator.clipboard){
+        navigator.clipboard.writeText(url);
+    }else{
+        const el = document.createElement('textarea');
+        el.value = url;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+    }
     successMessage && showSuccessToast(successMessage);
 };
 
