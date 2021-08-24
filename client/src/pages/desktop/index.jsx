@@ -13,7 +13,7 @@ export default function Index() {
     return (
         <div className="desktop">
             <img src={desktopImage} alt="" />
-            <h1>We are working on a desktop version. For now please view on a mobile device</h1>
+            <h1>We are working on a desktop version for ask-refer. For now please view on a mobile device.</h1>
         </div>
     );
 }
