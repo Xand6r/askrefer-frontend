@@ -7,9 +7,10 @@ import { showErrorToast } from "@/utilities";
 import PostCard from "@/components/postcard";
 import interviewImage from "@/assets/svgs/interview.svg";
 import Button from "@/components/button";
-
-import "./styles.scss";
 import { getReq } from "@/api";
+
+import ExpiredPage from './components/expired';
+import "./styles.scss";
 
 const CTA_TEXT = "post an ask";
 const DEFAULT_SKELETON_HEIGHT = "225px";
@@ -45,8 +46,12 @@ export default function Index(props) {
         history.push("/post");
     };
 
-    if (error === "NOT_FOUND") {
-        return <Error404 />;
+    // if (error === "NOT_FOUND") {
+    //     return <Error404 />;
+    // }
+
+    if(error === "NOT_FOUND"){
+        return <ExpiredPage />
     }
 
     return (
