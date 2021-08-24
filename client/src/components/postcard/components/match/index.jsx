@@ -56,7 +56,9 @@ export default function Index({ onSubmit, postId }) {
                 onSubmit();
             })
             .catch((err) => {
-                showErrorToast("There was an error: ", err.message);
+                showErrorToast(
+                    err.response?.data.error || "There was an unknown error"
+                );
             })
             .finally(() => {
                 setLoading(false);

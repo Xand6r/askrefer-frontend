@@ -35,7 +35,9 @@ export default function Index(props) {
             })
             .catch((err) => {
                 console.log(err);
-                showErrorToast("There was an error:", err.message);
+                showErrorToast(
+                    err.response?.data.error || "There was an unknown error"
+                );
                 history.push("/");
             })
             .finally(() => {

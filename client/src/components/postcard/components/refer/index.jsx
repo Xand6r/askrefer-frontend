@@ -63,7 +63,9 @@ export default function Index({ onSubmit, link }) {
                 onSubmit();
             })
             .catch((err) => {
-                showErrorToast("There was an unknown error:", err.message);
+                showErrorToast(
+                    err.response?.data.error || "There was an unknown error"
+                );
             })
             .finally(() => {
                 setLoading(false);

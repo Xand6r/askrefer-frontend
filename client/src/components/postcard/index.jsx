@@ -95,7 +95,9 @@ export default function Index({ post }) {
                 setrefLink(link);
             })
             .catch((err) => {
-                showErrorToast("there was an unknown error:", err.message);
+                showErrorToast(
+                    err.response?.data.error || "There was an unknown error"
+                );
             })
             .finally(() => {
                 setLoadingLink(false);
