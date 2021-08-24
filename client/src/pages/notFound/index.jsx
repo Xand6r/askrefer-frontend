@@ -9,6 +9,7 @@ export default function Index() {
     const goHome = () => {
         history.push("/");
     };
+
     return (
         <div className="notFound">
             <img src={notFoundImage} alt="" />

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 
-import Error404 from '@/pages/notFound';
+import Error404 from "@/pages/notFound";
 import { showErrorToast } from "@/utilities";
 import PostCard from "@/components/postcard";
 import interviewImage from "@/assets/svgs/interview.svg";
@@ -17,6 +17,7 @@ export default function Index(props) {
     const history = useHistory();
     const [loading, setLoading] = useState(true);
     const [post, setPost] = useState({});
+    const [error, setError] = useState("");
 
     useEffect(() => {
         const paramId = props.match.params.id;
@@ -25,14 +26,13 @@ export default function Index(props) {
                 const {
                     attachedPost: { post, error },
                 } = response;
-                if(error){
-                    alert('error');
-                    return;
+                if (error) {
+                    setError(error);
                 }
                 setPost({ ...post, referralId: paramId });
             })
             .catch((err) => {
-                console.log(err)
+                console.log(err);
                 showErrorToast("There was an error:", err.message);
                 // history.push("/");
             })
@@ -45,7 +45,9 @@ export default function Index(props) {
         history.push("/post");
     };
 
-    return <Error404 />
+    if (error === "NOT_FOUND") {
+        return <Error404 />;
+    }
 
     return (
         <div id="referral-page">
@@ -53,7 +55,7 @@ export default function Index(props) {
                 <Skeleton style={{ height: DEFAULT_SKELETON_HEIGHT }} />
             ) : (
                 <PostCard post={post} />
-            )} 
+            )}
             <img src={interviewImage} alt="poster" className="poster-image" />
             <div className="post-ask">
                 <Button text={CTA_TEXT} onClick={gotoCreatePost} />
