@@ -56,7 +56,7 @@ export default function Index() {
         }
     };
 
-    const buttonIsDisabled = !(state.desire && state.details && state.url && !isUrlValid(state.url));
+    const buttonIsDisabled = !(state.desire && state.details && (state.url? state.url && isUrlValid(state.url) : true));
 
     const formatState = () => ({
         title: state.desire,
