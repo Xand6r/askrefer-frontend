@@ -19,6 +19,7 @@ const INITIAL_STATE = {
 
 export default function Index({ postState }) {
     const [state, setState] = useState(INITIAL_STATE);
+    const [link, setLink] = useState("");
     const [loading, setLoading] = useState(false);
     const history = useHistory();
 
@@ -43,14 +44,9 @@ export default function Index({ postState }) {
         };
         postReq("/post/create", payload)
             .then(({ data: response }) => {
-                const { referralLink } = response
+                const { referralLink } = response;
+                setLink(referralLink);
                 copyToClipboard(referralLink);
-                showSuccessToast(
-                    "Your referral link has been copied to your clipboard."
-                );
-                setTimeout(() => {
-                    history.push("/");
-                }, REDIRECT_DELAY);
             })
             .catch((err) => {
                 showErrorToast(
@@ -60,6 +56,15 @@ export default function Index({ postState }) {
             .finally(() => {
                 setLoading(false);
             });
+    };
+
+    const copyReferralLink = () => {
+        showSuccessToast(
+            "Your referral link has been copied to your clipboard. you will be redirected"
+        );
+        setTimeout(() => {
+            history.push("/");
+        }, REDIRECT_DELAY);
     };
 
     const validateFields = () => {
@@ -111,7 +116,7 @@ export default function Index({ postState }) {
                         placeholder="This is the name viewed will see next to the ask."
                         onChange={changeState}
                         value={state.name}
-                        disabled={loading}
+                        disabled={loading || link}
                     />
                 </div>
                 <div className="input__group">
@@ -122,7 +127,7 @@ export default function Index({ postState }) {
                         placeholder="This is the email you will be contacted with."
                         onChange={changeState}
                         value={state.email}
-                        disabled={loading}
+                        disabled={loading || link}
                     />
                 </div>
                 <div className="input__group">
@@ -133,16 +138,23 @@ export default function Index({ postState }) {
                         placeholder="We use this to verify your identity."
                         onChange={changeState}
                         value={state.url}
-                        disabled={loading}
+                        disabled={loading || link}
                     />
                 </div>
                 <div onClick={validateFields}>
-                    <Button
-                        text={CTA_TEXT}
-                        onClick={submitPost}
-                        loading={loading}
-                        disabled={buttonIsDisabled}
-                    />
+                    {!link ? (
+                        <Button
+                            text={CTA_TEXT}
+                            onClick={submitPost}
+                            loading={loading}
+                            disabled={buttonIsDisabled}
+                        />
+                    ) : (
+                        <Button
+                            text="Copy Referral Link"
+                            onClick={copyReferralLink}
+                        />
+                    )}
                 </div>
             </form>
         </div>
