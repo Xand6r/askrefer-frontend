@@ -11,10 +11,10 @@ import { getToken } from "@/api/cache";
  */
 // TODO change to use .env and .env.prod respectively
 const REMOTE_URL = "https://askrefer-backend.herokuapp.com";
-export const BASE =
-    !process.env.NODE_ENV || process.env.NODE_ENV === "development"
-        ? "http://localhost:8000"
-        : REMOTE_URL;
+export const BASE =REMOTE_URL
+    // !process.env.NODE_ENV || process.env.NODE_ENV === "development"
+    //     ? "http://localhost:8000"
+    //     : REMOTE_URL;
 
 /**
  * dynamically get the tokens for every API call
@@ -33,7 +33,9 @@ const getHeader = () => ({
 export const postReq = async (path, obj) => {
     try {
         const response = await axios.post(BASE + path, obj, {
-            headers: getHeader(getToken()),
+            headers: {
+                "Content-Type": "application/json"
+            }
         });
         return response;
     } catch (error) {
@@ -48,9 +50,7 @@ export const postReq = async (path, obj) => {
  */
 export const getReq = async (path) => {
     try {
-        const response = await axios.get(BASE + path, {
-            headers: getHeader(getToken()),
-        });
+        const response = await axios.get(BASE + path);
         return response;
     } catch (error) {
         throw error;
