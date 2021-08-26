@@ -1,5 +1,5 @@
 import { Switch, Route } from "react-router-dom";
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer } from "react-toastify";
 
 // import components
 import NavBar from "@/components/navbar";
@@ -9,7 +9,7 @@ import PostPage from "@/pages/post";
 import ReferralPage from "@/pages/referral";
 
 import "@/styles/global.scss";
-import 'react-toastify/dist/ReactToastify.min.css';
+import "react-toastify/dist/ReactToastify.min.css";
 
 export default function Routes() {
     return (
@@ -20,7 +20,7 @@ export default function Routes() {
                 <Route exact path="/post" component={PostPage} />
                 <Route path="/referral/:id" component={ReferralPage} />
             </Switch>
-            <ToastContainer/>
+            <ToastContainer />
         </>
     );
 }

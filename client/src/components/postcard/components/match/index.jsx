@@ -20,7 +20,7 @@ const INITIAL_STATE = {
     url: "",
 };
 
-export default function Index({ onSubmit, postId }) {
+export default function Index({ onSubmit, postId, link }) {
     const history = useHistory();
     const [state, setState] = useState(INITIAL_STATE);
     const [loading, setLoading] = useState(false);
@@ -36,8 +36,9 @@ export default function Index({ onSubmit, postId }) {
     const recommendSelf = () => {
         if (loading) return;
         setLoading(true);
+        const referralId = link.split("/").reverse()[0];
         postReq("/referral/recommend", {
-            postId: postId,
+            referralKey: referralId,
             user: {
                 fullName: state.name,
                 email: state.email,

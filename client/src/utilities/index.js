@@ -51,16 +51,16 @@ export const gotoURL = (link) => {
  */
 export const copyToClipboard = (url, successMessage = "") => {
     // fallback for non navigator browser support
-    // if(navigator && navigator.clipboard){
-    //     navigator.clipboard.writeText(url);
-    // }else{
+    if(navigator && navigator.clipboard){
+        navigator.clipboard.writeText(url);
+    }else{
         const el = document.createElement('textarea');
         el.value = url;
         document.body.appendChild(el);
         el.select();
         document.execCommand('copy');
         document.body.removeChild(el);
-    // }
+    }
     successMessage && showSuccessToast(successMessage);
 };
 

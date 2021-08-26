@@ -179,7 +179,7 @@ export default function Index({ post }) {
             <Overlay
                 open={yes}
                 toggleOpen={() => yes && setYes(false)}
-                component={() => <Match postId={state.postId} onSubmit={onSubmitYes} />}
+                component={() => <Match postId={state.postId} link={refLink} onSubmit={onSubmitYes} />}
             />
             {/* for maybe */}
             <Overlay

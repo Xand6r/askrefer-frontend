@@ -13,16 +13,15 @@ import { getToken } from "@/api/cache";
 const REMOTE_URL = "https://askrefer-backend.herokuapp.com";
 export const BASE =
     !process.env.NODE_ENV || process.env.NODE_ENV === "development"
-        ? "http://0.0.0.0:8000"
+        ? "http://localhost:8000"
         : REMOTE_URL;
 
 /**
  * dynamically get the tokens for every API call
  * @param {String} token The token which would enable the user access protected routes
  */
-const getHeader = (token) => ({
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${token}`,
+const getHeader = () => ({
+    "Content-Type": "application/json"
 });
 
 /**
