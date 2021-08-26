@@ -59,10 +59,8 @@ export default function Index({ postState }) {
     };
 
     const copyReferralLink = () => {
-        showSuccessToast(
-            "Your referral link has been copied to your clipboard. you will be redirected"
-        );
-        copyToClipboard(link);
+        const message = "Your referral link has been copied to your clipboard. you will be redirected";
+        copyToClipboard(link, message);
         setTimeout(() => {
             history.push("/");
         }, REDIRECT_DELAY);
@@ -151,10 +149,12 @@ export default function Index({ postState }) {
                             disabled={buttonIsDisabled}
                         />
                     ) : (
-                        <Button
-                            text="Copy Referral Link"
-                            onClick={copyReferralLink}
-                        />
+                        <div className="link">
+                            <Button
+                                text="Copy Referral Link"
+                                onClick={copyReferralLink}
+                            />
+                        </div>
                     )}
                 </div>
             </form>
