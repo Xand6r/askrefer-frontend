@@ -62,7 +62,7 @@ export default function Index({ postState }) {
         showSuccessToast(
             "Your referral link has been copied to your clipboard. you will be redirected"
         );
-        copyToClipboard(state.url, "Link copied to clipboard");
+        copyToClipboard(link);
         setTimeout(() => {
             history.push("/");
         }, REDIRECT_DELAY);
