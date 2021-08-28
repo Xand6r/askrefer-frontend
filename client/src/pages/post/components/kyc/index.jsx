@@ -31,6 +31,15 @@ export default function Index({ postState }) {
         }));
     };
 
+    const renderIconAndText = () => {
+        return (
+            <span>
+                <i style={{ marginRight: "10px" }} class="fas fa-copy"></i>
+                Copy Referral Link
+            </span>
+        );
+    };
+
     const submitPost = () => {
         if (loading) return;
         setLoading(true);
@@ -59,11 +68,9 @@ export default function Index({ postState }) {
     };
 
     const copyReferralLink = () => {
-        const message = "Your referral link has been copied to your clipboard. you will be redirected";
+        const message =
+            "Your referral link has been copied to your clipboard.";
         copyToClipboard(link, message);
-        // setTimeout(() => {
-        //     history.push("/");
-        // }, REDIRECT_DELAY);
     };
 
     const validateFields = () => {
@@ -94,51 +101,68 @@ export default function Index({ postState }) {
         state.url &&
         LINKEDIN_REGEXP.exec(state.url);
     const buttonIsDisabled = !allFieldsFilled || loading;
+
     return (
         <div id="kyc-form" className="slider-form">
             <div className="header-group">
-                <h1 className="slider-form__header">Tell us more about you</h1>
+                <h1 className="slider-form__header">
+                    {!link
+                        ? "Tell us more about you"
+                        : "Copy and share your link"}
+                </h1>
 
                 <h6 className="slider-form__subheader">
-                    AskRefer will update you on the progress of your Ask
-                    <span>This would not be shared with the Viewers</span>
+                    {!link
+                        ? "AskRefer will update you on the progress of your Ask."
+                        : "Copy your referral link or share it across linkedin and whatsapp."}
+                    {!link ? (
+                        <span> This would not be shared with the Viewers</span>
+                    ) : (
+                        ""
+                    )}
                 </h6>
             </div>
 
             <form action="javascript:void(0)">
-                <div className="input__group">
-                    <label htmlFor="">Name</label>
-                    <input
-                        type="text"
-                        name="name"
-                        placeholder=""
-                        onChange={changeState}
-                        value={state.name}
-                        disabled={loading || link}
-                    />
-                </div>
-                <div className="input__group">
-                    <label htmlFor="">Email</label>
-                    <input
-                        type="text"
-                        name="email"
-                        placeholder=""
-                        onChange={changeState}
-                        value={state.email}
-                        disabled={loading || link}
-                    />
-                </div>
-                <div className="input__group">
-                    <label htmlFor="">Linkedin</label>
-                    <input
-                        type="text"
-                        name="url"
-                        placeholder="We use this to verify your identity."
-                        onChange={changeState}
-                        value={state.url}
-                        disabled={loading || link}
-                    />
-                </div>
+                {!link ? (
+                    <>
+                        <div className="input__group">
+                            <label htmlFor="">Name</label>
+                            <input
+                                type="text"
+                                name="name"
+                                placeholder=""
+                                onChange={changeState}
+                                value={state.name}
+                                disabled={loading || link}
+                            />
+                        </div>
+                        <div className="input__group">
+                            <label htmlFor="">Email</label>
+                            <input
+                                type="text"
+                                name="email"
+                                placeholder=""
+                                onChange={changeState}
+                                value={state.email}
+                                disabled={loading || link}
+                            />
+                        </div>
+                        <div className="input__group">
+                            <label htmlFor="">Linkedin</label>
+                            <input
+                                type="text"
+                                name="url"
+                                placeholder="We use this to verify your identity."
+                                onChange={changeState}
+                                value={state.url}
+                                disabled={loading || link}
+                            />
+                        </div>
+                    </>
+                ) : (
+                    ""
+                )}
                 <div onClick={validateFields}>
                     {!link ? (
                         <Button
@@ -149,10 +173,32 @@ export default function Index({ postState }) {
                         />
                     ) : (
                         <div className="link">
-                            <Button
-                                text="Copy Referral Link"
-                                onClick={copyReferralLink}
-                            />
+                            <>
+                                <a
+                                    id="linkedin"
+                                    className="share-button"
+                                    target="_blank"
+                                    title="Share on LinkedIn"
+                                    href={`https://www.linkedin.com/sharing/share-offsite/?url=${link}`}
+                                >
+                                    <i class="fab fa-linkedin"></i>
+                                    <h4>Share on LinkedIn</h4>
+                                </a>
+                                <a
+                                    id="whatsapp"
+                                    className="share-button"
+                                    data-action="share/whatsapp/share"
+                                    href={`whatsapp://send?text=Hi, I’m looking for ${postState.title}; can you help? ${link}`}
+                                    target="_blank"
+                                >
+                                    <i class="fab fa-whatsapp"></i>
+                                    <h4>Share on Whatsapp</h4>
+                                </a>
+                                <Button
+                                    text={renderIconAndText()}
+                                    onClick={copyReferralLink}
+                                />
+                            </>
                         </div>
                     )}
                 </div>
