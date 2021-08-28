@@ -26,6 +26,32 @@
                         color: white;
                         font-weight: 300;
                     }
+
+                    .share-dropdown{
+                        opacity: 1;
+                        background: white;
+                        position: absolute;
+                        top: 55px;
+                        width: 100%;
+                        box-shadow: 2px 2px 5px #e4e4e4;
+                        border-radius: 5px;
+                        padding-top: 5px;
+                        padding-bottom: 10px;
+                        
+                        h5{
+                            transition: 300ms;
+                            color: black;
+                            padding: 10px 10px;
+                            &:hover{
+                                background: rgba(0, 0, 0, 0.151);
+                            }
+                            a{
+                                text-decoration: none;
+                                color: black;
+
+                            }
+                        }
+                    }
                 }
             }
         }
