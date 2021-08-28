@@ -112,31 +112,28 @@ export default function Index({ onSubmit, postId, link }) {
 
             <form action="javascript:void(0)">
                 <div className="input__group">
-                    <label htmlFor="">Full name</label>
+                    <label htmlFor="">Name</label>
                     <input
                         type="text"
                         name="name"
-                        placeholder="This is the name viewed will see next to the ask."
                         onChange={changeState}
                         value={state.name}
                     />
                 </div>
                 <div className="input__group">
-                    <label htmlFor="">Email Address</label>
+                    <label htmlFor="">Email</label>
                     <input
                         type="text"
                         name="email"
-                        placeholder="This is the email you will be contacted with."
                         onChange={changeState}
                         value={state.email}
                     />
                 </div>
                 <div className="input__group">
-                    <label htmlFor="">Linkedin Url</label>
+                    <label htmlFor="">Linkedin</label>
                     <input
                         type="text"
                         name="url"
-                        placeholder="We use this to verify your identity."
                         onChange={changeState}
                         value={state.url}
                     />

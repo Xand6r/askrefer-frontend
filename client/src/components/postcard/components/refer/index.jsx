@@ -119,6 +119,16 @@ export default function Index({ onSubmit, link }) {
                         value={state.email}
                     />
                 </div>
+                <div className="input__group">
+                    <label htmlFor="">Name</label>
+                    <input
+                        type="text"
+                        name="email"
+                        placeholder="Add your name"
+                        onChange={changeState}
+                        value={state.email}
+                    />
+                </div>
                 <div onClick={validateInputs}>
                     <Button
                         text={CTA_TEXT}

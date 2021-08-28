@@ -5,8 +5,8 @@ import Button from "@/components/button";
 import "@/styles/input.scss";
 
 import "./styles.scss";
-import { copyToClipboard, showErrorToast, showSuccessToast } from "@/utilities";
-import { LINKEDIN_REGEXP, REDIRECT_DELAY } from "@/utilities/constants";
+import { copyToClipboard, showErrorToast } from "@/utilities";
+import { LINKEDIN_REGEXP } from "@/utilities/constants";
 import { postReq } from "@/api";
 
 const CTA_TEXT = "Generate Ask";

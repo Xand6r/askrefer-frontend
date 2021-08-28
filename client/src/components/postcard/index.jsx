@@ -145,7 +145,7 @@ export default function Index({ post }) {
                 <div className="post_content">
                     <h5>
                         {state.text}
-                        <span onClick={onViewMore}>view more</span>
+                        <span onClick={onViewMore}>view external page</span>
                     </h5>
                 </div>
                 <div className="auxilliary_content">
@@ -160,13 +160,13 @@ export default function Index({ post }) {
             <div className="divider" />
             <div className="bottom_section">
                 <div onClick={onSubmitNo} className="action_button --no">
-                    <h5>Nope Sorry</h5>
+                    <h5>Nope, Sorry</h5>
                 </div>
                 <div
                     onClick={generateReferral}
                     className="action_button --maybe"
                 >
-                    <h5>I know someone</h5>
+                    <h5>I know the guy</h5>
                 </div>
                 <div
                     onClick={() => !loadingLink && setYes(true)}
