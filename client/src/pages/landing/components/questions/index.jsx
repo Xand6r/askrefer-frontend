@@ -2,7 +2,7 @@ export function QuestionOne() {
     return(
         <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="100%"
+            width="110%"
             height="50.11"
             viewBox="0 0 164.998 54.11"
         >
@@ -19,18 +19,18 @@ export function QuestionOne() {
                     fill="#d4eafa"
                 />
                 <text
-                    id="_Who_is_a_good_dentist_in_my_neighbourhood_"
-                    data-name="“ Who is a good dentist in my neighbourhood”"
+                    id="_Which_investor_should_i_meet_for_my_fundraise_"
+                    data-name="Which investor should i meet for my fund raise"
                     transform="translate(925 3637)"
                     font-size="12"
                     font-family="OpenSans, Open Sans"
                     letter-spacing="-0.02em"
                 >
                     <tspan x="0" y="13">
-                        “ Who is a good dentist in{" "}
+                        “ Which investor should i {" "}
                     </tspan>
                     <tspan x="0" y="35">
-                        my neighbourhood”
+                    meet for my fundraise ”
                     </tspan>
                 </text>
             </g>
@@ -67,10 +67,10 @@ export function QuestionTwo() {
                     letter-spacing="-0.02em"
                 >
                     <tspan x="0" y="13">
-                        “Which investor should I{" "}
+                        “ Who's a great accountant{" "}
                     </tspan>
                     <tspan x="0" y="35">
-                        speak to?
+                    in my new neighborhood? ”
                     </tspan>
                 </text>
             </g>

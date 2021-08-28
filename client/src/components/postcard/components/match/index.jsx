@@ -36,7 +36,7 @@ export default function Index({ onSubmit, postId, link }) {
     const recommendSelf = () => {
         if (loading) return;
         setLoading(true);
-        const referralId = link.split("/").reverse()[0];
+        const referralId = window.location.href.split("/").reverse()[0];
         postReq("/referral/recommend", {
             referralKey: referralId,
             user: {

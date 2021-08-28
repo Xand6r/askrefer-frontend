@@ -9,7 +9,7 @@ import { copyToClipboard, showErrorToast, showSuccessToast } from "@/utilities";
 import { LINKEDIN_REGEXP, REDIRECT_DELAY } from "@/utilities/constants";
 import { postReq } from "@/api";
 
-const CTA_TEXT = "Complete";
+const CTA_TEXT = "Generate Ask";
 
 const INITIAL_STATE = {
     name: "",
@@ -61,9 +61,9 @@ export default function Index({ postState }) {
     const copyReferralLink = () => {
         const message = "Your referral link has been copied to your clipboard. you will be redirected";
         copyToClipboard(link, message);
-        setTimeout(() => {
-            history.push("/");
-        }, REDIRECT_DELAY);
+        // setTimeout(() => {
+        //     history.push("/");
+        // }, REDIRECT_DELAY);
     };
 
     const validateFields = () => {
@@ -97,40 +97,39 @@ export default function Index({ postState }) {
     return (
         <div id="kyc-form" className="slider-form">
             <div className="header-group">
-                <h1 className="slider-form__header">About you</h1>
+                <h1 className="slider-form__header">Tell us more about you</h1>
 
                 <h6 className="slider-form__subheader">
-                    This allows AskRefer to send you update on who is interested
-                    in your ask.{" "}
+                    AskRefer will update you on the progress of your Ask
                     <span>This would not be shared with the Viewers</span>
                 </h6>
             </div>
 
             <form action="javascript:void(0)">
                 <div className="input__group">
-                    <label htmlFor="">Full name</label>
+                    <label htmlFor="">Name</label>
                     <input
                         type="text"
                         name="name"
-                        placeholder="This is the name viewed will see next to the ask."
+                        placeholder=""
                         onChange={changeState}
                         value={state.name}
                         disabled={loading || link}
                     />
                 </div>
                 <div className="input__group">
-                    <label htmlFor="">Email Address</label>
+                    <label htmlFor="">Email</label>
                     <input
                         type="text"
                         name="email"
-                        placeholder="This is the email you will be contacted with."
+                        placeholder=""
                         onChange={changeState}
                         value={state.email}
                         disabled={loading || link}
                     />
                 </div>
                 <div className="input__group">
-                    <label htmlFor="">Linkedin Url</label>
+                    <label htmlFor="">Linkedin</label>
                     <input
                         type="text"
                         name="url"

@@ -14,9 +14,9 @@ const INITIAL_STATE = {
     duration: 1,
 };
 
-const TAB_NAMES = [1, 2, 3, 4];
+const TAB_NAMES = [1, 2, 4, 8];
 
-const CTA_TEXT = "Create Askrefer Url";
+const CTA_TEXT = "Proceed";
 
 function Tab({ name, selected }) {
     const className = `select-tab ${selected ? "--selected" : ""}`;
@@ -73,13 +73,14 @@ export default function Index() {
     return (
         <div id="post-page">
             <div className="textarea-group">
-                <h4 className="label">I am Looking for ...</h4>
+                <h4 className="label">Who are you looking for?</h4>
                 <textarea
                     name="desire"
                     id=""
                     cols="30"
                     rows="10"
-                    placeholder="A new board member"
+                    maxLength="15"
+                    placeholder="In a few words, describe who you’re looking for. E.g. A New York-based digital marketing expert”"
                     onChange={(e) => updateState(e.target.name, e.target.value)}
                     value={state.desire}
                 ></textarea>
@@ -87,14 +88,14 @@ export default function Index() {
 
             <div className="textarea-group">
                 <h4 className="label" htmlFor="details">
-                    More Details
+                    Tell us a little more about your Ask
                 </h4>
                 <textarea
                     name="details"
                     id=""
                     cols="30"
                     rows="10"
-                    placeholder="Enter more details"
+                    placeholder="Sharing a bit more context may help your network identify the best fit. E.g. My social media company is expanding rapidly in New York, and we’re looking for an awesome New York-based digital marketer with at least 3 years’ experience"
                     onChange={(e) => updateState(e.target.name, e.target.value)}
                     value={state.details}
                 ></textarea>
@@ -109,6 +110,7 @@ export default function Index() {
                     id=""
                     cols="30"
                     rows="10"
+                    maxLength="100"
                     placeholder="Enter Url"
                     onChange={(e) => updateState(e.target.name, e.target.value)}
                     value={state.url}
@@ -116,7 +118,7 @@ export default function Index() {
             </div>
 
             <div className="select-group">
-                <h4>Duration</h4>
+                <h4>Add an optional external link with more info</h4>
                 <div className="select-group__tabs">
                     {TAB_NAMES.map((oneName) => (
                         <div onClick={() => updateState("duration", oneName)}>

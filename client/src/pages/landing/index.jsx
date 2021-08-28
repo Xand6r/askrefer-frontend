@@ -20,8 +20,7 @@ export default function Index() {
             <section className="header">
                 <img src={Megaphone} alt="" />
                 <h4>
-                    Sometimes you can’t Google your way to
-                    the Perfect fit.
+                    Sometimes you need a personal touch
                 </h4>
             </section>
 
@@ -36,7 +35,7 @@ export default function Index() {
 
             <section className="cta">
                 <h5>
-                    AskRefer helps your friends find the answer for you.
+                    AskRefer empowers your network to search for the right person.
                 </h5>
                 <Button text={CTA_TEXT} onClick={onClickButton}/>
             </section>
