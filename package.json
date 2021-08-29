@@ -1,27 +1,52 @@
 {
   "name": "askrefer-frontend",
-  "version": "1.0.0",
-  "description": "a frontend for as refer",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "heroku-prebuild": "cd client && npm install && npm run build",
-    "start": "node index"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Xand6r/askrefer-frontend.git"
-  },
-  "keywords": [
-    "ask",
-    "refer",
-    "react",
-    "frontend",
-    "recommend"
-  ],
-  "author": "xand6r",
-  "license": "ISC",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
-    "express": "^4.17.1"
+    "@craco/craco": "^6.2.0",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "axios": "^0.21.1",
+    "jwt-decode": "^3.1.2",
+    "moment": "^2.29.1",
+    "node-sass": "4.14.1",
+    "randomcolor": "^0.6.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-loading-skeleton": "^2.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.3",
+    "react-toastify": "^7.0.4",
+    "react-use": "^17.2.4",
+    "styled-components": "^5.3.0",
+    "web-vitals": "^1.0.1"
+  },
+  "resolutions": {
+    "styled-components": "^5"
+  },
+  "scripts": {
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "craco eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
