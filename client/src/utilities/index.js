@@ -51,14 +51,14 @@ export const gotoURL = (link) => {
  */
 export const copyToClipboard = (url, successMessage = "") => {
     // fallback for non navigator browser support
-    if(navigator && navigator.clipboard){
+    if (navigator && navigator.clipboard) {
         navigator.clipboard.writeText(url);
-    }else{
-        const el = document.createElement('textarea');
+    } else {
+        const el = document.createElement("textarea");
         el.value = url;
         document.body.appendChild(el);
         el.select();
-        document.execCommand('copy');
+        document.execCommand("copy");
         document.body.removeChild(el);
     }
     successMessage && showSuccessToast(successMessage);
@@ -80,14 +80,13 @@ export function validateLinkedIn(url) {
     return LINKEDIN_REGEXP.exec(url);
 }
 
-
 /**
  * Validate url using regex
  */
 export function isUrlValid(userInput) {
-    var res = userInput.match(/(http(s)?:\/\/.)(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
-    if(res == null)
-        return false;
-    else
-        return true;
+    var res = userInput.match(
+        /(http(s)?:\/\/.)(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
+    );
+    if (res == null) return false;
+    else return true;
 }
