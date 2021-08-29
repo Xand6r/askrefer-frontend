@@ -29,7 +29,8 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "eject": "craco eject"
+    "eject": "craco eject",
+    "git-push": "craco build && git push"
   },
   "eslintConfig": {
     "extends": [

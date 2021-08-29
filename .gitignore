@@ -2,7 +2,6 @@
 # dependencies
 /node_modules
 /.pnp
-/build
 yarn.lock
 .pnp.js
 
