@@ -14,7 +14,7 @@ const CTA_TEXT = "Generate Ask";
 const INITIAL_STATE = {
     name: "",
     email: "",
-    url: "https://www.linkedin.com/in/alex-ander-shuaibu-28889b17a/",
+    url: "",
 };
 
 export default function Index({ postState }) {
