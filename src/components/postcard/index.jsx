@@ -21,6 +21,7 @@ const INITIAL_STATE = {
     creationDate: "",
     postId: "",
     referralId: "",
+    userUrl: ""
 };
 
 const TIMEOUT_DURATION = 1500;
@@ -33,6 +34,7 @@ export default function Index({ post }) {
     const [refLink, setrefLink] = useState("");
 
     const history = useHistory();
+    console.log({post});
 
     useEffect(() => {
         const {
@@ -43,7 +45,8 @@ export default function Index({ post }) {
             url,
             _id,
             referralId,
-            owner: { fullName = "" },
+            owner: { fullName = "", url : userUrl="" },
+            owner
         } = post;
         setState({
             ...state,
@@ -55,6 +58,7 @@ export default function Index({ post }) {
             creationDate: createdAt,
             referralId,
             postId: _id,
+            userUrl
         });
     }, []);
 
@@ -121,6 +125,11 @@ export default function Index({ post }) {
         goHome();
     };
 
+    const gotoOwnerReference = () => {
+        if(!state.userUrl) return;
+        window.open(state.userUrl, '_blank');
+    }
+
     const expiresIn = timeDifferenceText(expiryDate.diff(creationDate, "day"));
     const postedAt = timeDifferenceText(today.diff(creationDate, "day"));
 
@@ -130,22 +139,32 @@ export default function Index({ post }) {
             <div className="top_section">
                 <div className="poster_details">
                     <div
-                        style={{ backgroundColor: avatarDetails.color }}
+                        style={{
+                            backgroundColor: avatarDetails.color,
+                            cursor: state.userUrl ? "pointer" : "text"
+                        }}
+                        onClick={gotoOwnerReference}
                         className="poster_details__img"
                     >
                         <h4>{avatarDetails.initials}</h4>
                     </div>
                     <div className="extra_details">
-                        <h5 className="poster_details__text">
+                        <h5
+                            onClick={gotoOwnerReference}
+                            style={{cursor: state.userUrl ? "pointer" : "text"}}
+                            className="poster_details__text"
+                        >
                             {state.fullName}
                         </h5>
-                        <h6>{state.title}</h6>
+                        <h6>Looking for {state.title}</h6>
                     </div>
                 </div>
                 <div className="post_content">
                     <h5>
                         {state.text}
-                        <span onClick={onViewMore}>view external page</span>
+                        <span onClick={onViewMore}>
+                            <i class="fas fa-external-link-alt"></i>
+                        </span>
                     </h5>
                 </div>
                 <div className="auxilliary_content">
@@ -160,7 +179,7 @@ export default function Index({ post }) {
             <div className="divider" />
             <div className="bottom_section">
                 <div onClick={onSubmitNo} className="action_button --no">
-                    <h5>Nope, Sorry</h5>
+                    <h5>Nope, sorry</h5>
                 </div>
                 <div
                     onClick={generateReferral}

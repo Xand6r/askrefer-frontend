@@ -81,22 +81,22 @@ export default function Index({ onSubmit, postId, link }) {
         if (!validateEmail(email)) {
             return showErrorToast("Please fill in a valid email address");
         }
-        if (!url) {
-            return showErrorToast(
-                "Please fill in your linkedIn url we can use to validate your identity!"
-            );
-        }
-        if (!validateLinkedIn(url)) {
-            return showErrorToast("Please enter a valid linkedIn profile URL");
-        }
+        // if (!url) {
+        //     return showErrorToast(
+        //         "Please fill in your linkedIn url we can use to validate your identity!"
+        //     );
+        // }
+        // if (!validateLinkedIn(url)) {
+        //     return showErrorToast("Please enter a valid linkedIn profile URL");
+        // }
     };
 
     const allFieldsFilled =
         state.name &&
         state.email &&
-        state.url &&
-        validateEmail(state.email) &&
-        validateLinkedIn(state.url);
+        // state.url &&
+        validateEmail(state.email) ;
+        // validateLinkedIn(state.url);
     const buttonIsDisabled = !allFieldsFilled || loading;
 
     return (
@@ -130,7 +130,7 @@ export default function Index({ onSubmit, postId, link }) {
                     />
                 </div>
                 <div className="input__group">
-                    <label htmlFor="">Linkedin</label>
+                    <label htmlFor="">LinkedIn</label>
                     <input
                         type="text"
                         name="url"

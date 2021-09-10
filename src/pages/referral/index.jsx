@@ -12,8 +12,9 @@ import { getReq } from "@/api";
 import ExpiredPage from './components/expired';
 import "./styles.scss";
 
-const CTA_TEXT = "post an ask";
+const CTA_TEXT = "Post an Ask";
 const DEFAULT_SKELETON_HEIGHT = "225px";
+
 export default function Index(props) {
     const history = useHistory();
     const [loading, setLoading] = useState(true);

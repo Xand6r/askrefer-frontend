@@ -1,5 +1,6 @@
 import { Switch, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import ReactTooltip from 'react-tooltip';
 
 // import components
 import NavBar from "@/components/navbar";
@@ -21,6 +22,7 @@ export default function Routes() {
                 <Route path="/referral/:id" component={ReferralPage} />
             </Switch>
             <ToastContainer />
+            <ReactTooltip className="tooltip"/>
         </>
     );
 }

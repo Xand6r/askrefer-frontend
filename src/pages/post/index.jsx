@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import Overlay from "@/components/overlay";
 import Button from "@/components/button";
-import { isUrlValid, showErrorToast, showSuccessToast } from "@/utilities";
+import { isUrlValid, showErrorToast } from "@/utilities";
 
 import Kyc from "./components/kyc";
 import "./styles.scss";
@@ -17,6 +17,10 @@ const INITIAL_STATE = {
 const TAB_NAMES = [1, 2, 4, 8];
 
 const CTA_TEXT = "Proceed";
+const TITLE_GUIDE = "Describe who you’re looking for with as few words as possible";
+const MORE_GUIDE = "Share a bit more context in 1-2 sentences";
+const EXTERNAL_GUIDE = "Add a weblink or URL to an external page with more information";
+const DURATION_GUIDE = "Specify how long should your request should be active for"
 
 function Tab({ name, selected }) {
     const className = `select-tab ${selected ? "--selected" : ""}`;
@@ -49,21 +53,24 @@ export default function Index() {
                 "Please supply more details to better explain your request."
             );
         }
-        if (url && !isUrlValid(url)) {
-            return showErrorToast(
-                "Please enter a valid url of the form http://domainname.domain"
-            );
-        }
     };
 
-    const buttonIsDisabled = !(state.desire && state.details && (state.url? state.url && isUrlValid(state.url) : true));
+    const buttonIsDisabled = !(state.desire && state.details );
 
     const formatState = () => ({
         title: state.desire,
         details: state.details,
         durationInWeeks: state.duration,
-        url: state.url,
+        url: formatURL(state.url),
     });
+
+    const formatURL = (url) => {
+        if(!url) return ""
+        if(url.startsWith("http://") || url.startsWith("https://") ){
+            return url
+        }
+        return `http://${url}`
+    }
 
     const gotoSecondState = () => {
         const { desire, details, url, duration } = state;
@@ -73,14 +80,15 @@ export default function Index() {
     return (
         <div id="post-page">
             <div className="textarea-group">
-                <h4 className="label">Who are you looking for?</h4>
+                <h4 className="label">
+                    I’m looking for…
+                    <i data-tip={TITLE_GUIDE} class="fas fa-info-circle fonticon"></i>
+                </h4>
                 <textarea
                     name="desire"
                     id=""
-                    cols="30"
-                    rows="10"
-                    maxLength="15"
-                    placeholder="In a few words, describe who you’re looking for. E.g. A New York-based digital marketing expert”"
+                    rows="1"
+                    maxLength="50"
                     onChange={(e) => updateState(e.target.name, e.target.value)}
                     value={state.desire}
                 ></textarea>
@@ -88,14 +96,14 @@ export default function Index() {
 
             <div className="textarea-group">
                 <h4 className="label" htmlFor="details">
-                    Tell us a little more about your Ask
+                    Tell us more
+                    <i data-tip={MORE_GUIDE} class="fas fa-info-circle fonticon"></i>
                 </h4>
                 <textarea
                     name="details"
                     id=""
                     cols="30"
                     rows="10"
-                    placeholder="Sharing a bit more context may help your network identify the best fit. E.g. My social media company is expanding rapidly in New York, and we’re looking for an awesome New York-based digital marketer with at least 3 years’ experience"
                     onChange={(e) => updateState(e.target.name, e.target.value)}
                     value={state.details}
                 ></textarea>
@@ -103,7 +111,8 @@ export default function Index() {
 
             <div className="textarea-group">
                 <h4 className="label" htmlFor="url">
-                    Url for external info (If available)
+                    External page (optional)
+                    <i data-tip={EXTERNAL_GUIDE} class="fas fa-info-circle fonticon"></i>
                 </h4>
                 <textarea
                     name="url"
@@ -111,14 +120,16 @@ export default function Index() {
                     cols="30"
                     rows="10"
                     maxLength="100"
-                    placeholder="Enter Url"
                     onChange={(e) => updateState(e.target.name, e.target.value)}
                     value={state.url}
                 ></textarea>
             </div>
 
             <div className="select-group">
-                <h4>Add an optional external link with more info</h4>
+                <h4>
+                    Duration
+                    <i data-tip={DURATION_GUIDE} class="fas fa-info-circle fonticon"></i>
+                </h4>
                 <div className="select-group__tabs">
                     {TAB_NAMES.map((oneName) => (
                         <div onClick={() => updateState("duration", oneName)}>

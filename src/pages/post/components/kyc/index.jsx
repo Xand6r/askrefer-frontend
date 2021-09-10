@@ -21,7 +21,6 @@ export default function Index({ postState }) {
     const [state, setState] = useState(INITIAL_STATE);
     const [link, setLink] = useState("");
     const [loading, setLoading] = useState(false);
-    const history = useHistory();
 
     const changeState = (e) => {
         const { name, value } = e.target;
@@ -85,12 +84,7 @@ export default function Index({ postState }) {
                 "Please fill in an email we can use to contact you!"
             );
         }
-        if (!url) {
-            return showErrorToast(
-                "Please fill in your linkedIn url we can use to validate your identity!"
-            );
-        }
-        if (!LINKEDIN_REGEXP.exec(url)) {
+        if (url && !LINKEDIN_REGEXP.exec(url)) {
             return showErrorToast("Please enter a valid linkedIn profile URL");
         }
     };
@@ -98,8 +92,8 @@ export default function Index({ postState }) {
     const allFieldsFilled =
         state.name &&
         state.email &&
-        state.url &&
-        LINKEDIN_REGEXP.exec(state.url);
+        state.url ?
+        LINKEDIN_REGEXP.exec(state.url) : true;
     const buttonIsDisabled = !allFieldsFilled || loading;
 
     return (
@@ -108,18 +102,13 @@ export default function Index({ postState }) {
                 <h1 className="slider-form__header">
                     {!link
                         ? "Tell us more about you"
-                        : "Copy and share your link"}
+                        : "Great! Now let’s share your request"}
                 </h1>
 
                 <h6 className="slider-form__subheader">
                     {!link
-                        ? "AskRefer will update you on the progress of your Ask."
-                        : "Copy your referral link or share it across linkedin and whatsapp."}
-                    {!link ? (
-                        <span> This would not be shared with the Viewers</span>
-                    ) : (
-                        ""
-                    )}
+                        ? "This allows AskRefer to update you on the progress of your request"
+                        : "Copy and share your referral link or share across LinkedIn or WhatsApp"}
                 </h6>
             </div>
 
@@ -153,7 +142,6 @@ export default function Index({ postState }) {
                             <input
                                 type="text"
                                 name="url"
-                                placeholder="We use this to verify your identity."
                                 onChange={changeState}
                                 value={state.url}
                                 disabled={loading || link}
@@ -188,7 +176,7 @@ export default function Index({ postState }) {
                                     id="whatsapp"
                                     className="share-button"
                                     data-action="share/whatsapp/share"
-                                    href={`whatsapp://send?text=Hi, I’m looking for ${postState.title}; can you help? ${link}`}
+                                    href={`whatsapp://send?text=Hi! I’m looking for ${postState.title.toLowerCase()}. can you help? ${link}`}
                                     target="_blank"
                                 >
                                     <i class="fab fa-whatsapp"></i>

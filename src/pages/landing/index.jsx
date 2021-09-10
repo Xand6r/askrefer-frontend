@@ -35,7 +35,7 @@ export default function Index() {
 
             <section className="cta">
                 <h5>
-                    AskRefer empowers your network to search for the right person.
+                    AskRefer empowers your network to search for the right person
                 </h5>
                 <Button text={CTA_TEXT} onClick={onClickButton}/>
             </section>

@@ -39,6 +39,12 @@ export default function Index({ onSubmit, link, post }) {
     useClickAway(dropdownRef, closeDropdown);
 
     const renderDropdown = () => {
+        if(!state.email ){
+            return showErrorToast("Please fill in your email adress first!");
+        }
+        if(!validateEmail(state.email)){
+            return showErrorToast("Please fill in a valid email adress!");
+        }
         if (state.url) {
             setShowDropdown(true);
         }
@@ -138,7 +144,7 @@ export default function Index({ onSubmit, link, post }) {
                                             id="whatsapp"
                                             className="share-button"
                                             data-action="share/whatsapp/share"
-                                            href={`whatsapp://send?text=Hi, I’m looking for ${post.title}; can you help? ${state.url}`}
+                                            href={`whatsapp://send?text=Hi! My friend is looking for ${post.title}. Can you help? ${state.url}`}
                                             target="_blank"
                                         >
                                             <i
@@ -184,10 +190,10 @@ export default function Index({ onSubmit, link, post }) {
                     <label htmlFor="">Name</label>
                     <input
                         type="text"
-                        name="email"
+                        name="name"
                         placeholder="Add your name"
                         onChange={changeState}
-                        value={state.email}
+                        value={state.name}
                     />
                 </div>
                 <div onClick={validateInputs}>

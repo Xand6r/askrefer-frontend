@@ -16,7 +16,7 @@ export function QuestionOne() {
                     data-name="Union 3"
                     d="M-5414.593,4769a5,5,0,0,1-5-5v-34l-6.417-11.733c-.557-1.377.292-3.377,1.405-3.376h14.256c.208,0,.274.041.241.114h143.92a5,5,0,0,1,5,5v44a5,5,0,0,1-5,5Z"
                     transform="translate(6335.187 -1085.894)"
-                    fill="#d4eafa"
+                    fill="#fdc84e"
                 />
                 <text
                     id="_Which_investor_should_i_meet_for_my_fundraise_"
@@ -25,12 +25,13 @@ export function QuestionOne() {
                     font-size="12"
                     font-family="OpenSans, Open Sans"
                     letter-spacing="-0.02em"
+                    fill="#3F3D56"
                 >
                     <tspan x="0" y="13">
-                        “ Which investor should i {" "}
+                        “ I’m looking for a good {" "}
                     </tspan>
                     <tspan x="0" y="35">
-                    meet for my fundraise ”
+                         local accountant  ”
                     </tspan>
                 </text>
             </g>
@@ -56,7 +57,7 @@ export function QuestionTwo() {
                     data-name="Union 3"
                     d="M-5414.593,4769a5,5,0,0,1-5-5v-34l-6.417-11.733c-.557-1.377.292-3.377,1.405-3.376h14.256c.208,0,.274.041.241.114h143.92a5,5,0,0,1,5,5v44a5,5,0,0,1-5,5Z"
                     transform="translate(6335.187 -1085.894)"
-                    fill="#fad4d4"
+                    fill="#fdc84e"
                 />
                 <text
                     id="_Which_investor_should_I_speak_to_"
@@ -65,12 +66,13 @@ export function QuestionTwo() {
                     font-size="12"
                     font-family="OpenSans, Open Sans"
                     letter-spacing="-0.02em"
+                    fill="#3F3D56"
                 >
                     <tspan x="0" y="13">
-                        “ Who's a great accountant{" "}
+                        “ I’m looking for pilot users{" "}
                     </tspan>
                     <tspan x="0" y="35">
-                    in my new neighborhood? ”
+                    for our new product ”
                     </tspan>
                 </text>
             </g>

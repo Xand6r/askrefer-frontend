@@ -9,6 +9,10 @@
         margin-top: 44px;
     }
 
+    .fonticon{
+        margin-left: 10px;
+    }
+
     .select-group {
         h4 {
             margin-bottom: 12px;
@@ -49,7 +53,7 @@
             font-weight: 400;
         }
         textarea {
-            height: 72px;
+            max-height: 102px;
             border: 1px solid rgba(0, 0, 0, 0.1);
             transition: $transition-speed;
             padding: 28px 14px;

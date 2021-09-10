@@ -13,7 +13,7 @@ export default function Index() {
     return (
         <div className="notFound">
             <img src={notFoundImage} alt="" />
-            <h1>Page not found. <span onClick={goHome}>Go home</span></h1>
+            <h1>Resource not found. <span onClick={goHome}>Go home</span></h1>
         </div>
     );
 }
