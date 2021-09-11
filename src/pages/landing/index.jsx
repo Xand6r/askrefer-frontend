@@ -1,13 +1,21 @@
 import { useHistory } from "react-router-dom";
+import Slider from "react-slick";
 import Megaphone from "@/assets/svgs/landingicon.svg";
 import Button from "@/components/button";
-import { QuestionOne, QuestionTwo } from "./components/questions";
+import { QuestionOne, QuestionTwo, QuestionThree } from "./components/questions";
 import "./styles.scss";
-
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
 const CTA_TEXT = "Get Started";
 
 export default function Index() {
     const history = useHistory();
+    const settings = {
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1
+      };
     /**
      * The CTA to be called when we choose to go to the next page
      */
@@ -25,12 +33,17 @@ export default function Index() {
             </section>
 
             <section className="questions">
-                <div>
-                    <QuestionOne />
-                </div>
-                <div>
-                    <QuestionTwo />
-                </div>
+                <Slider {...settings}>
+                    <div>
+                        <QuestionOne />
+                    </div>
+                    <div>
+                        <QuestionTwo />
+                    </div>
+                    <div>
+                        <QuestionThree />
+                    </div>
+                </Slider>
             </section>
 
             <section className="cta">
