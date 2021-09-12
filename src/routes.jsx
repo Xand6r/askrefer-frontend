@@ -22,7 +22,7 @@ export default function Routes() {
                 <Route path="/referral/:id" component={ReferralPage} />
             </Switch>
             <ToastContainer />
-            <ReactTooltip clickable={true} className="tooltip"/>
+            <ReactTooltip event="click"  className="tooltip"/>
         </>
     );
 }
