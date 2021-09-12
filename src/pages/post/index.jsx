@@ -76,13 +76,16 @@ export default function Index() {
         const { desire, details, url, duration } = state;
         setOpenOverlay(true);
     };
+    
 
     return (
         <div id="post-page">
             <div className="textarea-group">
                 <h4 className="label">
                     I’m looking for…
-                    <i data-tip={TITLE_GUIDE} class="fas fa-info-circle fonticon"></i>
+                    <div data-tip={TITLE_GUIDE} className="tooltip-wrapper">
+                        <i class="fas fa-info-circle fonticon"></i>
+                    </div>
                 </h4>
                 <textarea
                     name="desire"
@@ -97,7 +100,9 @@ export default function Index() {
             <div className="textarea-group">
                 <h4 className="label" htmlFor="details">
                     Tell us more
-                    <i data-tip={MORE_GUIDE} class="fas fa-info-circle fonticon"></i>
+                    <div data-tip={MORE_GUIDE} className="tooltip-wrapper">
+                        <i class="fas fa-info-circle fonticon"></i>
+                    </div>
                 </h4>
                 <textarea
                     name="details"
@@ -112,7 +117,9 @@ export default function Index() {
             <div className="textarea-group">
                 <h4 className="label" htmlFor="url">
                     External page (optional)
-                    <i data-tip={EXTERNAL_GUIDE} class="fas fa-info-circle fonticon"></i>
+                    <div data-tip={EXTERNAL_GUIDE} className="tooltip-wrapper">
+                        <i class="fas fa-info-circle fonticon"></i>
+                    </div>
                 </h4>
                 <textarea
                     name="url"
@@ -128,7 +135,9 @@ export default function Index() {
             <div className="select-group">
                 <h4>
                     Duration
-                    <i data-tip={DURATION_GUIDE} class="fas fa-info-circle fonticon"></i>
+                    <div data-tip={DURATION_GUIDE} className="tooltip-wrapper">
+                        <i class="fas fa-info-circle fonticon"></i>
+                    </div>
                 </h4>
                 <div className="select-group__tabs">
                     {TAB_NAMES.map((oneName) => (
