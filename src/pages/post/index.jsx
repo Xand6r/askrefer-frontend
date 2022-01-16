@@ -98,7 +98,7 @@ export default function Index() {
     })
       .then((resp) => resp.json())
       .then((data) => {
-        updateState(data.url);
+        updateState("url", data.url);
       })
       .catch((err) => console.log(err));
   };
@@ -161,24 +161,6 @@ export default function Index() {
         <div className="filename">{file?.name}</div>
       </div>
 
-      <div className="select-group">
-        <h4>
-          Duration
-          <div data-tip={DURATION_GUIDE} className="tooltip-wrapper">
-            <i class="fas fa-info-circle fonticon"></i>
-          </div>
-        </h4>
-        <div className="select-group__tabs">
-          {TAB_NAMES.map((oneName) => (
-            <div onClick={() => updateState("duration", oneName)}>
-              <Tab
-                selected={state.duration === oneName}
-                name={`${oneName} ${oneName == 1 ? "Week" : " Weeks"}`}
-              />
-            </div>
-          ))}
-        </div>
-      </div>
 
       <div onClick={validateForm} className="submit-button">
         <Button
