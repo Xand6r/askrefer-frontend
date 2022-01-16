@@ -65,7 +65,7 @@ export default function Index(props) {
             ) : (
                 <PostCard post={post} />
             )}
-            <img src={interviewImage} alt="poster" className="poster-image" />
+            {/* <img src={interviewImage} alt="poster" className="poster-image" /> */}
             <div className="post-ask">
                 <Button text={CTA_TEXT} onClick={gotoCreatePost} />
             </div>

@@ -1,16 +1,13 @@
 import moment from "moment";
 import { getReq } from "@/api";
-import { useClickAway } from "react-use";
 import { useHistory } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
-import { Document, Page } from "react-pdf/dist/esm/entry.webpack";
+import { useState, useEffect } from "react";
 
+import PdfViewer from "@/components/pdfModal";
 import Match from "./components/match";
 import Refer from "./components/refer";
 import Overlay from "@/components/overlay";
-import CloseIcon from "@/assets/svgs/closeIcon.svg";
 import { showSuccessToast } from "@/utilities";
-import { DATE_FORMAT } from "@/utilities/constants";
 import { getAvatarDetails, gotoURL, showErrorToast } from "@/utilities";
 import CircularProgressSpinner from "../loader";
 
@@ -163,7 +160,7 @@ export default function Index({ post }) {
         <div className="post_content">
           <h5>
             {state.text}
-            {state.url ? (
+            {state.url && state.url.endsWith('.pdf') ? (
               <span onClick={onViewMore}>
                 <i class="fas fa-external-link-alt"></i>
               </span>
@@ -219,32 +216,3 @@ export default function Index({ post }) {
     </div>
   );
 }
-
-const PdfViewer = ({ url, onClose, open }) => {
-  const [numPages, setNumPages] = useState(null);
-  const [pageNumber, setPageNumber] = useState(1);
-  const pdfRef = useRef(null);
-
-  function onDocumentLoadSuccess({ numPages }) {
-    setNumPages(numPages);
-  }
-  useClickAway(pdfRef, onClose);
-
-  if (!open) return <></>;
-  return (
-    <div className="pdf__viewercontainer">
-      <img src={CloseIcon} onClick={onClose} className="close__icon" />
-      <div ref={pdfRef}>
-        <Document
-          file="http://res.cloudinary.com/xand6r/image/upload/v1642348774/askrefer/ewztcdodhjvud7vcnm1o.pdf"
-          onLoadSuccess={onDocumentLoadSuccess}
-        >
-          <Page pageNumber={pageNumber} />
-        </Document>
-        <p>
-          Page {pageNumber} of {numPages}
-        </p>
-      </div>
-    </div>
-  );
-};

@@ -20,19 +20,7 @@ const CTA_TEXT = "Proceed";
 const TITLE_GUIDE =
   "Describe who you’re looking for with as few words as possible";
 const MORE_GUIDE = "Share a bit more context in 1-2 sentences";
-const EXTERNAL_GUIDE =
-  "Add a weblink or URL to an external page with more information";
-const DURATION_GUIDE =
-  "Specify how long should your request should be active for";
-
-function Tab({ name, selected }) {
-  const className = `select-tab ${selected ? "--selected" : ""}`;
-  return (
-    <div className={className}>
-      <h5>{name}</h5>
-    </div>
-  );
-}
+const EXTERNAL_GUIDE = "Upload a pdf with more information";
 
 export default function Index() {
   const [state, setState] = useState(INITIAL_STATE);
@@ -48,7 +36,7 @@ export default function Index() {
   };
 
   const validateForm = () => {
-    const { desire, details, url } = state;
+    const { desire, details } = state;
 
     if (!desire) {
       return showErrorToast("Please supply what you are looking for.");
@@ -109,7 +97,7 @@ export default function Index() {
     <div id="post-page">
       <div className="textarea-group">
         <h4 className="label">
-          I’m looking for…
+          Title
           <div data-tip={TITLE_GUIDE} className="tooltip-wrapper">
             <i class="fas fa-info-circle fonticon"></i>
           </div>
@@ -126,7 +114,7 @@ export default function Index() {
 
       <div className="textarea-group">
         <h4 className="label" htmlFor="details">
-          Tell us more
+          Summary
           <div data-tip={MORE_GUIDE} className="tooltip-wrapper">
             <i class="fas fa-info-circle fonticon"></i>
           </div>
@@ -143,7 +131,10 @@ export default function Index() {
 
       <div className="textarea-group">
         <h4 className="label" htmlFor="url">
-          External page (optional)
+          PDF attachment
+          <div data-tip={EXTERNAL_GUIDE} className="tooltip-wrapper">
+            <i class="fas fa-info-circle fonticon"></i>
+          </div>
         </h4>
         <div
           className={`upload-wrapper __${file && "active"}`}
@@ -160,7 +151,6 @@ export default function Index() {
         />
         <div className="filename">{file?.name}</div>
       </div>
-
 
       <div onClick={validateForm} className="submit-button">
         <Button
