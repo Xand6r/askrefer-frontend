@@ -1,8 +1,10 @@
 import { useState, useRef } from "react";
+import Toggle from "react-toggle";
+import { TagsInput } from "react-tag-input-component";
 
 import Overlay from "@/components/overlay";
 import Button from "@/components/button";
-import { isUrlValid, showErrorToast } from "@/utilities";
+import { showErrorToast } from "@/utilities";
 
 import Kyc from "./components/kyc";
 import "./styles.scss";
@@ -12,14 +14,15 @@ const INITIAL_STATE = {
   details: "",
   url: "",
   duration: 1000, //set an arbitrarily large deadline, because we no longer use deadlines
+  public: false,
+  allowedEmails: [],
 };
-
-const TAB_NAMES = [1, 2, 4, 8];
 
 const CTA_TEXT = "Proceed";
 const TITLE_GUIDE =
   "Describe who you’re looking for with as few words as possible";
 const MORE_GUIDE = "Share a bit more context in 1-2 sentences";
+const ACCESS_CONTROL_MODE = "You can either make the post public or input a number of mails to share it to"
 const EXTERNAL_GUIDE = "Upload a pdf with more information";
 
 export default function Index() {
@@ -27,6 +30,8 @@ export default function Index() {
   const [openOverlay, setOpenOverlay] = useState(false);
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const [selected, setSelected] = useState(["papaya"]);
 
   const updateState = (name, value) => {
     setState((state) => ({
@@ -48,14 +53,15 @@ export default function Index() {
     }
   };
 
-  console.log({ file });
   const buttonIsDisabled = !(state.desire && state.details);
 
   const formatState = () => ({
     title: state.desire,
     details: state.details,
     durationInWeeks: state.duration,
-    url: formatURL(state.url),
+    url: formatURL(state.url), //make sure urls not preceeded by http/https are rectified so as not to cause errors
+    accessControlMode: state.public ? "public" : "private",
+    allowedEmails: state.allowedEmails
   });
 
   const formatURL = (url) => {
@@ -150,6 +156,33 @@ export default function Index() {
           ref={inputRef}
         />
         <div className="filename">{file?.name}</div>
+      </div>
+
+      <div className="textarea-group">
+        <h4 className="label" htmlFor="details">
+          Grant public access
+          <div data-tip={ACCESS_CONTROL_MODE} className="tooltip-wrapper">
+            <i class="fas fa-info-circle fonticon"></i>
+          </div>
+          <Toggle
+            defaultChecked={state.public}
+            icons={false}
+            onChange={() => {
+              updateState("public", !state.public);
+            }}
+          />
+        </h4>
+        {!state.public ? (
+          <TagsInput
+            value={state.allowedEmails}
+            onChange={(val) => updateState('allowedEmails', val)}
+            name="fruits"
+            placeHolder="Invite people by mail"
+            seprators={["Enter", " ", ","]}
+          />
+        ) : (
+          <></>
+        )}
       </div>
 
       <div onClick={validateForm} className="submit-button">
