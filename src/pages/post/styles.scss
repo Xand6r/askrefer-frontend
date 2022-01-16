@@ -5,6 +5,12 @@
     // margin-top: 16px;
     margin-top: 30px;
 
+    .filename{
+        font-family: 'Open Sans', sans-serif;
+        font-size: 12px;
+        margin-top: 3px;
+    }
+
     .submit-button {
         margin-top: 44px;
     }
@@ -84,5 +90,30 @@
                 font-size: 12px;
             }
         }
+    }
+}
+
+.upload-wrapper{
+    height: 150px;
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background-image: url("../../assets/svgs/upload.svg");
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: center;
+    cursor: pointer;
+    background-position: center;
+    background-origin: content-box;
+    padding: 17px;
+
+    &.__active{
+        background-image: url("../../assets/svgs/uploaded.svg");
     }
 }

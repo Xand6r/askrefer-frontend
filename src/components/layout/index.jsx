@@ -4,7 +4,6 @@ import "./styles.scss";
 
 const Layout = ({ children }) => {
   const [isMobile, setIsMobile] = useState(true);
-  console.log(children)
   const handleResizeScreen = useCallback(() => {
     if (window.innerWidth < 767) {
       setIsMobile(true);
