@@ -22,7 +22,8 @@ const CTA_TEXT = "Proceed";
 const TITLE_GUIDE =
   "Describe who you’re looking for with as few words as possible";
 const MORE_GUIDE = "Share a bit more context in 1-2 sentences";
-const ACCESS_CONTROL_MODE = "You can either make the post public or input a number of mails to share it to"
+const ACCESS_CONTROL_MODE =
+  "You can either make the post public or input a number of mails to share it to";
 const EXTERNAL_GUIDE = "Upload a pdf with more information";
 
 export default function Index() {
@@ -61,7 +62,7 @@ export default function Index() {
     durationInWeeks: state.duration,
     url: formatURL(state.url), //make sure urls not preceeded by http/https are rectified so as not to cause errors
     accessControlMode: state.public ? "public" : "private",
-    allowedEmails: state.allowedEmails
+    allowedEmails: state.allowedEmails,
   });
 
   const formatURL = (url) => {
@@ -150,7 +151,15 @@ export default function Index() {
         ></div>
         {/* hidden input for  file upload shadow */}
         <input
-          onChange={(e) => setFile(e.target.files[0])}
+          onChange={(e) => {
+            const file = e.target.files[0];
+            const { type } = file;
+            if (type === "application/pdf") {
+              setFile(file);
+            } else {
+              showErrorToast(`Invalid file type: ${type}, please upload a csv`);
+            }
+          }}
           style={{ display: "none" }}
           type="file"
           ref={inputRef}
@@ -175,7 +184,7 @@ export default function Index() {
         {!state.public ? (
           <TagsInput
             value={state.allowedEmails}
-            onChange={(val) => updateState('allowedEmails', val)}
+            onChange={(val) => updateState("allowedEmails", val)}
             name="fruits"
             placeHolder="Invite people by mail"
             seprators={["Enter", " ", ","]}
