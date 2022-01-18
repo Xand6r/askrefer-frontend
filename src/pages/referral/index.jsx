@@ -24,6 +24,7 @@ export default function Index(props) {
   const [post, setPost] = useState({});
   const [error, setError] = useState("");
   const [previewOpen, setPreviewOpen] = useState(true);
+  const [user, setUser] = useState(null);
 
   const paramId = props.match.params.id;
 
@@ -45,7 +46,7 @@ export default function Index(props) {
       {loading ? (
         <Skeleton style={{ height: DEFAULT_SKELETON_HEIGHT }} />
       ) : (
-        <PostCard post={post} />
+        <PostCard post={post} user={user} />
       )}
       {/* <img src={interviewImage} alt="poster" className="poster-image" /> */}
       <div className="post-ask">
@@ -55,11 +56,12 @@ export default function Index(props) {
       {/* section for the identity verification footer */}
       <Overlay
         open={previewOpen}
-        toggleOpen={() => previewOpen  && setPreviewOpen(false)}
+        toggleOpen={() => false}
         component={() => (
           <Preview
-            onSubmit={(post) => {
+            onSubmit={(post, user) => {
               setPost({ ...post, referralId: paramId });
+              setUser(user)
               setLoading(false);
               setPreviewOpen(false)
             }}

@@ -13,8 +13,9 @@ import { LINKEDIN_REGEXP } from "@/utilities/constants";
 import { postReq } from "@/api";
 import { useHistory } from "react-router";
 
-const CTA_TEXT = "Complete";
+const CTA_TEXT = "Proceed";
 const INITIAL_STATE = {
+  name: "",
   email: "",
   url: "",
   code: "",
@@ -44,8 +45,8 @@ export default function Index({ onSubmit, setError }) {
       if (post.key === state.code) {
         setTimeout(() => {
           setLoading(false);
-          onSubmit(post.data);
-        }, 1000);
+          onSubmit(post.data, state);
+        }, 1500);
       } else {
         setTimeout(() => {
           showErrorToast("Incorrect code!");
@@ -72,11 +73,12 @@ export default function Index({ onSubmit, setError }) {
           return showErrorToast(message, {
             autoClose: 5000,
           });
-        } else {
-          //   onSubmit(data);
-          setStage(1);
-          setPost(response);
+        } 
+        if (data.accessControlMode === "public") {
+            return onSubmit(data);
         }
+        setStage(1);
+        setPost(response);
       })
       .catch((err) => {
         showErrorToast(
@@ -89,7 +91,7 @@ export default function Index({ onSubmit, setError }) {
   };
 
   const validateState = () => {
-    const { email } = state;
+    const { email, name } = state;
     if (!email) {
       return showErrorToast(
         "Please fill in an email we can use to contact you!"
@@ -98,11 +100,14 @@ export default function Index({ onSubmit, setError }) {
     if (!validateEmail(email)) {
       return showErrorToast("Please fill in a valid email address");
     }
+    if(!name){
+      return  showErrorToast("Please fill in a valid name");
+    }
   };
 
   const allFieldsFilled =
     state.email &&
-    // state.url &&
+    state.name &&
     validateEmail(state.email);
   // validateLinkedIn(state.url);
   const buttonIsDisabled = !allFieldsFilled || loading;
@@ -126,6 +131,15 @@ export default function Index({ onSubmit, setError }) {
       <form action="javascript:void(0)">
         {!stage ? (
           <>
+          <div className="input__group">
+              <label htmlFor="">Name</label>
+              <input
+                type="text"
+                name="name"
+                onChange={changeState}
+                value={state.name}
+              />
+            </div>
             <div className="input__group">
               <label htmlFor="">Email</label>
               <input

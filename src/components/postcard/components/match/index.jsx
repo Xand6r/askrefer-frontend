@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Button from "@/components/button";
 import "@/styles/input.scss";
@@ -20,7 +20,7 @@ const INITIAL_STATE = {
     url: "",
 };
 
-export default function Index({ onSubmit, postId, link }) {
+export default function Index({ onSubmit, postId, link, user }) {
     const history = useHistory();
     const [state, setState] = useState(INITIAL_STATE);
     const [loading, setLoading] = useState(false);
@@ -32,6 +32,11 @@ export default function Index({ onSubmit, postId, link }) {
             [name]: value,
         }));
     };
+
+    useEffect(() => {
+        if(!user) return;
+        setState({...user});
+    }, [user]);
 
     const recommendSelf = () => {
         if (loading) return;
@@ -81,14 +86,6 @@ export default function Index({ onSubmit, postId, link }) {
         if (!validateEmail(email)) {
             return showErrorToast("Please fill in a valid email address");
         }
-        // if (!url) {
-        //     return showErrorToast(
-        //         "Please fill in your linkedIn url we can use to validate your identity!"
-        //     );
-        // }
-        // if (!validateLinkedIn(url)) {
-        //     return showErrorToast("Please enter a valid linkedIn profile URL");
-        // }
     };
 
     const allFieldsFilled =

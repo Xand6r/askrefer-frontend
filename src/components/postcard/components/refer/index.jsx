@@ -19,15 +19,17 @@ const INITIAL_STATE = {
     url: "",
 };
 
-export default function Index({ onSubmit, link, post }) {
+export default function Index({ onSubmit, link, post, user }) {
     const inputRef = useRef();
     const dropdownRef = useRef();
     const [state, setState] = useState(INITIAL_STATE);
     const [loading, setLoading] = useState(false);
     const [showDropdown, setShowDropdown] = useState(false);
+    const [attached, setAttached] = useState(false);
+
     useEffect(() => {
         setState({
-            ...state,
+            ...user,
             url: link,
         });
     }, [link]);
@@ -72,26 +74,34 @@ export default function Index({ onSubmit, link, post }) {
         }
     };
 
-    function attachUserToURL() {
-        if (loading) return;
+    function attachUserToURL(user) {
         setLoading(true);
+        setAttached(true)
         const referralId = link.split("/").reverse()[0];
         postReq("/referral/attach", {
-            email: state.email,
+            email: user.email,
             referralKey: referralId,
         })
             .then((res) => {
-                onSubmit();
+                console.log(res);
+                console.log("Attacked")
+                setAttached(true)
             })
             .catch((err) => {
-                showErrorToast(
-                    err.response?.data.error || "There was an unknown error"
+                console.log(
+                    err.response?.data.error || "There was an unknown error attaching user to link"
                 );
+                setAttached(false)
             })
             .finally(() => {
                 setLoading(false);
             });
     }
+
+    useEffect(() => {
+        if(!link || attached || loading) return;
+        attachUserToURL(user);
+    },[link]);
 
     const buttonDisabled =
         !state.email || !validateEmail(state.email) || loading || !state.url;
@@ -176,7 +186,7 @@ export default function Index({ onSubmit, link, post }) {
                         </div>
                     </div>
                 </div>
-                <div className="input__group">
+                {/* <div className="input__group">
                     <label htmlFor="">Email Address</label>
                     <input
                         type="text"
@@ -195,11 +205,11 @@ export default function Index({ onSubmit, link, post }) {
                         onChange={changeState}
                         value={state.name}
                     />
-                </div>
+                </div> */}
                 <div onClick={validateInputs}>
                     <Button
                         text={CTA_TEXT}
-                        onClick={attachUserToURL}
+                        onClick={onSubmit}
                         disabled={buttonDisabled}
                         loading={loading}
                     />

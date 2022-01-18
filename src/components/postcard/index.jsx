@@ -27,7 +27,7 @@ const INITIAL_STATE = {
 
 const TIMEOUT_DURATION = 1500;
 
-export default function Index({ post }) {
+export default function Index({ post, user }) {
   const [showPdf, setShowPdf] = useState(false);
   const [state, setState] = useState(INITIAL_STATE);
   const [yes, setYes] = useState(false);
@@ -177,17 +177,14 @@ export default function Index({ post }) {
       </div>
       <div className="divider" />
       <div className="bottom_section">
-        <div onClick={onSubmitNo} className="action_button --no">
-          <h5>Nope, sorry</h5>
-        </div>
         <div onClick={generateReferral} className="action_button --maybe">
-          <h5>I know the guy</h5>
+          <h5>Share</h5>
         </div>
         <div
           onClick={() => !loadingLink && setYes(true)}
           className="action_button --yes"
         >
-          <h5>I am your guy</h5>
+          <h5>Shortlist me</h5>
         </div>
       </div>
       {/* for yes */}
@@ -195,7 +192,7 @@ export default function Index({ post }) {
         open={yes}
         toggleOpen={() => yes && setYes(false)}
         component={() => (
-          <Match postId={state.postId} link={refLink} onSubmit={onSubmitYes} />
+          <Match user={user} postId={state.postId} link={refLink} onSubmit={onSubmitYes} />
         )}
       />
       {/* for maybe */}
@@ -203,7 +200,7 @@ export default function Index({ post }) {
         open={maybe}
         toggleOpen={() => maybe && setMaybe(false)}
         component={() => (
-          <Refer link={refLink} post={state} onSubmit={onSubmitMaybe} />
+          <Refer user={user} link={refLink} post={state} onSubmit={onSubmitMaybe} />
         )}
       />
       {/* for vieweing pdf */}
