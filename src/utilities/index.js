@@ -8,15 +8,15 @@ import { LINKEDIN_REGEXP, TOAST_INITIALIZERS } from "./constants";
 /**
  * A utility function used to show an error toast
  */
-export const showErrorToast = (text) => {
-    toast.error(text, TOAST_INITIALIZERS);
+export const showErrorToast = (text, params = {}) => {
+    toast.error(text, {...TOAST_INITIALIZERS, ...params});
 };
 
 /**
  * A utility function to show a success toast
  */
-export const showSuccessToast = (text) => {
-    toast.success(text, TOAST_INITIALIZERS);
+export const showSuccessToast = (text, params) => {
+    toast.success(text, {...TOAST_INITIALIZERS, ...params});
 };
 
 /**
