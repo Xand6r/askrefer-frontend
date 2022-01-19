@@ -1,14 +1,16 @@
 import moment from "moment";
-import { getReq } from "@/api";
 import { useHistory } from "react-router-dom";
 import { useState, useEffect } from "react";
+import Skeleton from "react-loading-skeleton";
 
+import { getReq, postReq } from "@/api";
 import PdfViewer from "@/components/pdfModal";
-import Match from "./components/match";
-import Refer from "./components/refer";
 import Overlay from "@/components/overlay";
 import { showSuccessToast } from "@/utilities";
 import { getAvatarDetails, gotoURL, showErrorToast } from "@/utilities";
+
+import Match from "./components/match";
+import Refer from "./components/refer";
 import CircularProgressSpinner from "../loader";
 
 import "./styles.scss";
@@ -23,9 +25,11 @@ const INITIAL_STATE = {
   postId: "",
   referralId: "",
   userUrl: "",
+  email: "",
 };
 
 const TIMEOUT_DURATION = 1500;
+const DEFAULT_SKELETON_HEIGHT = "50px";
 
 export default function Index({ post, user }) {
   const [showPdf, setShowPdf] = useState(false);
@@ -34,6 +38,7 @@ export default function Index({ post, user }) {
   const [maybe, setMaybe] = useState(false);
   const [loadingLink, setLoadingLink] = useState(false);
   const [refLink, setrefLink] = useState("");
+  const [stats, setStats] = useState(null);
 
   const history = useHistory();
   console.log({ post });
@@ -47,7 +52,7 @@ export default function Index({ post, user }) {
       url,
       _id,
       referralId,
-      owner: { fullName = "", url: userUrl = "" },
+      owner: { fullName = "", url: userUrl = "", email },
       owner,
     } = post;
     setState({
@@ -61,8 +66,20 @@ export default function Index({ post, user }) {
       referralId,
       postId: _id,
       userUrl,
+      email,
     });
   }, []);
+
+  console.log({ stats });
+  // get the stats of the owner of this page
+  useEffect(() => {
+    if (!Boolean(state.email) || stats) return;
+    (async function fetchStatistics() {
+      const { email } = state;
+      const { data: stats } = await postReq("/user/statistics", { email });
+      setStats(stats);
+    })();
+  }, [state]);
 
   const avatarDetails = getAvatarDetails(state.fullName);
 
@@ -134,7 +151,8 @@ export default function Index({ post, user }) {
   // moment
   return (
     <div id="post-card">
-      <div className="top_section">
+      <div className="top-nav" />
+      <div className="content-body">
         <div className="poster_details">
           <div
             style={{
@@ -147,16 +165,71 @@ export default function Index({ post, user }) {
             <h4>{avatarDetails.initials}</h4>
           </div>
           <div className="extra_details">
-            <h5
+            <h3
               onClick={gotoOwnerReference}
               style={{ cursor: state.userUrl ? "pointer" : "text" }}
               className="poster_details__text"
             >
               {state.fullName}
-            </h5>
-            <h6>Looking for {state.title}</h6>
+            </h3>
+            <h6>{state.title}</h6>
           </div>
         </div>
+
+        {/* section for the stats */}
+        {stats ? (
+          <div>
+            <div className="stats_details">
+              <div className="one_detail">
+                <h2> {stats.postcount} </h2>
+                <h5>Posts</h5>
+              </div>
+
+              <div className="one_detail">
+                <h2> {stats.referralCount} </h2>
+                <h5>Referrals</h5>
+              </div>
+
+              <div className="one_detail">
+                <h2> {stats.totalAccepted} </h2>
+                <h5>Hires</h5>
+              </div>
+            </div>
+
+            <div className="action_details">
+              <div onClick={generateReferral} className="action_button --maybe">
+                <h5>Share</h5>
+              </div>
+              <div
+                onClick={() => !loadingLink && setYes(true)}
+                className="action_button --yes"
+              >
+                <h5>Shortlist me</h5>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <Skeleton style={{ height: DEFAULT_SKELETON_HEIGHT }} />
+        )}
+        {/* section for the stats */}
+
+        {/* section for the actual post */}
+        <div className="desire_details_wrapper">
+          <div className="desire_details">
+            <h4>More details</h4>
+            <h5>{state.text}</h5>
+          </div>
+        </div>
+        {/* section for the actual post */}
+
+        {/* section for action to be taken */}
+        {/* section for action to be taken */}
+
+        {/* section to display pdfs */}
+        {/* section to display pdfs */}
+      </div>
+
+      {/* <div className="top_section">
         <div className="post_content">
           <h5>
             {state.text}
@@ -177,22 +250,19 @@ export default function Index({ post, user }) {
       </div>
       <div className="divider" />
       <div className="bottom_section">
-        <div onClick={generateReferral} className="action_button --maybe">
-          <h5>Share</h5>
-        </div>
-        <div
-          onClick={() => !loadingLink && setYes(true)}
-          className="action_button --yes"
-        >
-          <h5>Shortlist me</h5>
-        </div>
-      </div>
+        
+      </div> */}
       {/* for yes */}
       <Overlay
         open={yes}
         toggleOpen={() => yes && setYes(false)}
         component={() => (
-          <Match user={user} postId={state.postId} link={refLink} onSubmit={onSubmitYes} />
+          <Match
+            user={user}
+            postId={state.postId}
+            link={refLink}
+            onSubmit={onSubmitYes}
+          />
         )}
       />
       {/* for maybe */}
@@ -200,7 +270,12 @@ export default function Index({ post, user }) {
         open={maybe}
         toggleOpen={() => maybe && setMaybe(false)}
         component={() => (
-          <Refer user={user} link={refLink} post={state} onSubmit={onSubmitMaybe} />
+          <Refer
+            user={user}
+            link={refLink}
+            post={state}
+            onSubmit={onSubmitMaybe}
+          />
         )}
       />
       {/* for vieweing pdf */}
