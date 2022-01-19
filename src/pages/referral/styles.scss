@@ -1,24 +1,25 @@
 @import "@/styles/variables.scss";
 
-#referral-page{
-    // padding: 0 $padding-x;
-    // margin-top: 21px;
-    position: relative;
+#referral-page {
+  // padding: 0 $padding-x;
+  // margin-top: 21px;
+  position: relative;
 
-    img.poster-image{
-        height: 215px;
-        position: absolute;
-        top: 267px;
-        z-index: -1;
-        margin-left: calc(50% - 155px);
-    }
+  img.poster-image {
+    height: 215px;
+    position: absolute;
+    top: 267px;
+    z-index: -1;
+    margin-left: calc(50% - 155px);
+  }
 
-    .post-ask{
-        width: 168px;
-        box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
-        border-radius: 26px;
-        position: absolute;
-        right: $padding-x;
-        top: 70vh;
-    }
+  .post-ask {
+    width: 168px;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+    border-radius: 26px;
+    right: $padding-x;
+    position: fixed;
+    right: 16px;
+    top: 85vh;
+  }
 }

@@ -1,141 +1,8 @@
 @import "@/styles/variables.scss";
 
 #post-card {
-  // min-height: 225px;
   width: 100%;
-  // background-color: black;
-  // box-shadow: 0px 0px 6px rgba(136, 132, 132, 0.16);
-
-  // .top_section {
-  //   padding: 12px;
-  //   padding-bottom: 16px;
-  //   .auxilliary_content {
-  //     display: flex;
-  //     justify-content: space-between;
-  //     margin-top: 16px;
-  //     h6 {
-  //       font-weight: 400;
-  //     }
-  //     h6.auxilliary_content__posted {
-  //       color: #a3a5ad;
-  //     }
-  //     h6.auxilliary_content__expiry {
-  //       color: #ed6767;
-  //     }
-  //   }
-
-  //   .post_content {
-  //     h5 {
-  //       font-weight: 300;
-  //       line-height: 24px;
-  //       display: block;
-  //       span {
-  //         text-decoration: underline;
-  //         color: #2052d8;
-  //         cursor: pointer;
-  //         margin-left: 5px;
-  //       }
-  //     }
-
-  //     h5:first-letter {
-  //       text-transform: uppercase;
-  //     }
-  //   }
-
-  //   .extra_details {
-  //     h6 {
-  //       display: block;
-  //       margin-top: 1px;
-  //     }
-
-  //     h6:first-letter {
-  //       text-transform: uppercase;
-  //     }
-  //   }
-
-  //   .poster_details {
-  //     display: flex;
-  //     align-items: center;
-  //     margin-bottom: 12px;
-  //     &__img {
-  //       color: white;
-  //       height: 40px;
-  //       width: 40px;
-  //       border-radius: 50%;
-  //       display: flex;
-  //       justify-content: center;
-  //       align-items: center;
-  //       text-transform: uppercase;
-  //       margin-right: 10px;
-  //       h4 {
-  //         font-weight: bold;
-  //         letter-spacing: 1px;
-  //       }
-  //     }
-  //     &__text {
-  //       font-weight: 500;
-  //     }
-  //   }
-  // }
-
-  // .pdf__viewercontainer {
-  //   position: fixed;
-  //   top: 0;
-  //   left: 0;
-  //   height: 100vh;
-  //   width: 100vw;
-  //   background: rgba(0, 0, 0, 0.8);
-  //   display: flex;
-  //   justify-content: center;
-  //   align-items: center;
-  //   z-index: 1000000;
-
-  //   .react-pdf__Page__canvas {
-  //     width: 90vw !important;
-  //     object-fit: contain !important;
-  //     height: auto !important;
-  //   }
-  // }
-
-  // .close__icon {
-  //   position: absolute;
-  //   top: 25px;
-  //   left: 25px;
-  //   cursor: pointer;
-  // }
-
-  // .pagination__wrapper {
-  //   display: flex;
-  //   justify-content: space-between;
-  //   color: #7d4fe0;
-  //   font-family: "Open Sans", sans-serif;
-  //   font-size: 13px;
-  //   margin-top: 10px;
-
-  //   .navigation {
-  //     display: flex;
-  //     text-decoration: underline;
-  //     gap: 15px;
-  //     cursor: pointer;
-  //     span {
-  //       height: 40px;
-  //       display: inline-flex;
-  //       justify-content: center;
-  //       align-items: center;
-  //     }
-  //   }
-
-  //   .pages{
-  //       height: 40px;
-  //       display: inline-flex;
-  //       justify-content: center;
-  //       align-items: center;
-  //   }
-  // }
-}
-
-#post-card {
-  font-family: 'Open Sans', sans-serif !important;
+  font-family: "Open Sans", sans-serif !important;
   .top-nav {
     height: 136px;
     width: 100%;
@@ -145,7 +12,7 @@
   .content-body {
     position: relative;
     top: -40px;
-    
+
     .poster_details {
       padding-left: $padding-x;
       padding-right: $padding-x;
@@ -184,8 +51,8 @@
       justify-content: space-between;
       margin-bottom: 25px;
 
-      .one_detail{
-        h2{
+      .one_detail {
+        h2 {
           font-weight: 500;
         }
       }
@@ -197,20 +64,17 @@
       justify-content: space-between;
       align-items: center;
       padding: 16px;
-  
-      @media (max-width: 380px) {
-        flex-direction: column;
-      }
+      flex-direction: column;
+
       .action_button {
         padding: 8px;
         cursor: pointer;
         border-radius: 5px;
         transition: $transition-speed;
-        @media (max-width: 380px) {
-          width: 100%;
-          text-align: center;
-          margin-bottom: 10px;
-        }
+        width: 100%;
+        text-align: center;
+        margin-bottom: 10px;
+
         &.--no {
           background: #fd4e4e;
           &:hover {
@@ -233,16 +97,16 @@
     }
 
     .desire_details_wrapper {
-      background: #F6F6F6;
+      background: #f6f6f6;
       padding-top: 10px;
       padding-bottom: 10px;
 
-      .desire_details{
+      .desire_details {
         padding: $padding-x;
         min-height: 20px;
         background: white;
 
-        h4{
+        h4 {
           font-weight: bold;
           margin-bottom: 10px;
           font-size: 15px;
@@ -251,22 +115,90 @@
     }
 
     .attachment_details_wrapper {
-      background: #F6F6F6;
+      background: #f6f6f6;
       padding-top: 10px;
       padding-bottom: 10px;
 
-      .attachment_details{
+      .attachment_details {
         padding: $padding-x;
         min-height: 20px;
         background: white;
 
-        h4{
+        h4 {
           font-weight: bold;
           margin-bottom: 10px;
           font-size: 15px;
         }
+
+        .attachments {
+          margin-top: 15px;
+          height: 270px;
+          overflow: hidden;
+          cursor: pointer;
+          .react-pdf__Page__canvas {
+            width: 200px !important;
+            object-fit: contain !important;
+            height: auto !important;
+          }
+        }
       }
     }
-  
+  }
+
+  .pdf__viewercontainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000000;
+    .react-pdf__Page__annotations {
+      display: none;
+    }
+    .react-pdf__Page__canvas {
+      width: 90vw !important;
+      object-fit: contain !important;
+      height: auto !important;
+    }
+
+    .close__icon {
+      position: absolute;
+      top: 25px;
+      left: 25px;
+      cursor: pointer;
+    }
+
+    .pagination__wrapper {
+      display: flex;
+      justify-content: space-between;
+      color: #7d4fe0;
+      font-family: "Open Sans", sans-serif;
+      font-size: 13px;
+      margin-top: 10px;
+
+      .navigation {
+        display: flex;
+        text-decoration: underline;
+        gap: 15px;
+        cursor: pointer;
+        span {
+          height: 40px;
+          display: inline-flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+
+      .pages {
+        height: 40px;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
   }
 }

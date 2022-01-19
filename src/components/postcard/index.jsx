@@ -2,6 +2,7 @@ import moment from "moment";
 import { useHistory } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Skeleton from "react-loading-skeleton";
+import { Document, Page } from "react-pdf/dist/esm/entry.webpack";
 
 import { getReq, postReq } from "@/api";
 import PdfViewer from "@/components/pdfModal";
@@ -29,7 +30,7 @@ const INITIAL_STATE = {
 };
 
 const TIMEOUT_DURATION = 1500;
-const DEFAULT_SKELETON_HEIGHT = "50px";
+const DEFAULT_SKELETON_HEIGHT = "100px";
 
 export default function Index({ post, user }) {
   const [showPdf, setShowPdf] = useState(false);
@@ -147,7 +148,7 @@ export default function Index({ post, user }) {
 
   const expiresIn = timeDifferenceText(expiryDate.diff(creationDate, "day"));
   const postedAt = timeDifferenceText(today.diff(creationDate, "day"));
-
+  const isPdf = state.url && state.url.endsWith("pdf");
   // moment
   return (
     <div id="post-card">
@@ -222,13 +223,21 @@ export default function Index({ post, user }) {
         </div>
         {/* section for the actual post */}
 
-
-        {/* section to display pdfs */}
-        <div className="attachment_details_wrapper">
-          <div className="attachment_details">
-            <h4 onClick={onViewMore}>Attached Media</h4>
+        {/* section to display pdf attachments*/}
+        {isPdf ? (
+          <div className="attachment_details_wrapper">
+            <div className="attachment_details">
+              <h4>Attached Media</h4>
+              <div onClick={onViewMore} className="attachments">
+                <Document file={state.url}>
+                  <Page pageNumber={1} />
+                </Document>
+              </div>
+            </div>
           </div>
-        </div>
+        ) : (
+          <></>
+        )}
         {/* section to display pdfs */}
       </div>
 
@@ -282,11 +291,13 @@ export default function Index({ post, user }) {
         )}
       />
       {/* for vieweing pdf */}
-      <PdfViewer
-        url={state.url}
-        open={showPdf}
-        onClose={() => setShowPdf(false)}
-      />
+      {state.url && (
+        <PdfViewer
+          url={state.url}
+          open={showPdf}
+          onClose={() => setShowPdf(false)}
+        />
+      )}
       {/* for vieweing pdf */}
     </div>
   );
