@@ -249,5 +249,24 @@
         }
       }
     }
+
+    .attachment_details_wrapper {
+      background: #F6F6F6;
+      padding-top: 10px;
+      padding-bottom: 10px;
+
+      .attachment_details{
+        padding: $padding-x;
+        min-height: 20px;
+        background: white;
+
+        h4{
+          font-weight: bold;
+          margin-bottom: 10px;
+          font-size: 15px;
+        }
+      }
+    }
+  
   }
 }

@@ -222,10 +222,13 @@ export default function Index({ post, user }) {
         </div>
         {/* section for the actual post */}
 
-        {/* section for action to be taken */}
-        {/* section for action to be taken */}
 
         {/* section to display pdfs */}
+        <div className="attachment_details_wrapper">
+          <div className="attachment_details">
+            <h4 onClick={onViewMore}>Attached Media</h4>
+          </div>
+        </div>
         {/* section to display pdfs */}
       </div>
 

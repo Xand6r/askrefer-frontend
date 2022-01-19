@@ -15,6 +15,7 @@ const PdfViewer = ({ url, onClose, open }) => {
     setLoaded(true);
   }
   useClickAway(pdfRef, onClose);
+  console.log({url})
 
   const nextPage = () => setPageNumber((p) => p + 1);
   const previousPage = () => setPageNumber((p) => p - 1);
