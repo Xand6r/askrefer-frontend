@@ -33,8 +33,8 @@ const PdfViewer = ({ url, onClose, open }) => {
         {numPages && (
           <div className="pagination__wrapper">
             <div className="navigation">
-              {isPreviousPage && <span onClick={previousPage}>previous page</span>}
-              {isNextPage && <span onClick={nextPage}>next page</span>}
+              {isPreviousPage && <span style={{zIndex: 10000}} onClick={previousPage}>previous page</span>}
+              {isNextPage && <span style={{zIndex: 10000}} onClick={nextPage}>next page</span>}
             </div>
             <div className="pages">
               Page {pageNumber} of {numPages}
