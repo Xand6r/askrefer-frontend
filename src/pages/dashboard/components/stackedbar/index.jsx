@@ -9,35 +9,45 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
+  ResponsiveContainer,
+  Label,
 } from "recharts";
 
-export default function App({ columnName = "", columnLabel = "", data = [] }) {
+export default function BarChartComponent({
+  columnName = "",
+  columnLabel = "",
+  chartLabel = "",
+  data = [],
+}) {
   return (
-    <BarChart
-      width={500}
-      height={300}
-      data={data}
-
-    >
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis
-        angle={-45}
-        textAnchor="end" 
-        minTickGap={-200}
-        // axisLine={false}
-        dataKey="name"
-        height={50}
-        tick={{fontSize: 12}} 
-      />
-      <YAxis />
-      <Tooltip />
-      {/* <Legend verticalAlign="middle" align="right" /> */}
-      <Bar
-        name={columnLabel}
-        dataKey={columnName}
-        stackId="a"
-        fill={randomColor({ seed: columnName })}
-      />
-    </BarChart>
+    <ResponsiveContainer width="100%" height={300}>
+      <BarChart data={data}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis
+          angle={-25}
+          textAnchor="end"
+          minTickGap={-12}
+          // axisLine={false}
+          dataKey="name"
+          height={80}
+          tick={{ fontSize: 12 }}
+        >
+          <Label
+            value={chartLabel}
+            offset={0}
+            position="insideBottom"
+          />
+        </XAxis>
+        <YAxis width={20} />
+        <Tooltip />
+        <Legend verticalAlign="top" align="right" />
+        <Bar
+          name={columnLabel}
+          dataKey={columnName}
+          stackId="a"
+          fill={randomColor({ seed: columnName })}
+        />
+      </BarChart>
+    </ResponsiveContainer>
   );
 }

@@ -6,7 +6,7 @@ import { postReq, getReq } from "@/api";
 import { decodeToken, validateEmail, showErrorToast } from "@/utilities";
 
 // import required components
-import StackedBar from "./components/stackedbar";
+import BarChart from "./components/stackedbar";
 // import required components
 
 import "./styles.scss";
@@ -21,17 +21,30 @@ export default function Index({ match }) {
 
   // state for the graphs
   const [viewsByDay, setViewsByDay] = useState([]);
+  const [viewsByUser, setViewsByUser] = useState([]);
 
   const triggerError = () => {
     setError(true);
   };
 
   const fetchViewsByDay = (postId) => {
-    postReq("/dashboard/views", {
+    postReq("/dashboard/viewsbyday", {
       postId,
     })
       .then(({ data }) => {
         setViewsByDay(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const fetchViewsByUser = (postId) => {
+    postReq("/dashboard/viewsbyowner", {
+      postId,
+    })
+      .then(({ data }) => {
+        setViewsByUser(data);
       })
       .catch((err) => {
         console.log(err);
@@ -44,8 +57,11 @@ export default function Index({ match }) {
    */
   useEffect(() => {
     if (!value || !value.value) return;
+    const { value: postId } = value;
     // fetch all of the views by day
-    fetchViewsByDay(value.value);
+    fetchViewsByDay(postId);
+    // fetch all the views by user
+    fetchViewsByUser(postId);
   }, [value]);
 
   /**
@@ -107,16 +123,28 @@ export default function Index({ match }) {
 
       {/* fetch the details for the views by day breakdown */}
       {viewsByDay.length ? (
-        <StackedBar
+        <BarChart
           columnName="views"
           columnLabel="Total views per day"
+          chartLabel="Total views of posts per day"
           data={viewsByDay}
         />
       ) : (
         ""
       )}
       {/* fetch the details for the views by day breakdown */}
-
+      {viewsByUser.length ? (
+        <div style={{marginTop: "20px"}}>
+          <BarChart
+            columnName="views"
+            columnLabel="Total views per day"
+            chartLabel="Total views of posts per day"
+            data={viewsByUser}
+          />
+        </div>
+      ) : (
+        ""
+      )}
       {/* based on the selected item fetch the statistics */}
     </div>
   );

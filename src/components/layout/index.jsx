@@ -28,7 +28,7 @@ const Layout = ({ children }) => {
     return () => window.removeEventListener("resize", handleResizeScreen);
   });
 
-  if (!isMobile) {
+  if (isMobile) {
     return (
       <>
         <div className="layout-app-wrapper">{children}</div>
