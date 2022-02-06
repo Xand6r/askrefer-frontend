@@ -4,6 +4,18 @@
 import { toast } from "react-toastify";
 import randomColor from "randomcolor"; // import the script
 import { LINKEDIN_REGEXP, TOAST_INITIALIZERS } from "./constants";
+import jwt_decode from "jwt-decode";
+
+
+/**
+ * A utility function used to decode jwt tokens
+ * @param {*} text 
+ * @param {*} params 
+ */
+export const decodeToken = (token) => {
+    return jwt_decode(token);
+};
+
 
 /**
  * A utility function used to show an error toast
