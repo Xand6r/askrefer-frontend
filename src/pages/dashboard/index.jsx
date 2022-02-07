@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Select from "react-select";
 
 import Error404 from "@/pages/notFound";
@@ -19,6 +19,9 @@ export default function Index({ match }) {
   const [error, setError] = useState(null);
   const [postsLoading, setPostsLoading] = useState(false);
   const [value, setValue] = useState(null);
+  const [showDropdown, setShowDropdown] = useState(null);
+
+  const dropdownRef = useRef(null);
 
   // state for the graphs
   const [viewsByDay, setViewsByDay] = useState([]);
@@ -110,14 +113,29 @@ export default function Index({ match }) {
   return (
     <div id="dashboard-page">
       <div className="header__tab">
-        <Select
-          isLoading={postsLoading}
-          placeholder="Select your post"
-          options={posts}
-          isDisabled={postsLoading}
-          onChange={(newValue) => setValue(newValue)}
-          value={value}
-        />
+        <div className="header__select">
+          <Select
+            isLoading={postsLoading}
+            placeholder="Select your post"
+            options={posts}
+            isDisabled={postsLoading}
+            onChange={(newValue) => setValue(newValue)}
+            value={value}
+          />
+        </div>
+        <div className="header__dropdown">
+          <i class="fa fa-2x fa-bars" aria-hidden="true"></i>
+          <div className="options__dropdown">
+            <div className="dd-item">
+              <i class="fa fa-pencil" aria-hidden="true"></i>
+              <span>Edit Post</span>
+            </div>
+            <div className="dd-item">
+              <i class="fa fa-trash" aria-hidden="true"></i>
+              <span>Delete Post</span>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* based on the selected item fetch the statistics */}
@@ -131,11 +149,11 @@ export default function Index({ match }) {
           data={viewsByDay}
         />
       ) : (
-        ""
+        <p style={{ textAlign: "center" }}>This Job has no views yet</p>
       )}
       {/* fetch the details for the views by day breakdown */}
       {viewsByUser.length ? (
-        <div style={{marginTop: "20px"}}>
+        <div style={{ marginTop: "20px" }}>
           <UserBarChart
             columnName="views"
             columnLabel="views per referrrer"
