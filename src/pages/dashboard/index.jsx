@@ -6,7 +6,8 @@ import { postReq, getReq } from "@/api";
 import { decodeToken, validateEmail, showErrorToast } from "@/utilities";
 
 // import required components
-import BarChart from "./components/stackedbar";
+import DayBarChart from "./components/dayBar";
+import UserBarChart from "./components/referrerBar";
 // import required components
 
 import "./styles.scss";
@@ -123,9 +124,9 @@ export default function Index({ match }) {
 
       {/* fetch the details for the views by day breakdown */}
       {viewsByDay.length ? (
-        <BarChart
+        <DayBarChart
           columnName="views"
-          columnLabel="Total views per day"
+          columnLabel="views per day"
           chartLabel="Total views of posts per day"
           data={viewsByDay}
         />
@@ -135,10 +136,10 @@ export default function Index({ match }) {
       {/* fetch the details for the views by day breakdown */}
       {viewsByUser.length ? (
         <div style={{marginTop: "20px"}}>
-          <BarChart
+          <UserBarChart
             columnName="views"
-            columnLabel="Total views per day"
-            chartLabel="Total views of posts per day"
+            columnLabel="views per referrrer"
+            chartLabel="Views of posts per referrrer"
             data={viewsByUser}
           />
         </div>
