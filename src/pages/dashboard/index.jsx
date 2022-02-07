@@ -21,7 +21,7 @@ const DEFAULT_OPTIONS = [];
 export default function Index({ match }) {
   const [posts, setPosts] = useState(DEFAULT_OPTIONS);
   const [error, setError] = useState(null);
-  const [postsLoading, setPostsLoading] = useState(true);
+  const [postsLoading, setPostsLoading] = useState(false);
   const [value, setValue] = useState(null);
   const [showDropdown, setShowDropdown] = useState(null);
   const [openConfirmOverlay, setOpenConfirmOverlay] = useState(null);
@@ -219,7 +219,7 @@ export default function Index({ match }) {
         )}
         open={openConfirmOverlay}
         toggleOpen={() =>
-          openConfirmOverlay && !loading && setOpenConfirmOverlay(true)
+          openConfirmOverlay && !loading && setOpenConfirmOverlay(!openConfirmOverlay)
         }
       />
       {/* include the popup component */}
