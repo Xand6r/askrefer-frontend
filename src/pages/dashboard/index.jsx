@@ -20,7 +20,8 @@ import PostEditWindow from "./components/editPost";
 // import required components
 
 import "./styles.scss";
-import CircularProgressSpinner from "@/components/blueLoader";
+import CircularBlueProgressSpinner from "@/components/blueLoader";
+import CircularProgressSpinner from "@/components/loader";
 import axios from "axios";
 
 const DEFAULT_OPTIONS = [];
@@ -57,8 +58,7 @@ export default function Index({ match }) {
   };
 
   const rejectApplicant = async (link, userId) => {
-    console.log(link);
-    axios
+    await axios
       .get(link)
       .then((res) => {
         showSuccessToast(
@@ -76,7 +76,7 @@ export default function Index({ match }) {
   };
 
   const acceptApplicant = async (link, userId) => {
-    axios
+    await axios
       .get(link)
       .then((res) => {
         showSuccessToast(
@@ -220,6 +220,54 @@ export default function Index({ match }) {
     return <Error404 />;
   }
 
+  const OneCandidate = ({ oac }) => {
+    const [loading, setLoading] = useState(false);
+
+    const actionApplicant = async (url, identifier, action) => {
+      if (loading) return;
+      setLoading(true);
+      try {
+        if (action === "accept") {
+          await acceptApplicant(url, identifier);
+        } else {
+          await rejectApplicant(url, identifier);
+        }
+      } catch (err) {
+        showErrorToast("There was an error:", err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    return (
+      <div className="one__candidate">
+        <span
+          className={
+            oac.url ? "active__candidate candidate__name" : "candidate__name"
+          }
+          onClick={() => {
+            oac.url && window.open(oac.url, "_blank");
+          }}
+        >
+          {oac.fullName}
+        </span>
+        <div className="candidate__actions">
+          <span
+            onClick={() => actionApplicant(oac.acceptURL, oac.email, "accept")}
+            className="actions__accept"
+          >
+            {loading ? <CircularProgressSpinner /> : "Accept"}
+          </span>
+          <span
+            onClick={() => actionApplicant(oac.rejectURL, oac.email, "decline")}
+            className="actions__reject"
+          >
+            {loading ? <CircularProgressSpinner /> : "Reject"}
+          </span>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div id="dashboard-page">
       <div className="header__tab">
@@ -259,7 +307,7 @@ export default function Index({ match }) {
       {/* fetch the details for the views by day breakdown */}
       {postsLoading ? (
         <div style={{ display: "flex", justifyContent: "center" }}>
-          <CircularProgressSpinner />
+          <CircularBlueProgressSpinner />
         </div>
       ) : (
         <>
@@ -296,52 +344,20 @@ export default function Index({ match }) {
           )}
 
           {/* render details about the user who have applied  */}
-          {appliedCandidates.length ? (
-            <div className="candidates__applied">
-              <p>Shortlist candidates</p>
-              {/* render list of all available candidates to shortlist */}
-              <div className="all__candidates">
-                {appliedCandidates.map((oac) => (
-                  <div className="one__candidate">
-                    <span
-                      className={
-                        oac.url
-                          ? "active__candidate candidate__name"
-                          : "candidate__name"
-                      }
-                      onClick={() => {
-                        oac.url && window.open(oac.url, "_blank");
-                      }}
-                    >
-                      {oac.fullName}
-                    </span>
-                    <div className="candidate__actions">
-                      <span
-                        onClick={() =>
-                          acceptApplicant(oac.acceptURL, oac.email)
-                        }
-                        className="actions__accept"
-                      >
-                        Accept
-                      </span>
-                      <span
-                        onClick={() =>
-                          rejectApplicant(oac.rejectURL, oac.email)
-                        }
-                        className="actions__reject"
-                      >
-                        Reject
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
+          <div className="candidates__applied">
+            <p>Shortlist candidates</p>
+            {/* render list of all available candidates to shortlist */}
+            <div className="all__candidates">
+              {appliedCandidates.map((oac) => (
+                <OneCandidate oac={oac} />
+              ))}
+              {!appliedCandidates.length && (
+                <p style={{ textAlign: "center", marginTop: "20px" }}>
+                  This Job has no applicants yet
+                </p>
+              )}
             </div>
-          ) : (
-            <p style={{ textAlign: "center", marginTop: "20px" }}>
-              This Job has no applicants yet
-            </p>
-          )}
+          </div>
           {/* render details about the user who have applied  */}
         </>
       )}

@@ -24,9 +24,9 @@ export default function BarChartComponent({
       <BarChart data={data}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis
-          angle={-10}
+          angle={-15}
           textAnchor="end"
-          minTickGap={-12000}
+          minTickGap={-120}
           // axisLine={false}
           dataKey="name"
           height={80}

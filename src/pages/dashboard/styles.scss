@@ -29,10 +29,11 @@
 
   .candidates__applied {
     align-items: center;
-    p {
+    & > p {
       margin-top: 40px;
       margin-bottom: 10px;
       text-align: center;
+      font-weight: bold;
     }
 
     .one__candidate {
