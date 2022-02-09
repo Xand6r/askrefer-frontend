@@ -52,13 +52,14 @@ export default function Index({ match }) {
 
   const removeApplicant = (applicantId) => {
     setAppliedCandidates(
-      appliedCandidates.filter(a => a.email !== applicantId)
-    )
+      appliedCandidates.filter((a) => a.email !== applicantId)
+    );
   };
 
   const rejectApplicant = async (link, userId) => {
-    console.log(link)
-    axios.get(link)
+    console.log(link);
+    axios
+      .get(link)
       .then((res) => {
         showSuccessToast(
           "You have sucesfully rejected this applicant, they will be notified"
@@ -66,13 +67,17 @@ export default function Index({ match }) {
         removeApplicant(userId);
       })
       .catch((err) => {
-        console.log(err)
-        showErrorToast("There was an error rejecting this candidate:", err.message);
+        console.log(err);
+        showErrorToast(
+          "There was an error rejecting this candidate:",
+          err.message
+        );
       });
   };
 
   const acceptApplicant = async (link, userId) => {
-    axios.get(link)
+    axios
+      .get(link)
       .then((res) => {
         showSuccessToast(
           "You have sucesfully accepted this applicant, they will be notified"
@@ -80,8 +85,11 @@ export default function Index({ match }) {
         removeApplicant(userId);
       })
       .catch((err) => {
-        console.log(err)
-        showErrorToast("There was an error accepting this candidate:", err.message);
+        console.log(err);
+        showErrorToast(
+          "There was an error accepting this candidate:",
+          err.message
+        );
       });
   };
   const fetchViewsByDay = async (postId) => {
@@ -263,7 +271,7 @@ export default function Index({ match }) {
               data={viewsByDay}
             />
           ) : (
-            <p style={{ textAlign: "center" }}>This Job has no views yet</p>
+            ""
           )}
           {/* fetch the details for the views by day breakdown */}
 
@@ -282,43 +290,58 @@ export default function Index({ match }) {
           )}
           {/* fetch the details for the views by referrer breakdown */}
 
+          {/* display error messages */}
+          {!viewsByDay.length && !viewsByUser.length && (
+            <p style={{ textAlign: "center" }}>This Job has no views yet</p>
+          )}
+
           {/* render details about the user who have applied  */}
-          <div className="candidates__applied">
-            <p>Shortlist candidates</p>
-            {/* render list of all available candidates to shortlist */}
-            <div className="all__candidates">
-              {appliedCandidates.map((oac) => (
-                <div className="one__candidate">
-                  <span
-                    className={
-                      oac.url
-                        ? "active__candidate candidate__name"
-                        : "candidate__name"
-                    }
-                    onClick={() => {
-                      oac.url && window.open(oac.url, "_blank");
-                    }}
-                  >
-                    {oac.fullName}
-                  </span>
-                  <div className="candidate__actions">
+          {appliedCandidates.length ? (
+            <div className="candidates__applied">
+              <p>Shortlist candidates</p>
+              {/* render list of all available candidates to shortlist */}
+              <div className="all__candidates">
+                {appliedCandidates.map((oac) => (
+                  <div className="one__candidate">
                     <span
-                      onClick={() => acceptApplicant(oac.acceptURL, oac.email)}
-                      className="actions__accept"
+                      className={
+                        oac.url
+                          ? "active__candidate candidate__name"
+                          : "candidate__name"
+                      }
+                      onClick={() => {
+                        oac.url && window.open(oac.url, "_blank");
+                      }}
                     >
-                      Accept
+                      {oac.fullName}
                     </span>
-                    <span
-                      onClick={() => rejectApplicant(oac.rejectURL, oac.email)}
-                      className="actions__reject"
-                    >
-                      Reject
-                    </span>
+                    <div className="candidate__actions">
+                      <span
+                        onClick={() =>
+                          acceptApplicant(oac.acceptURL, oac.email)
+                        }
+                        className="actions__accept"
+                      >
+                        Accept
+                      </span>
+                      <span
+                        onClick={() =>
+                          rejectApplicant(oac.rejectURL, oac.email)
+                        }
+                        className="actions__reject"
+                      >
+                        Reject
+                      </span>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
+          ) : (
+            <p style={{ textAlign: "center", marginTop: "20px" }}>
+              This Job has no applicants yet
+            </p>
+          )}
           {/* render details about the user who have applied  */}
         </>
       )}
