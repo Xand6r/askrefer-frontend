@@ -11,6 +11,7 @@ import Overlay from "@/components/overlay";
 import DayBarChart from "./components/dayBar";
 import UserBarChart from "./components/referrerBar";
 import ConfirmDelete from "./components/confirmDelete";
+import PostEditWindow from "./components/kyc";
 // import required components
 
 import "./styles.scss";
@@ -20,14 +21,18 @@ const DEFAULT_OPTIONS = [];
 
 export default function Index({ match }) {
   const [posts, setPosts] = useState(DEFAULT_OPTIONS);
+  const [allPosts, setAllPosts] = useState([]);
   const [error, setError] = useState(null);
   const [postsLoading, setPostsLoading] = useState(false);
   const [value, setValue] = useState(null);
   const [showDropdown, setShowDropdown] = useState(null);
   const [openConfirmOverlay, setOpenConfirmOverlay] = useState(null);
+  const [openEditOverlay, setOpenEditOverlay] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const dropdownRef = useRef(null);
+  const selectedPost = allPosts.find(p => p._id === value.value)
+
 
   // state for the graphs
   const [viewsByDay, setViewsByDay] = useState([]);
@@ -79,7 +84,7 @@ export default function Index({ match }) {
   };
 
   const onEdit = () => {
-    alert("on edit");
+    setOpenEditOverlay(true);
   };
 
   const onClose = () => {
@@ -122,6 +127,7 @@ export default function Index({ match }) {
         }));
         setPosts(mappedData);
         setValue(mappedData[0]);
+        setAllPosts(data);
       })
       .catch((err) => {
         showErrorToast(err.message);
@@ -180,7 +186,7 @@ export default function Index({ match }) {
 
       {/* fetch the details for the views by day breakdown */}
       {postsLoading ? (
-        <div style={{display: "flex", justifyContent: "center"}}>
+        <div style={{ display: "flex", justifyContent: "center" }}>
           <CircularProgressSpinner />
         </div>
       ) : (
@@ -219,10 +225,22 @@ export default function Index({ match }) {
         )}
         open={openConfirmOverlay}
         toggleOpen={() =>
-          openConfirmOverlay && !loading && setOpenConfirmOverlay(!openConfirmOverlay)
+          openConfirmOverlay &&
+          !loading &&
+          setOpenConfirmOverlay(!openConfirmOverlay)
         }
       />
       {/* include the popup component */}
+
+      {/* include overlay for editing posts */}
+      <Overlay
+        component={() => <PostEditWindow onClose={() => setOpenEditOverlay(false)} postState={selectedPost} onSuccess={fetchInitialPost} />}
+        open={openEditOverlay}
+        toggleOpen={() =>
+          openEditOverlay && !loading && setOpenEditOverlay(!openEditOverlay)
+        }
+      />
+      {/* include overlay for editing posts */}
     </div>
   );
 }

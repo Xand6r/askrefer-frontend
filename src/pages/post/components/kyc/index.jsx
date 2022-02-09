@@ -175,7 +175,7 @@ export default function Index({ postState }) {
                                 <a
                                     id="whatsapp"
                                     className="share-button"
-                                    data-action="share/whatsapp/share"
+                                   data-action="share/whatsapp/share"
                                     href={`whatsapp://send?text=Hi! I’m looking for ${postState.title.toLowerCase()}. can you help? ${link}`}
                                     target="_blank"
                                 >

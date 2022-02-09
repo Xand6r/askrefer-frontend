@@ -1,0 +1,89 @@
+@import "@/styles/variables.scss";
+
+#kycf-form{
+    margin: 27px 22px 44px;
+
+    .textarea-group {
+        label{
+            font-size: 12px;
+        }
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 24px;
+
+        h4.label {
+            margin-bottom: 12px;
+            font-size: 12px;
+            font-weight: 400;
+            display: flex;
+        }
+        textarea {
+            max-height: 102px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            transition: $transition-speed;
+            padding: 28px 14px;
+            box-sizing: border-box;
+            color: #6a6a7d;
+            outline: none;
+            -webkit-appearance: none;
+            box-shadow: none !important;
+
+            &:focus {
+                outline: none;
+                border: 1px solid rgba(0, 0, 0, 0.2);
+            }
+            &::-webkit-input-placeholder {
+                /* Chrome/Opera/Safari */
+                font-size: 12px;
+            }
+            &::-moz-placeholder {
+                /* Firefox 19+ */
+                font-size: 12px;
+            }
+            &:-ms-input-placeholder {
+                /* IE 10+ */
+                font-size: 12px;
+            }
+            &:-moz-placeholder {
+                /* Firefox 18- */
+                font-size: 12px;
+            }
+        }
+    }
+
+    .link{
+        #action-button{
+            background-color: #fdc84e;
+        }
+    }
+
+    .share-button{
+        &#whatsapp{
+            background-color: #25D366;
+        }
+        &#linkedin{
+            background-color: #0072b1;
+        }
+        i{
+            font-size: 20px;
+            margin-right: 10px;
+        }
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        width: 100%;
+        height: 52px;
+        color: white;
+        padding: 15px;
+        border-radius: 26px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: 300ms;
+        font-weight: 400;
+        margin: 0;
+        font-family: 'Open Sans', sans-serif;
+        margin-bottom: 10px;
+    }
+}
