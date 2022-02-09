@@ -4,18 +4,24 @@ import { useClickAway } from "react-use";
 
 import Error404 from "@/pages/notFound";
 import { postReq, getReq } from "@/api";
-import { decodeToken, validateEmail, showErrorToast } from "@/utilities";
+import {
+  decodeToken,
+  validateEmail,
+  showErrorToast,
+  showSuccessToast,
+} from "@/utilities";
 import Overlay from "@/components/overlay";
 
 // import required components
 import DayBarChart from "./components/dayBar";
 import UserBarChart from "./components/referrerBar";
 import ConfirmDelete from "./components/confirmDelete";
-import PostEditWindow from "./components/kyc";
+import PostEditWindow from "./components/editPost";
 // import required components
 
 import "./styles.scss";
 import CircularProgressSpinner from "@/components/blueLoader";
+import axios from "axios";
 
 const DEFAULT_OPTIONS = [];
 
@@ -31,12 +37,12 @@ export default function Index({ match }) {
   const [loading, setLoading] = useState(false);
 
   const dropdownRef = useRef(null);
-  const selectedPost = allPosts.find(p => p._id === value.value)
-
+  const selectedPost = allPosts.find((p) => p._id === value.value);
 
   // state for the graphs
   const [viewsByDay, setViewsByDay] = useState([]);
   const [viewsByUser, setViewsByUser] = useState([]);
+  const [appliedCandidates, setAppliedCandidates] = useState([]);
 
   useClickAway(dropdownRef, () => setShowDropdown(false));
 
@@ -44,8 +50,42 @@ export default function Index({ match }) {
     setError(true);
   };
 
-  const fetchViewsByDay = (postId) => {
-    postReq("/dashboard/viewsbyday", {
+  const removeApplicant = (applicantId) => {
+    setAppliedCandidates(
+      appliedCandidates.filter(a => a.email !== applicantId)
+    )
+  };
+
+  const rejectApplicant = async (link, userId) => {
+    console.log(link)
+    axios.get(link)
+      .then((res) => {
+        showSuccessToast(
+          "You have sucesfully rejected this applicant, they will be notified"
+        );
+        removeApplicant(userId);
+      })
+      .catch((err) => {
+        console.log(err)
+        showErrorToast("There was an error rejecting this candidate:", err.message);
+      });
+  };
+
+  const acceptApplicant = async (link, userId) => {
+    axios.get(link)
+      .then((res) => {
+        showSuccessToast(
+          "You have sucesfully accepted this applicant, they will be notified"
+        );
+        removeApplicant(userId);
+      })
+      .catch((err) => {
+        console.log(err)
+        showErrorToast("There was an error accepting this candidate:", err.message);
+      });
+  };
+  const fetchViewsByDay = async (postId) => {
+    await postReq("/dashboard/viewsbyday", {
       postId,
     })
       .then(({ data }) => {
@@ -56,8 +96,8 @@ export default function Index({ match }) {
       });
   };
 
-  const fetchViewsByUser = (postId) => {
-    postReq("/dashboard/viewsbyowner", {
+  const fetchViewsByUser = async (postId) => {
+    await postReq("/dashboard/viewsbyowner", {
       postId,
     })
       .then(({ data }) => {
@@ -67,6 +107,19 @@ export default function Index({ match }) {
         console.log(err);
       });
   };
+
+  const fetchAppliedCandidates = async (postId) => {
+    await getReq(`/dashboard/applicants/${postId}`, {
+      postId,
+    })
+      .then(({ data }) => {
+        setAppliedCandidates(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  console.log(appliedCandidates);
 
   const closeDownPost = () => {
     if (loading) return;
@@ -95,12 +148,23 @@ export default function Index({ match }) {
    * Fetch all the required statistics for the selected post
    */
   useEffect(() => {
-    if (!value || !value.value) return;
-    const { value: postId } = value;
-    // fetch all of the views by day
-    fetchViewsByDay(postId);
-    // fetch all the views by user
-    fetchViewsByUser(postId);
+    (async function () {
+      if (!value || !value.value) return;
+      try {
+        const { value: postId } = value;
+        setPostsLoading(true);
+        // fetch all of the views by day
+        await fetchViewsByDay(postId);
+        // fetch all the views by user
+        await fetchViewsByUser(postId);
+        // fetch all shortlisted candidates
+        await fetchAppliedCandidates(postId);
+        setPostsLoading(false);
+      } catch (err) {
+        console.log("err");
+        setPostsLoading(false);
+      }
+    })();
   }, [value]);
 
   /**
@@ -202,6 +266,8 @@ export default function Index({ match }) {
             <p style={{ textAlign: "center" }}>This Job has no views yet</p>
           )}
           {/* fetch the details for the views by day breakdown */}
+
+          {/* fetch the details for the views by referrer breakdown */}
           {viewsByUser.length ? (
             <div style={{ marginTop: "20px" }}>
               <UserBarChart
@@ -214,7 +280,46 @@ export default function Index({ match }) {
           ) : (
             ""
           )}
-          {/* based on the selected item fetch the statistics */}
+          {/* fetch the details for the views by referrer breakdown */}
+
+          {/* render details about the user who have applied  */}
+          <div className="candidates__applied">
+            <p>Shortlist candidates</p>
+            {/* render list of all available candidates to shortlist */}
+            <div className="all__candidates">
+              {appliedCandidates.map((oac) => (
+                <div className="one__candidate">
+                  <span
+                    className={
+                      oac.url
+                        ? "active__candidate candidate__name"
+                        : "candidate__name"
+                    }
+                    onClick={() => {
+                      oac.url && window.open(oac.url, "_blank");
+                    }}
+                  >
+                    {oac.fullName}
+                  </span>
+                  <div className="candidate__actions">
+                    <span
+                      onClick={() => acceptApplicant(oac.acceptURL, oac.email)}
+                      className="actions__accept"
+                    >
+                      Accept
+                    </span>
+                    <span
+                      onClick={() => rejectApplicant(oac.rejectURL, oac.email)}
+                      className="actions__reject"
+                    >
+                      Reject
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          {/* render details about the user who have applied  */}
         </>
       )}
 
@@ -234,7 +339,13 @@ export default function Index({ match }) {
 
       {/* include overlay for editing posts */}
       <Overlay
-        component={() => <PostEditWindow onClose={() => setOpenEditOverlay(false)} postState={selectedPost} onSuccess={fetchInitialPost} />}
+        component={() => (
+          <PostEditWindow
+            onClose={() => setOpenEditOverlay(false)}
+            postState={selectedPost}
+            onSuccess={fetchInitialPost}
+          />
+        )}
         open={openEditOverlay}
         toggleOpen={() =>
           openEditOverlay && !loading && setOpenEditOverlay(!openEditOverlay)
