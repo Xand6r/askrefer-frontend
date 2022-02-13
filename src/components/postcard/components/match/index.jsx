@@ -14,7 +14,7 @@ const INITIAL_STATE = {
 };
 
 export default function Index({ onSubmit, user }) {
-  const [submitted, setSubmitted] = useState(true);
+  const [submitted, setSubmitted] = useState(false);
   const [state, setState] = useState(INITIAL_STATE);
   const [loading, setLoading] = useState(false);
 
