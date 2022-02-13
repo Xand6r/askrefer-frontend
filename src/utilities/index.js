@@ -40,9 +40,9 @@ export const getAvatarDetails = (fullName) => {
     const [firstName, lastname] = fullName.split("");
     let initials;
     if (lastname) {
-        initials = `${fullName[0]}${fullName[1]}`;
+        initials = `${fullName?.[0]}${fullName?.[1]}`;
     } else {
-        initials = `${firstName[0]}${lastname[0]}`;
+        initials = `${firstName?.[0]}${lastname?.[0]}`;
     }
     const color = randomColor({ seed: initials });
     return {

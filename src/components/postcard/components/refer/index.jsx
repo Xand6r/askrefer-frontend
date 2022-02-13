@@ -65,6 +65,7 @@ export default function Index({ onSubmit, link, post, user }) {
     }
 
     const validateInputs = () => {
+        console.log({state});
         if (!state.email) {
             return showErrorToast("Please input your email before you submit");
         }
@@ -82,9 +83,7 @@ export default function Index({ onSubmit, link, post, user }) {
             email: user.email,
             referralKey: referralId,
         })
-            .then((res) => {
-                console.log(res);
-                console.log("Attacked")
+            .then((res) => {             
                 setAttached(true)
             })
             .catch((err) => {

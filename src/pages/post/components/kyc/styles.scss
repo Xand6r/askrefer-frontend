@@ -36,4 +36,8 @@
         font-family: 'Open Sans', sans-serif;
         margin-bottom: 10px;
     }
+
+    .overlay-component__slider{
+        overflow-y: auto !important;
+    }
 }

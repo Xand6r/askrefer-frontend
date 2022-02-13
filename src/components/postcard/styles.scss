@@ -1,5 +1,11 @@
 @import "@/styles/variables.scss";
 
+.close__icon{
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  cursor: pointer;
+}
 #post-card {
   width: 100%;
   font-family: "Open Sans", sans-serif !important;
@@ -7,6 +13,7 @@
     height: 136px;
     width: 100%;
     background: #fdc84d;
+    position: relative;
   }
 
   .content-body {
@@ -74,6 +81,7 @@
         width: 100%;
         text-align: center;
         margin-bottom: 10px;
+
 
         &.--no {
           background: #fd4e4e;
@@ -200,6 +208,14 @@
         justify-content: center;
         align-items: center;
       }
+    }
+  }
+
+  .endpreview__button{
+    #action-button{
+      border-radius: 0!important;
+      position: absolute;
+      bottom: 0;
     }
   }
 }

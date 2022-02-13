@@ -43,7 +43,7 @@ export default function Index({ onSubmit, setError }) {
     if (stage) {
       // verify if the code is equal to the actual code
       // <ALEX></ALEX>
-      if (post.key === state.code ||true) {
+      if (post.key === state.code) {
         setTimeout(() => {
           setLoading(false);
           onSubmit(post.data, state);
@@ -74,9 +74,9 @@ export default function Index({ onSubmit, setError }) {
           return showErrorToast(message, {
             autoClose: 5000,
           });
-        } 
+        }
         if (data.accessControlMode === "public") {
-            return onSubmit(data);
+          return onSubmit(data, state);
         }
         setStage(1);
         setPost(response);
@@ -101,15 +101,13 @@ export default function Index({ onSubmit, setError }) {
     if (!validateEmail(email)) {
       return showErrorToast("Please fill in a valid email address");
     }
-    if(!name){
-      return  showErrorToast("Please fill in a valid name");
+    if (!name) {
+      return showErrorToast("Please fill in a valid name");
     }
   };
 
   const allFieldsFilled =
-    state.email &&
-    state.name &&
-    validateEmail(state.email);
+    state.email && state.name && validateEmail(state.email);
   // validateLinkedIn(state.url);
   const buttonIsDisabled = !allFieldsFilled || loading;
 
@@ -120,7 +118,8 @@ export default function Index({ onSubmit, setError }) {
 
         {!stage ? (
           <h6 className="slider-form__subheader">
-            Please input your personal details to access the post.
+            AskRefer is tool to securely indicate your interest in an opportunity, or refer it to someone else who might be a better fit.<br /><br />
+            <i>Before proceeding, we need to double-check that you’re approved to view this opportunity. Please enter your details below.</i>
           </h6>
         ) : (
           <h6 className="slider-form__subheader">
@@ -132,31 +131,45 @@ export default function Index({ onSubmit, setError }) {
       <form action="javascript:void(0)">
         {!stage ? (
           <>
-          <div className="input__group">
+            <div className="input__group">
               <label htmlFor="">Name</label>
+              <span className="input__group__subtitle">
+                This will only be visible to approved viewers of your Ask{" "}
+              </span>
               <input
                 type="text"
                 name="name"
                 onChange={changeState}
                 value={state.name}
+                placeholder="Hint: Elon Musk"
               />
             </div>
             <div className="input__group">
               <label htmlFor="">Email</label>
+              <span className="input__group__subtitle">
+                This won’t be shared publicly, and will only be used to update
+                you on your search
+              </span>
               <input
                 type="text"
                 name="email"
                 onChange={changeState}
                 value={state.email}
+                placeholder="Hint: elon.musk@spacex.com "
               />
             </div>
             <div className="input__group">
               <label htmlFor="">LinkedIn (optional)</label>
+              <span className="input__group__subtitle">
+                Adding your LinkedIn profile helps improve engagement on your
+                search
+              </span>
               <input
                 type="text"
                 name="url"
                 onChange={changeState}
                 value={state.url}
+                placeholder="Hint: https://linkedin.com/in/rocketman"
               />
             </div>
           </>

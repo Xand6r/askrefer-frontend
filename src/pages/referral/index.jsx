@@ -28,7 +28,6 @@ export default function Index(props) {
 
   const paramId = props.match.params.id;
 
-
   const gotoCreatePost = () => {
     history.push("/post");
   };

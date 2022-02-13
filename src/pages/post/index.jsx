@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import Toggle from "react-toggle";
 import { TagsInput } from "react-tag-input-component";
 
+import PostCard from "@/components/postcard";
 import Overlay from "@/components/overlay";
 import Button from "@/components/button";
 import { showErrorToast } from "@/utilities";
@@ -14,25 +15,25 @@ const INITIAL_STATE = {
   details: "",
   url: "",
   duration: 1000, //set an arbitrarily large deadline, because we no longer use deadlines
-  public: false,
+  public: true,
   allowedEmails: [],
 };
 
+const KYC_INITIAL_STATE = {
+  name: "",
+  email: "",
+  url: "",
+};
+
 const CTA_TEXT = "Proceed";
-const TITLE_GUIDE =
-  "Describe who you’re looking for with as few words as possible";
-const MORE_GUIDE = "Share a bit more context in 1-2 sentences";
-const ACCESS_CONTROL_MODE =
-  "You can either make the post public or input a number of mails to share it to";
-const EXTERNAL_GUIDE = "Upload a pdf with more information";
 
 export default function Index() {
   const [state, setState] = useState(INITIAL_STATE);
+  const [kycState, setKycState] = useState(KYC_INITIAL_STATE);
   const [openOverlay, setOpenOverlay] = useState(false);
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const [selected, setSelected] = useState(["papaya"]);
 
   const updateState = (name, value) => {
     setState((state) => ({
@@ -76,7 +77,9 @@ export default function Index() {
   const gotoSecondState = async () => {
     setLoading(true);
     //upload an image to cloundinary
-    await uploadImage();
+    if(file){
+      await uploadImage();
+    }
     setLoading(false);
     setOpenOverlay(true);
   };
@@ -102,13 +105,14 @@ export default function Index() {
 
   return (
     <div id="post-page">
+      <div className="post-title">
+        <h2>Create an Ask</h2>
+        <h5>
+          Tell us who you’re looking for and attach any supporting documents
+        </h5>
+      </div>
       <div className="textarea-group">
-        <h4 className="label">
-          Title
-          <div data-tip={TITLE_GUIDE} className="tooltip-wrapper">
-            <i class="fas fa-info-circle fonticon"></i>
-          </div>
-        </h4>
+        <h4 className="label">Title</h4>
         <textarea
           name="desire"
           id=""
@@ -116,15 +120,13 @@ export default function Index() {
           maxLength="50"
           onChange={(e) => updateState(e.target.name, e.target.value)}
           value={state.desire}
+          placeholder="Hint: A top tier VC with space technology experience"
         ></textarea>
       </div>
 
       <div className="textarea-group">
         <h4 className="label" htmlFor="details">
           Summary
-          <div data-tip={MORE_GUIDE} className="tooltip-wrapper">
-            <i class="fas fa-info-circle fonticon"></i>
-          </div>
         </h4>
         <textarea
           name="details"
@@ -133,22 +135,22 @@ export default function Index() {
           rows="10"
           onChange={(e) => updateState(e.target.name, e.target.value)}
           value={state.details}
+          placeholder="Hint: Our company, SpaceX, is raising a $500M round. We’re targeting a huge market, have great traction, and have already secured two term sheets. We’re searching for spacetech investors who might be a good fit"
         ></textarea>
       </div>
 
       <div className="textarea-group">
         <h4 className="label" htmlFor="url">
           PDF attachment
-          <div data-tip={EXTERNAL_GUIDE} className="tooltip-wrapper">
-            <i class="fas fa-info-circle fonticon"></i>
-          </div>
         </h4>
         <div
           className={`upload-wrapper __${file && "active"}`}
           onClick={() => {
             inputRef.current.click();
           }}
-        ></div>
+        >
+          {!file ? <h5>Supporting documents if available (PDF only)</h5> : ""}
+        </div>
         {/* hidden input for  file upload shadow */}
         <input
           onChange={(e) => {
@@ -168,19 +170,21 @@ export default function Index() {
       </div>
 
       <div className="textarea-group">
-        <h4 className="label" htmlFor="details">
-          Grant public access
-          <div data-tip={ACCESS_CONTROL_MODE} className="tooltip-wrapper">
-            <i class="fas fa-info-circle fonticon"></i>
+        <div className="access-control-wrapper">
+          <h4 className="" htmlFor="details">
+            Who can view my Ask?
+          </h4>
+          <div>
+            <Toggle
+              defaultChecked={state.public}
+              icons={false}
+              onChange={() => {
+                updateState("public", !state.public);
+              }}
+            />
+            <span>public access - {state.public ? "on" : "off"}</span>
           </div>
-          <Toggle
-            defaultChecked={state.public}
-            icons={false}
-            onChange={() => {
-              updateState("public", !state.public);
-            }}
-          />
-        </h4>
+        </div>
         {!state.public ? (
           <TagsInput
             value={state.allowedEmails}
@@ -205,7 +209,7 @@ export default function Index() {
       <Overlay
         open={openOverlay}
         toggleOpen={() => openOverlay && setOpenOverlay(false)}
-        component={() => <Kyc postState={formatState()} />}
+        component={() => <Kyc state={kycState} setState={setKycState} postState={formatState()} />}
       />
     </div>
   );

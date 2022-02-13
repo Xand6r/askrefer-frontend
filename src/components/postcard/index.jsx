@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Skeleton from "react-loading-skeleton";
 import { Document, Page } from "react-pdf/dist/esm/entry.webpack";
 
+import Button from "@/components/button";
 import { getReq, postReq } from "@/api";
 import PdfViewer from "@/components/pdfModal";
 import Overlay from "@/components/overlay";
@@ -32,7 +33,7 @@ const INITIAL_STATE = {
 const TIMEOUT_DURATION = 1500;
 const DEFAULT_SKELETON_HEIGHT = "100px";
 
-export default function Index({ post, user }) {
+export default function Index({ post, user, preview, onClose, onProceed, open }) {
   const [showPdf, setShowPdf] = useState(false);
   const [state, setState] = useState(INITIAL_STATE);
   const [yes, setYes] = useState(false);
@@ -40,9 +41,9 @@ export default function Index({ post, user }) {
   const [loadingLink, setLoadingLink] = useState(false);
   const [refLink, setrefLink] = useState("");
   const [stats, setStats] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const history = useHistory();
-  console.log({ post });
 
   useEffect(() => {
     const {
@@ -71,7 +72,6 @@ export default function Index({ post, user }) {
     });
   }, []);
 
-  console.log({ stats });
   // get the stats of the owner of this page
   useEffect(() => {
     if (!Boolean(state.email) || stats) return;
@@ -81,11 +81,22 @@ export default function Index({ post, user }) {
       setStats(stats);
     })();
   }, [state]);
-
   const avatarDetails = getAvatarDetails(state.fullName);
 
   const onViewMore = () => {
     setShowPdf(true);
+  };
+
+  const createPost = async () => {
+    if (loading) return;
+    setLoading(true);
+    try {
+      await onProceed();
+    } catch (err) {
+      showErrorToast(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const today = moment();
@@ -152,7 +163,9 @@ export default function Index({ post, user }) {
   // moment
   return (
     <div id="post-card">
-      <div className="top-nav" />
+      <div className="top-nav">
+        {preview && <CloseIcon onClose={onClose} />}
+      </div>
       <div className="content-body">
         <div className="poster_details">
           <div
@@ -173,13 +186,13 @@ export default function Index({ post, user }) {
             >
               {state.fullName}
             </h3>
-            <h6>{state.title}</h6>
+            <h6>Is looking for {state.title}</h6>
           </div>
         </div>
 
         {/* section for the stats */}
-        {stats ? (
           <div>
+        {stats ? (
             <div className="stats_details">
               <div className="one_detail">
                 <h2> {stats.postcount} </h2>
@@ -196,22 +209,25 @@ export default function Index({ post, user }) {
                 <h5>Hires</h5>
               </div>
             </div>
+                    ) : (
+                      <Skeleton style={{ height: DEFAULT_SKELETON_HEIGHT }} />
+                    )}
 
             <div className="action_details">
-              <div onClick={generateReferral} className="action_button --maybe">
-                <h5>Share</h5>
-              </div>
-              <div
-                onClick={() => !loadingLink && setYes(true)}
+            <div
+                onClick={() => !preview && !loadingLink && setYes(true)}
                 className="action_button --yes"
               >
-                <h5>Shortlist me</h5>
+                <h5>I’m interested. Please shortlist me</h5>
+              </div>
+              <div
+                onClick={() => !preview && generateReferral()}
+                className="action_button --maybe"
+              >
+                <h5>I can refer someone else</h5>
               </div>
             </div>
           </div>
-        ) : (
-          <Skeleton style={{ height: DEFAULT_SKELETON_HEIGHT }} />
-        )}
         {/* section for the stats */}
 
         {/* section for the actual post */}
@@ -241,30 +257,6 @@ export default function Index({ post, user }) {
         {/* section to display pdfs */}
       </div>
 
-      {/* <div className="top_section">
-        <div className="post_content">
-          <h5>
-            {state.text}
-            {state.url && state.url.endsWith('.pdf') ? (
-              <span onClick={onViewMore}>
-                <i class="fas fa-external-link-alt"></i>
-              </span>
-            ) : (
-              <></>
-            )}
-          </h5>
-        </div>
-        <div className="auxilliary_content">
-          <h6 className="auxilliary_content__posted">
-            {postedAt} {postedAt === "Today" ? "" : "ago"}
-          </h6>
-        </div>
-      </div>
-      <div className="divider" />
-      <div className="bottom_section">
-        
-      </div> */}
-      {/* for yes */}
       <Overlay
         open={yes}
         toggleOpen={() => yes && setYes(false)}
@@ -299,6 +291,37 @@ export default function Index({ post, user }) {
         />
       )}
       {/* for vieweing pdf */}
+      {/* wrapper for button to submit when in preview mode */}
+      {preview && open ? (
+        <div className="endpreview__button">
+          <Button
+            text="Publish Ask"
+            onClick={createPost}
+            disabled={loading}
+            loading={loading}
+          />
+        </div>
+      ) : (
+        ""
+      )}
+      {/* wrapper for button to submit when in preview mode */}
     </div>
   );
 }
+
+const CloseIcon = ({ onClose }) => (
+  <div onClick={onClose} className="close__icon">
+    <svg
+      width="13"
+      height="13"
+      viewBox="0 0 13 13"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M6.5 5.05578L11.5558 0L13 1.44422L7.94422 6.5L13 11.5558L11.5558 13L6.5 7.94422L1.44422 13L0 11.5558L5.05578 6.5L0 1.44422L1.44422 0L6.5 5.05578Z"
+        fill="#000"
+      />
+    </svg>
+  </div>
+);
