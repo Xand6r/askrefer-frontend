@@ -167,7 +167,7 @@ export default function Index({ postState, state, setState }) {
                   id="whatsapp"
                   className="share-button"
                   data-action="share/whatsapp/share"
-                  href={`whatsapp://send?text=Hi! I’m looking for ${postState.title.toLowerCase()}. can you help? ${link}`}
+                  href={`whatsapp://send?text=Hi! I’m looking for a ${postState.title.toLowerCase()}.  Can you help? ${link}`}
                   target="_blank"
                 >
                   <i class="fab fa-whatsapp"></i>
