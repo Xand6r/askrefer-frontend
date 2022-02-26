@@ -11,10 +11,10 @@ import { getToken } from "@/api/cache";
  */
 // TODO change to use .env and .env.prod respectively
 const REMOTE_URL = "https://askrefer-backend.herokuapp.com";
-export const BASE = 
-     !process.env.NODE_ENV || process.env.NODE_ENV === "development"
-         ? "http://localhost:8000"
-         : REMOTE_URL;
+export const BASE = REMOTE_URL;
+    //  !process.env.NODE_ENV || process.env.NODE_ENV === "development"
+    //      ? "http://localhost:8000"
+    //      : REMOTE_URL;
 
 /**
  * dynamically get the tokens for every API call

@@ -209,7 +209,7 @@ export default function Index() {
       <Overlay
         open={openOverlay}
         toggleOpen={() => openOverlay && setOpenOverlay(false)}
-        component={() => <Kyc state={kycState} setState={setKycState} postState={formatState()} />}
+        component={() => <Kyc backup={kycState} setBackup={setKycState} postState={formatState()} />}
       />
     </div>
   );

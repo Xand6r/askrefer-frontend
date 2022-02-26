@@ -12,12 +12,11 @@ import { postReq } from "@/api";
 
 const CTA_TEXT = "Preview Ask";
 
-
-
-export default function Index({ postState, state, setState }) {
+export default function Index({ postState, backup, setBackup }) {
   const [link, setLink] = useState("");
   const [loading, setLoading] = useState(false);
   const [openOverlay, setOpenOverLay] = useState(false);
+  const [state, setState] = useState({ name: "", email: "", url: "" });
 
   const changeState = (e) => {
     const { name, value } = e.target;
@@ -26,6 +25,10 @@ export default function Index({ postState, state, setState }) {
       [name]: value,
     }));
   };
+
+  useState(() => {
+    setState(backup);
+  }, []);
 
   const renderIconAndText = () => {
     return (
@@ -36,7 +39,7 @@ export default function Index({ postState, state, setState }) {
     );
   };
 
-  const submitPost = () => {
+  const submitPost = async () => {
     const payload = {
       post: postState,
       user: {
@@ -82,9 +85,9 @@ export default function Index({ postState, state, setState }) {
   };
 
   const allFieldsFilled =
-    state.name && state.email && (state.url
-      ? LINKEDIN_REGEXP.exec(state.url)
-      : true);
+    state.name &&
+    state.email &&
+    (state.url ? LINKEDIN_REGEXP.exec(state.url) : true);
 
   const buttonIsDisabled = !allFieldsFilled;
 
@@ -147,7 +150,10 @@ export default function Index({ postState, state, setState }) {
           {!link ? (
             <Button
               text={CTA_TEXT}
-              onClick={() => setOpenOverLay(true)}
+              onClick={() => {
+                setOpenOverLay(true);
+                setBackup(state)
+              }}
               disabled={buttonIsDisabled}
             />
           ) : (
