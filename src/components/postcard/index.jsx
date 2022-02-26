@@ -74,7 +74,7 @@ export default function Index({ post, user, preview, onClose, onProceed, open })
 
   // get the stats of the owner of this page
   useEffect(() => {
-    if (!Boolean(state.email) || stats || !open) return;
+    if (!Boolean(state.email) || stats || (preview && !open)) return;
     (async function fetchStatistics() {
       const { email } = state;
       const { data: stats } = await postReq("/user/statistics", { email });

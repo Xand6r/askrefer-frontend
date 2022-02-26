@@ -1,18 +1,35 @@
-#kyc-form{
-    margin: 27px 22px 44px;
+#kyc-form {
+  margin: 27px 22px 44px;
 
-    .postsubmit__section{
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: flex-end;
-        text-align: center;
-        font-weight: 400;
-        height: 280px;
-        img{
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
+  .postsubmit__section {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    text-align: center;
+    font-weight: 400;
+    height: 280px;
+    img {
+      position: absolute;
+      top: 0;
+      left: 0;
     }
+  }
+
+  span.input__group__subtitle {
+    font-size: 10px;
+    font-family: "Open Sans", sans-serif;
+    margin-bottom: 10px;
+    font-weight: 200;
+    font-style: italic;
+  }
+
+  .filename {
+    font-size: 11px;
+    margin-top: 6px;
+  }
+
+  .textarea-group {
+    margin-bottom: 35px;
+  }
 }

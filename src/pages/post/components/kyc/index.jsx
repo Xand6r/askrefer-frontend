@@ -162,9 +162,8 @@ export default function Index({ postState, backup, setBackup }) {
             <Button
               text={CTA_TEXT}
               onClick={() => {
-                alert("her");
-                setOpenOverLay(true);
                 setBackup(state);
+                setOpenOverLay(true);
               }}
               disabled={buttonIsDisabled}
             />
