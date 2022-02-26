@@ -74,13 +74,13 @@ export default function Index({ post, user, preview, onClose, onProceed, open })
 
   // get the stats of the owner of this page
   useEffect(() => {
-    if (!Boolean(state.email) || stats) return;
+    if (!Boolean(state.email) || stats || !open) return;
     (async function fetchStatistics() {
       const { email } = state;
       const { data: stats } = await postReq("/user/statistics", { email });
       setStats(stats);
     })();
-  }, [state]);
+  }, [state, open]);
   const avatarDetails = getAvatarDetails(state.fullName);
 
   const onViewMore = () => {
