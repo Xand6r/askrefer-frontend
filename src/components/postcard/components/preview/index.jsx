@@ -134,7 +134,7 @@ export default function Index({ onSubmit, setError }) {
             <div className="input__group">
               <label htmlFor="">Name</label>
               <span className="input__group__subtitle">
-                This will only be visible to approved viewers of your Ask{" "}
+                This will only be visible to owner of the Ask
               </span>
               <input
                 type="text"
@@ -161,8 +161,7 @@ export default function Index({ onSubmit, setError }) {
             <div className="input__group">
               <label htmlFor="">LinkedIn (optional)</label>
               <span className="input__group__subtitle">
-                Adding your LinkedIn profile helps improve engagement on your
-                search
+                Adding your LinkedIn profile helps provide credibility for you.
               </span>
               <input
                 type="text"

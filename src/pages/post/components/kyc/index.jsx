@@ -112,6 +112,9 @@ export default function Index({ postState, backup, setBackup }) {
           <>
             <div className="input__group">
               <label htmlFor="">Name</label>
+              <span className="input__group__subtitle">
+                This will only be visible to approved viewers of your Ask{" "}
+              </span>
               <input
                 type="text"
                 name="name"
@@ -123,6 +126,10 @@ export default function Index({ postState, backup, setBackup }) {
             </div>
             <div className="input__group">
               <label htmlFor="">Email</label>
+              <span className="input__group__subtitle">
+                This won’t be shared publicly, and will only be used to update
+                you on your search
+              </span>
               <input
                 type="text"
                 name="email"
@@ -134,6 +141,10 @@ export default function Index({ postState, backup, setBackup }) {
             </div>
             <div className="input__group">
               <label htmlFor="">Linkedin</label>
+              <span className="input__group__subtitle">
+                Adding your LinkedIn profile helps improve engagement on your
+                search
+              </span>
               <input
                 type="text"
                 name="url"
@@ -151,9 +162,9 @@ export default function Index({ postState, backup, setBackup }) {
             <Button
               text={CTA_TEXT}
               onClick={() => {
-                alert('her')
+                alert("her");
                 setOpenOverLay(true);
-                setBackup(state)
+                setBackup(state);
               }}
               disabled={buttonIsDisabled}
             />

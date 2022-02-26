@@ -1,6 +1,14 @@
 #kyc-form{
     margin: 27px 22px 44px;
 
+    span.input__group__subtitle{
+        font-size: 10px;
+        font-family: 'Open Sans', sans-serif;
+        margin-bottom: 10px;
+        font-weight: 200;
+        font-style: italic;
+    }
+
     .link{
         #action-button{
             background-color: #fdc84e;
