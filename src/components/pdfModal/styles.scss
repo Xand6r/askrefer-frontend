@@ -1,0 +1,26 @@
+.pdf__wrapper {
+  width: 85vw;
+  height: 63vh;
+  background: ghostwhite;
+  position: relative;
+
+  .pdf__loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 1;
+  }
+
+  iframe {
+    z-index: 100;
+  }
+
+  .viewer__wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 90;
+  }
+}
