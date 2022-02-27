@@ -254,6 +254,7 @@ export default function Index({
               <div onClick={onViewMore} className="attachments">
                 <div className="pdf__dummy">
                   <i class="fas fa-4x fa-file-pdf"></i>
+                  <span>click to preview pdf</span>
                 </div>
               </div>
             </div>
