@@ -245,9 +245,9 @@ export default function Index({ post, user, preview, onClose, onProceed, open })
             <div className="attachment_details">
               <h4>Attached Media</h4>
               <div onClick={onViewMore} className="attachments">
-                <Document file={state.url}>
-                  <Page pageNumber={1} />
-                </Document>
+                <div className="pdf__dummy">
+                  <i class="fas fa-4x fa-file-pdf"></i>
+                </div>
               </div>
             </div>
           </div>
