@@ -12,6 +12,7 @@
     flex-direction: column-reverse;
     transition: $transition-speed;
     z-index: 10;
+    overflow-y: auto !important;
 
     .overlay-component{
         &__slider{

@@ -33,7 +33,14 @@ const INITIAL_STATE = {
 const TIMEOUT_DURATION = 1500;
 const DEFAULT_SKELETON_HEIGHT = "100px";
 
-export default function Index({ post, user, preview, onClose, onProceed, open }) {
+export default function Index({
+  post,
+  user,
+  preview,
+  onClose,
+  onProceed,
+  open,
+}) {
   const [showPdf, setShowPdf] = useState(false);
   const [state, setState] = useState(INITIAL_STATE);
   const [yes, setYes] = useState(false);
@@ -191,8 +198,8 @@ export default function Index({ post, user, preview, onClose, onProceed, open })
         </div>
 
         {/* section for the stats */}
-          <div>
-        {stats ? (
+        <div>
+          {stats ? (
             <div className="stats_details">
               <div className="one_detail">
                 <h2> {stats.postcount} </h2>
@@ -209,25 +216,25 @@ export default function Index({ post, user, preview, onClose, onProceed, open })
                 <h5>Hires</h5>
               </div>
             </div>
-                    ) : (
-                      <Skeleton style={{ height: DEFAULT_SKELETON_HEIGHT }} />
-                    )}
+          ) : (
+            <Skeleton style={{ height: DEFAULT_SKELETON_HEIGHT }} />
+          )}
 
-            <div className="action_details">
+          <div className="action_details">
             <div
-                onClick={() => !preview && !loadingLink && setYes(true)}
-                className="action_button --yes"
-              >
-                <h5>I’m interested. Please shortlist me</h5>
-              </div>
-              <div
-                onClick={() => !preview && generateReferral()}
-                className="action_button --maybe"
-              >
-                <h5>I can refer someone else</h5>
-              </div>
+              onClick={() => !preview && !loadingLink && setYes(true)}
+              className="action_button --yes"
+            >
+              <h5>I’m interested. Please shortlist me</h5>
+            </div>
+            <div
+              onClick={() => !preview && generateReferral()}
+              className="action_button --maybe"
+            >
+              <h5>I can refer someone else</h5>
             </div>
           </div>
+        </div>
         {/* section for the stats */}
 
         {/* section for the actual post */}
