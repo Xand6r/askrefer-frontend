@@ -162,8 +162,9 @@ export default function Index({ postState, backup, setBackup }) {
             <Button
               text={CTA_TEXT}
               onClick={() => {
-                setBackup(state);
                 setOpenOverLay(true);
+                // have to add a wierd time out, or else i have to click the button multiple times, wierd right?
+                // i dont understand why, also too lazy to investigate, good luck!
               }}
               disabled={buttonIsDisabled}
             />
@@ -198,7 +199,7 @@ export default function Index({ postState, backup, setBackup }) {
       </form>
       <Overlay
         open={openOverlay}
-        toggleOpen={() => setOpenOverLay(false)}
+        toggleOpen={() => openOverlay && setOpenOverLay(false) && setBackup(state)}
         component={() => (
           <PostCard
             post={{
@@ -211,7 +212,7 @@ export default function Index({ postState, backup, setBackup }) {
             }}
             user={{}}
             preview
-            onClose={() => setOpenOverLay(false)}
+            onClose={() => openOverlay && setOpenOverLay(false) && setBackup(state)}
             onProceed={submitPost}
             open={openOverlay}
           />
